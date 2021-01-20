@@ -72,14 +72,13 @@ export default function Menu() {
                 <div className="head-div-search">
 
                     <TextField
-
-                        style={{ marginTop: "13px", color: "red", position: "absolute", width: "14%" }}
+                        style={{ marginTop: "13px", position: "absolute", width: "14%" }}
                         label="BUSCAR"
                         id="outlined-size-small"
                         defaultValue=""
                         variant="outlined"
                         size="small"
-                        bgcolor="warning.main"
+                        color="success"
                     />
 
 

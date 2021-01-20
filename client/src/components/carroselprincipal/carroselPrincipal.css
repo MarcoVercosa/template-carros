@@ -1,0 +1,29 @@
+.CarroselPrincipal-article{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.CarroselPrincipal-article-div{
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    height: 400px;
+    width: 80%;
+    margin:0 auto
+}
+
+.CarroselPrincipal-article-div img{
+    border-radius: 25px;
+    position: absolute;
+    height: 100%;
+    width: 100%;  
+    opacity: 0;  
+    object-fit: cover;
+    transition: opacity 1s;
+}
+
+.CarroselPrincipal-article-div img.selected{
+    opacity: 1;
+}
