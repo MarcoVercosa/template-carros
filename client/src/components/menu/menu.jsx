@@ -2,6 +2,7 @@ import React from 'react';
 import SloganLeft from "./sloganLeft.png"
 import TextField from '@material-ui/core/TextField';
 import "./menu.css"
+import { Link } from 'react-router-dom';
 
 
 
@@ -63,9 +64,10 @@ export default function Menu() {
                         <li>
                             SOBRE NÓS
                 </li>
-                        <li>
+                        <li><Link to="/paineladministrativo">
                             CONTATO
-                </li>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 

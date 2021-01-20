@@ -1,0 +1,37 @@
+
+
+.paineladministrativo-div{
+    
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(70, 70, 208);
+    border-radius: 15px;
+    width: 90%;
+    margin:  auto;
+    color: white;
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-bottom: 55px;
+    
+}
+
+.paineladministrativo-article h4{
+    
+    margin-left: 70px;
+    color: rgb(14, 12, 12);
+    font-family: 'Lora', serif;
+    font-size: 17px;
+}
+.paineladministrativo-article-div-button{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 50px;
+    background-color: rgb(141, 141, 196);
+    border-radius: 15px;
+    width: 90%;
+    margin:  auto;
+    
+}

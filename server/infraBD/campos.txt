@@ -1,0 +1,54 @@
+
+Marca 
+modelo
+motor/combustivel/portas/cambio -- exemplo: 2.0 TSI 16V TURBO GASOLINA 4P TIPTRONIC
+
+Valor
+
+ano
+KM
+Câmbio
+Carroceria
+Combustível
+final placa
+aceita troca sim ou não
+IPVA pago = sim ou não
+licenciado = sim ou não
+
+Sobre o carro: ex: Veículo abaixo da tabela por problema no ar condicionado , veículo já foi batido
+ex: Carro será periciado na finalização do processo, o que garante que é livre de sinistros ou passagem por leilão.
+
+itens sim ou não:
+
+Airbag
+Alarme
+CD Player
+DVD player
+Rádio
+Rádio e toca fitas
+Computador de bordo
+Controle de tração
+Controle automático de velocidade
+Desembaçador traseiro
+Ar condicionado
+Ar quente
+Freio ABS
+Limpador traseiro
+Rádio
+Retrovisores elétricos
+Retrovisor fotocrômico
+Rodas de liga leve
+Sensor de chuva
+Sensor de estacionamento
+Teto solar
+Travas elétricas
+Vidros elétricos
+Volante com regulagem de altura
+Bancos em couro
+Encosto de cabeça traseiro
+Bancos dianteiros com aquecimento
+Tração 4x4
+Direção hidráulica
+Protetor de caçamba
+GPS
+Farol de xenônio
