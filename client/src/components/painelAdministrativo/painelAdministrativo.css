@@ -20,7 +20,7 @@
 .paineladministrativo-article h4{
     
     margin-left: 70px;
-    color: rgb(14, 12, 12);
+    color: rgb(63, 60, 60);
     font-family: 'Lora', serif;
     font-size: 17px;
 }
@@ -41,7 +41,10 @@
 .paineladministrativo-div-formualario{
     margin: 0 auto;    
     width: 90%;   
-    border-radius: 15px
+    border-radius: 15px;
+    background-color: rgb(245, 243, 234);
+    border-radius: 15px;
+    padding: 10px;
 }
 
 .paineladministrativo-div-formualario-form{
@@ -49,8 +52,40 @@
 }
 
 .paineladministrativo-div-formualario-form-hr{
-    margin: 30px 30px;
-    border-width: 1px;
+    margin: 30px 0 30px 0;
+    border-width: 2px;
     border-style: dashed;
     border-color: rgb(114, 114, 114);
+    width: 100%;
+    
+}
+
+.paineladministrativo-div-formualario-form h4{
+    color:rgb(104, 104, 104);
+    margin-left: 15px;
+}
+.paineladministrativo-div-formualario-form-div-grid{
+    display: grid;
+    
+    grid-template-columns: 20%  20% 20% 20%;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    
+}
+.paineladministrativo-div-formualario-form-div-grid div{
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 15px;
+    background-color:rgb(176, 176, 197);
+    border-radius: 25px;
+    font-family: 'Lora', serif;
+    color: rgb(68, 68, 68);
+    padding: 2px;    
+}
+
+.paineladministrativo-div-formualario-form-botao-publicar{
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
