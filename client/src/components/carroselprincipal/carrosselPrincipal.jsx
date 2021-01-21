@@ -1,4 +1,4 @@
-import { React, useStae, useEffect } from 'react';
+import { React, useEffect } from 'react';
 import "./carroselPrincipal.css"
 import ImagemUm from "./imagens/carros.jpg"
 import ImagemDois from "./imagens/feliz.jpg"

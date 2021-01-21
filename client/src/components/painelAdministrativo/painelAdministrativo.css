@@ -29,9 +29,28 @@
     justify-content: center;
     text-align: center;
     gap: 50px;
-    background-color: rgb(141, 141, 196);
+    background-color: rgb(176, 176, 197);
     border-radius: 15px;
     width: 90%;
-    margin:  auto;
+    margin:  auto; 
+    margin-bottom: 25px;   
+    padding: 20px;
     
+}
+
+.paineladministrativo-div-formualario{
+    margin: 0 auto;    
+    width: 90%;   
+    border-radius: 15px
+}
+
+.paineladministrativo-div-formualario-form{
+    width: 100%;
+}
+
+.paineladministrativo-div-formualario-form-hr{
+    margin: 30px 30px;
+    border-width: 1px;
+    border-style: dashed;
+    border-color: rgb(114, 114, 114);
 }
