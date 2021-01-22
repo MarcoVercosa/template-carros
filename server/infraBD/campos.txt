@@ -30,11 +30,11 @@ Computador de bordo
 Controle de tração
 Controle automático de velocidade
 Desembaçador traseiro
+Limpador traseiro
 Ar condicionado
 Ar quente
 Freio ABS
-Limpador traseiro
-Rádio
+
 Retrovisores elétricos
 Retrovisor fotocrômico
 Rodas de liga leve
@@ -52,3 +52,41 @@ Direção hidráulica
 Protetor de caçamba
 GPS
 Farol de xenônio
+
+const [airbag, setAirbag] = useState(false)
+const [alarme, setAlarme] = useState(false)
+const [cdplayer, setCdplayer] = useState(false)
+const [dvdplayer, setDvdplayer] = useState(false)
+const [gps, setGps] = useState(false)
+const [radio, setRadio] = useState(false)
+const [radioTocaFita, setRadioTocaFita] = useState(false)
+const [computadorBordo, setComputadorBordo] = useState(false)
+const [controleTracao, setControleTracao] = useState(false)
+const [controleVelocidade, setControleVelocidade] = useState(false)
+const [desembacadorTraseiro, setDesembacadorTraseiro] = useState(false)
+const [limpadorTraseiro, setLimpadorTraseiro] = useState(false)
+const [arCondicionado, setArCondicionado] = useState(false)
+const [arQuente, setArQuente] = useState(false)
+const [freioAbs, setFreioAbs]= useState(false)
+const [retrovisoresEletricos, setRetrovisoresEletricos]= useState(false)
+const [retrovisoresFotocromicos, setRetrovisoresFotocromicos]= useState(false)
+const [rodaLigaLeve, setRodaLigaLeve]= useState(false)
+const [sensorChuva, setSensorChuva]= useState(false)
+const [sensorEstacionamento, setSensorEstacionamento]= useState(false)
+const [tetoSolar, setTetoSolar] = useState(false)
+const [travasEletricas, setTravasEletricas] = useState(false)
+const [vidrosEletricos, setVidrosEletricos] = useState(false)
+const [direcaoHidraulica, setDirecaoHidraulica] = useState(false)
+const [volanteAltura, setVolanteAltura] = useState(false)
+const [bancoCouro, setBancoCouro] = useState(false)
+const [encostoCabecaTraseiro, setEncostoCabecaTraseiro] = useState(false)
+const [bancosFrenteAquecimento, setBancosFrenteAquecimento] = useState(false)
+const [tracaoQuatroRodas, setTracaoQuatroRodas] = useState(false)
+const [protetorCacamba, setProtetorCacamba] = useState(false)
+const [farolXenonio, setFarolXenonio] = useState(false)
+
+
+Seguinte, meu parça trampa se eu nao me engano numa empresa muito boa de financeiro e estão precisando para suporte, falei  bem de vc.
+Posso pedir o e-mail dele para vc mandar seu currículo ?
+
+

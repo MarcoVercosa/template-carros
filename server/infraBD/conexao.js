@@ -6,6 +6,8 @@ const conectaBD = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "deusepoder",
-    database: "hinoHarpa"
+    database: "vendaCarro"
 
 })
+
+module.exports = conectaBD

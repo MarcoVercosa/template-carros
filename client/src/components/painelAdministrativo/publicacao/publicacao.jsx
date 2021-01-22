@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import BuscaBD from "../../fetchBackEnd/api"
 import "./publicacao.css"
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -23,9 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Publicacao() {
 
+    const [render, setRender] = useState(1930)//recece loop para gerar os anos para seleção do ano do carro
+
     const [marca, setMarca] = useState("")
     const [ano, setAno] = useState("")
-    const [render, setRender] = useState(1930)//recece loop para gerar os anos para seleção do ano do carro
     const [modelo, setModelo] = useState("")
     const [motor, setMotor] = useState("")
     const [kilometro, setKilometro] = useState()
@@ -77,6 +79,9 @@ export default function Publicacao() {
     }));
     const classes = useStyles();
 
+
+
+
     useEffect(() => {
         var anoAtual = new Date().getFullYear()
         var anoInicio = 1930
@@ -88,11 +93,64 @@ export default function Publicacao() {
         setRender(render)
     }, [])
 
+    async function GuardarDados() {
+        const reuniDados =
+        {
+            marca,
+            ano,
+            modelo,
+            motor,
+            kilometro,
+            combustivel,
+            porta,
+            carroceria,
+            aceitaTroca,
+            IPVA,
+            licenciado,
+            airbag,
+            alarme,
+            cdplayer,
+            dvdplayer,
+            gps,
+            radio,
+            radioTocaFita,
+            computadorBordo,
+            controleTracao,
+            controleVelocidade,
+            desembacadorTraseiro,
+            limpadorTraseiro,
+            arCondicionado,
+            arQuente,
+            freioAbs,
+            retrovisoresEletricos,
+            retrovisoresFotocromicos,
+            rodaLigaLeve,
+            sensorChuva,
+            sensorEstacionamento,
+            tetoSolar,
+            travasEletricas,
+            vidrosEletricos,
+            direcaoHidraulica,
+            volanteAltura,
+            bancoCouro,
+            encostoCabecaTraseiro,
+            bancosFrenteAquecimento,
+            tracaoQuatroRodas,
+            protetorCacamba,
+            farolXenonio
+        }
+        console.log(reuniDados)
+        const classBuscaBD = new BuscaBD
+        const resultado = await classBuscaBD.BuscaBDPostAnuncio(reuniDados)
+        console.log(resultado)
+    }
+
     return (
 
         <div className="paineladministrativo-div-formualario"
             onSubmit={(event) => {
                 event.preventDefault()
+                GuardarDados()
 
             }}>
 
