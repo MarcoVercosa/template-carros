@@ -1,4 +1,4 @@
-.paineladministrativo-div-formualario{
+.formulario-div-formualario{
     margin: 0 auto;    
     width: 90%;   
     border-radius: 15px;
@@ -30,11 +30,11 @@
     }
   }v
 
-.paineladministrativo-div-formualario-form{
+.formulario-div-formualario-form{
     width: 100%;
 }
 
-.paineladministrativo-div-formualario-form-hr{
+.formulario-div-formualario-form-hr{
     margin: 30px 0 30px 0;
     border-width: 2px;
     border-style: dashed;
@@ -43,11 +43,11 @@
     
 }
 
-.paineladministrativo-div-formualario-form h4{
+.formulario-div-formualario-form h4{
     color:rgb(104, 104, 104);
     margin-left: 15px;
 }
-.paineladministrativo-div-formualario-form-div-grid{
+.formulario-div-formualario-form-div-grid{
     display: grid;
     
     grid-template-columns: 20%  20% 20% 20%;
@@ -56,7 +56,7 @@
     text-align: center;
     
 }
-.paineladministrativo-div-formualario-form-div-grid div{
+.formulario-div-formualario-form-div-grid div{
     justify-content: center;
     text-align: center;
     margin-bottom: 15px;
@@ -67,13 +67,13 @@
     padding: 2px;    
 }
 
-.paineladministrativo-div-formualario-form-botao-publicar{
+.formulario-div-formualario-form-botao-publicar{
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
-.paineladministrativo-div-formualario-form-label-imagem{
+.formulario-div-formualario-form-label-imagem{
     color:rgb(58, 58, 58);
     margin-left: 15px;
 }

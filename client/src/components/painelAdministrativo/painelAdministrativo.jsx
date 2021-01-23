@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import "./painelAdministrativo.css"
-import Publicacao from "./publicacao/publicacao"
+import Formulario from "./publicacao/publicacao"
 import AlteracaoPublicacao from "./alteracao/alteracao"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SendIcon from '@material-ui/icons/Send';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ export default function Paineladministrativo() {
                     </Button>
 
                     <Button
+                        onClick={(dadosBotao, envia = "alterarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
                         variant="contained"
                         color="default"
                         className={classes.button}
@@ -79,6 +81,7 @@ export default function Paineladministrativo() {
                     </Button>
 
                     <Button
+                        onClick={(dadosBotao, envia = "deletarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
                         variant="contained"
                         color="secondary"
                         className={classes.button}
@@ -89,15 +92,43 @@ export default function Paineladministrativo() {
                 </div>
             </article>
 
-            <div className="animacao">
-                {criarAnuncio && <Publicacao />}
+            <div className="seletorformulario">
+
+                {criarAnuncio &&
+                    <>
+                        <h2>PUBLICADOR DE ANÚNCIOS</h2>
+                        <Formulario tipoFormulario="criarAnuncio" />
+                    </>
+                }
+
+            </div>
+            <div className="seletorformulario">
+
+                {alterarAnuncio &&
+                    <>
+                        <h2>EDIÇÃO DE ANÚNCIOS</h2>
+
+                        <Formulario tipoFormulario="alterarAnuncio" />
+                    </>
+                }
+
+            </div>
+            <div className="seletorformulario">
+
+                {deletarAnuncio &&
+                    <>
+                        <h2>REMOVER ANÚNCIOS</h2>
+                        <Formulario tipoFormulario="deletarAnuncio" />
+                    </>
+                }
+
             </div>
 
-            <div className="animacao">
+            {/* <div className="animacao">
 
                 {alterarAnuncio && <AlteracaoPublicacao />}
 
-            </div>
+            </div> */}
         </>
 
     )
