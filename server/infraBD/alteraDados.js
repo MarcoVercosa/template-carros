@@ -5,7 +5,7 @@ class AlteraDadosBD {
     Cadastra(atendimento, res) {
         console.log(atendimento)
         const sql = `INSERT INTO carros SET ?`
-        conectaBD.query(sql, atendimento.dados, (erro, resultado) => {
+        conectaBD.query(sql, atendimento, (erro, resultado) => {
 
             if (erro) {
                 console.log(erro)

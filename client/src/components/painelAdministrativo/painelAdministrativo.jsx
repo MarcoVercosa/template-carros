@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { React, useState } from 'react';
 import "./painelAdministrativo.css"
 import Publicacao from "./publicacao/publicacao"
+import AlteracaoPublicacao from "./alteracao/alteracao"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -91,6 +91,12 @@ export default function Paineladministrativo() {
 
             <div className="animacao">
                 {criarAnuncio && <Publicacao />}
+            </div>
+
+            <div className="animacao">
+
+                {alterarAnuncio && <AlteracaoPublicacao />}
+
             </div>
         </>
 

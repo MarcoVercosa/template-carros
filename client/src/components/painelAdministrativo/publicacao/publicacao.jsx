@@ -1,15 +1,14 @@
 import { React, useState, useEffect } from 'react';
 import BuscaBD from "../../fetchBackEnd/api"
+import FormData from 'form-data'
 import "./publicacao.css"
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import SendIcon from '@material-ui/icons/Send';
+
 import SaveIcon from '@material-ui/icons/Save';
 import {
-    TextField, FormControlLabel, Container,
-    InputLabel, Select, FormControl, FormLabel, Radio, RadioGroup
+    TextField, FormControlLabel,
+    InputLabel, Select, FormControl
 } from '@material-ui/core/';
 
 import Switch from '@material-ui/core/Switch';
@@ -24,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Publicacao() {
 
-    const [render, setRender] = useState(1930)//recece loop para gerar os anos para seleção do ano do carro
+    const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
+
 
     const [marca, setMarca] = useState("")
     const [ano, setAno] = useState("")
@@ -70,6 +70,7 @@ export default function Publicacao() {
     const [tracaoQuatroRodas, setTracaoQuatroRodas] = useState(false)
     const [protetorCacamba, setProtetorCacamba] = useState(false)
     const [farolXenonio, setFarolXenonio] = useState(false)
+    const [imagens, setImagens] = useState([])
 
 
     const useStyles = makeStyles((theme) => ({
@@ -93,69 +94,69 @@ export default function Publicacao() {
         setRender(render)
     }, [])
 
-    async function GuardarDados() {
+    async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
+        event.preventDefault()
+
+        if (imagens.length > 12) {
+            alert("SELECIONE ATÉ 12 IMAGENS")
+            return
+        }
+        const classBuscaBD = new BuscaBD()// classe da Api onde está conf  o Axios
+        const dadosImagens = new FormData()//FormData classe que permite o multer identificar as imagens
+        for (var i = 0; i < imagens.length; i++) {
+            dadosImagens.append("files", imagens[i])
+        }
+        //para enviar imagens tem q ser pelo FormData
+        //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
+
+
+        const retornaImagenslLocationNodeMulter = await classBuscaBD.BuscaBDPostImagem(dadosImagens)
+        //faz o upload das imagens e o node vai retornar as imagens recebidas
+        console.log(retornaImagenslLocationNodeMulter)
+
+        let imagensPath = []
+        retornaImagenslLocationNodeMulter.data.map((dados) => {
+            imagensPath.push("http://localhost:9000/static/" + dados.filename)
+        })
+
+        const GuardaDados = await ArmazenaDadosBD(imagensPath)
+        console.log(GuardaDados)
+    }
+
+
+    async function ArmazenaDadosBD(imagensPath) {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
+        const classBuscaBD = new BuscaBD()
+
+        var imagensPath = JSON.stringify(imagensPath);//transforma a array de localização das imagens em uma array String
+        console.log(imagensPath)
+
         const reuniDados =
         {
-            marca,
-            ano,
-            modelo,
-            motor,
-            kilometro,
-            combustivel,
-            porta,
-            carroceria,
-            aceitaTroca,
-            IPVA,
-            licenciado,
-            airbag,
-            alarme,
-            cdplayer,
-            dvdplayer,
-            gps,
-            radio,
-            radioTocaFita,
-            computadorBordo,
-            controleTracao,
-            controleVelocidade,
-            desembacadorTraseiro,
-            limpadorTraseiro,
-            arCondicionado,
-            arQuente,
-            freioAbs,
-            retrovisoresEletricos,
-            retrovisoresFotocromicos,
-            rodaLigaLeve,
-            sensorChuva,
-            sensorEstacionamento,
-            tetoSolar,
-            travasEletricas,
-            vidrosEletricos,
-            direcaoHidraulica,
-            volanteAltura,
-            bancoCouro,
-            encostoCabecaTraseiro,
-            bancosFrenteAquecimento,
-            tracaoQuatroRodas,
-            protetorCacamba,
-            farolXenonio
+            marca, ano, modelo, motor, kilometro, combustivel, porta, carroceria, aceitaTroca, IPVA, licenciado,
+            airbag, alarme, cdplayer, dvdplayer, gps, radio, radioTocaFita, computadorBordo, controleTracao,
+            controleVelocidade, desembacadorTraseiro, limpadorTraseiro, arCondicionado, arQuente, freioAbs,
+            retrovisoresEletricos, travasEletricas, vidrosEletricos, retrovisoresFotocromicos, rodaLigaLeve, sensorChuva, sensorEstacionamento, tetoSolar,
+            direcaoHidraulica, volanteAltura, bancoCouro, encostoCabecaTraseiro,
+            bancosFrenteAquecimento, tracaoQuatroRodas, protetorCacamba, farolXenonio, imagensPath
         }
         console.log(reuniDados)
-        const classBuscaBD = new BuscaBD
-        const resultado = await classBuscaBD.BuscaBDPostAnuncio(reuniDados)
-        console.log(resultado)
+
+        const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reuniDados)
+        return EnviaDadosBD
     }
+
 
     return (
 
         <div className="paineladministrativo-div-formualario"
             onSubmit={(event) => {
                 event.preventDefault()
-                GuardarDados()
+                UploadImagens(event)
 
             }}>
 
-            <form className="paineladministrativo-div-formualario-form">
-
+            {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
+            <form className="paineladministrativo-div-formualario-form" >
                 <TextField style={{ marginLeft: '20px', width: '15%' }}
                     onBlur={(recebe) => { setMotor(recebe.target.value) }}
                     id="Valor"
@@ -181,7 +182,7 @@ export default function Publicacao() {
                 <TextField style={{ marginLeft: '20px', width: '15%' }}
                     onBlur={(recebe) => { setMarca(recebe.target.value) }}
                     id="marca"
-                    label="MARCA - ex: nissan"
+                    label="MARCA - ex: FIAT"
                     variant="outlined"
                     className="FormularioCadastro_inputs"
                     margin="dense"
@@ -189,7 +190,7 @@ export default function Publicacao() {
                 <TextField style={{ marginLeft: '20px', width: '15%' }}
                     onBlur={(recebe) => { setModelo(recebe.target.value) }}
                     id="modelo"
-                    label="MODELO - ex: sentra"
+                    label="MODELO - ex: UP"
                     variant="outlined"
                     className="FormularioCadastro_inputs"
                     margin="dense"
@@ -605,6 +606,11 @@ export default function Publicacao() {
                 />
 
                 <hr className="paineladministrativo-div-formualario-form-hr" />
+
+                <label className="paineladministrativo-div-formualario-form-label-imagem">
+                    Selecione as imagens:
+                    <input type="file" name="file" multiple="multiple" onChange={(recebe) => { setImagens(recebe.target.files) }}></input>
+                </label>
 
                 <div paineladministrativo-div-formualario-form-botao-publicar
                     style={{ display: "flex", justifyContent: "center", textAlign: "center" }}

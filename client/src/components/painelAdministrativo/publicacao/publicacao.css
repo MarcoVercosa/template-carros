@@ -5,10 +5,12 @@
     background-color: rgb(245, 243, 234);
     border-radius: 15px;
     padding: 10px;
-    animation-duration: 0.7s;
+    animation-duration: 1.1s;
     animation-name: slidein;
 }
-@keyframes slidein {
+
+/* move a div d esquerda para a direita */
+/* @keyframes slidein {
     from {
       margin-left: 90%;
       width: 90%
@@ -17,7 +19,16 @@
       margin-left: 4%;
       width: 90%;
     }
-  }
+  } */
+
+  @keyframes slidein {
+    from {
+      opacity: 0;
+    }  
+    to {
+      opacity: 1;
+    }
+  }v
 
 .paineladministrativo-div-formualario-form{
     width: 100%;
@@ -60,4 +71,9 @@
     display: flex;
     justify-content: center;
     text-align: center;
+}
+
+.paineladministrativo-div-formualario-form-label-imagem{
+    color:rgb(58, 58, 58);
+    margin-left: 15px;
 }
