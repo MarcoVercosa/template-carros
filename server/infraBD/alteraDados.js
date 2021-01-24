@@ -10,11 +10,13 @@ class AlteraDadosBD {
 
             if (erro) {
                 console.log(erro)
+                res.json(erro)
             } else {
-                return resultado
+                res.json(resultado)
             }
         })
     }
+
 
     //Busca dados para alterar anúncio
     BuscaParaAlterar(atendimento, res) {

@@ -32,20 +32,21 @@ module.exports = (app) => {
     })
 
     //cadastra anuncio no BD
-    app.post("/cadastraveiculo", (req, res) => {
 
-        console.log(req.body)
+    app.post("/cadastraveiculo", (req, res) => {
+        console.log("Solicitado post de DADOS")
+        // console.log(req.body)
         const atendimento = req.body
         const resultado = AlteraDadosBD.Cadastra(atendimento, res)
-        console.log("Solicitado post de DADOS")
-        res.json(req.body)
+
+        // res.json(req.body)
     })
     //deixa a pasta upload das imagens online
     app.use("/static", express.static("./uploads/images"))
 
     app.get("/buscacarro/:id", (req, res) => {
         console.log("Busca dados para editar")
-        console.log(req.params)
+        // console.log(req.params)
         const resultado = AlteraDadosBD.BuscaParaAlterar(req.params.id, res)
 
 

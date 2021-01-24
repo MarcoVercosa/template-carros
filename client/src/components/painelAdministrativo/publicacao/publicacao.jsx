@@ -27,53 +27,55 @@ export default function Formulario(props) {
     console.log(props.tipoFormulario)
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
 
-    const [valor, setValor] = useState()
-    const [marca, setMarca] = useState()
-    const [ano, setAno] = useState()
-    const [modelo, setModelo] = useState()
-    const [motor, setMotor] = useState()
-    const [kilometro, setKilometro] = useState()
-    const [combustivel, setCombustivel] = useState()
-    const [porta, setPorta] = useState()
-    const [cambio, setCambio] = useState()
-    const [carroceria, setCarroceria] = useState()
-    const [finalPlaca, setFinalPlaca] = useState()
-    const [sobre, setSobre] = useState()
-    const [aceitaTroca, setAceitaTroca] = useState(false)
-    const [IPVA, setIPVA] = useState(false)
-    const [licenciado, setLicenciado] = useState(false)
-    const [airbag, setAirbag] = useState(false)
-    const [alarme, setAlarme] = useState(false)
-    const [cdplayer, setCdplayer] = useState(false)
-    const [dvdplayer, setDvdplayer] = useState(false)
-    const [gps, setGps] = useState(false)
-    const [radio, setRadio] = useState(false)
-    const [radioTocaFita, setRadioTocaFita] = useState(false)
-    const [computadorBordo, setComputadorBordo] = useState(false)
-    const [controleTracao, setControleTracao] = useState(false)
-    const [controleVelocidade, setControleVelocidade] = useState(false)
-    const [desembacadorTraseiro, setDesembacadorTraseiro] = useState(false)
-    const [limpadorTraseiro, setLimpadorTraseiro] = useState(false)
-    const [arCondicionado, setArCondicionado] = useState(false)
-    const [arQuente, setArQuente] = useState(false)
-    const [freioAbs, setFreioAbs] = useState(false)
-    const [retrovisoresEletricos, setRetrovisoresEletricos] = useState(false)
-    const [retrovisoresFotocromicos, setRetrovisoresFotocromicos] = useState(false)
-    const [rodaLigaLeve, setRodaLigaLeve] = useState(false)
-    const [sensorChuva, setSensorChuva] = useState(false)
-    const [sensorEstacionamento, setSensorEstacionamento] = useState(false)
-    const [tetoSolar, setTetoSolar] = useState(false)
-    const [travasEletricas, setTravasEletricas] = useState(false)
-    const [vidrosEletricos, setVidrosEletricos] = useState(false)
-    const [direcaoHidraulica, setDirecaoHidraulica] = useState(false)
-    const [volanteAltura, setVolanteAltura] = useState(false)
-    const [bancoCouro, setBancoCouro] = useState(false)
-    const [encostoCabecaTraseiro, setEncostoCabecaTraseiro] = useState(false)
-    const [bancosFrenteAquecimento, setBancosFrenteAquecimento] = useState(false)
-    const [tracaoQuatroRodas, setTracaoQuatroRodas] = useState(false)
-    const [protetorCacamba, setProtetorCacamba] = useState(false)
-    const [farolXenonio, setFarolXenonio] = useState(false)
-    const [imagens, setImagens] = useState([])
+    const [formulario, SetFormulario] = useState({
+        valor: 0,
+        marca: "",
+        ano: 2010,
+        modelo: "",
+        motor: "",
+        kilometro: 0,
+        combustivel: "",
+        porta: 4,
+        cambio: "",
+        carroceria: "",
+        finalPlaca: 0,
+        sobre: "",
+        aceitaTroca: false,
+        IPVA: false,
+        licenciado: false,
+        airbag: false,
+        alarme: false,
+        cdplayer: false,
+        dvdplayer: false,
+        gps: false,
+        radio: false,
+        radioTocaFita: false,
+        computadorBordo: false,
+        controleTracao: false,
+        controleVelocidade: false,
+        desembacadorTraseiro: false,
+        limpadorTraseiro: false,
+        arCondicionado: false,
+        arQuente: false,
+        freioAbs: false,
+        retrovisoresEletricos: false,
+        retrovisoresFotocromicos: false,
+        rodaLigaLeve: false,
+        sensorChuva: false,
+        sensorEstacionamento: false,
+        tetoSolar: false,
+        travasEletricas: false,
+        vidrosEletricos: false,
+        direcaoHidraulica: false,
+        volanteAltura: false,
+        bancoCouro: false,
+        encostoCabecaTraseiro: false,
+        bancosFrenteAquecimento: false,
+        tracaoQuatroRodas: false,
+        protetorCacamba: false,
+        farolXenonio: false,
+        imagensPath: false
+    })
 
 
     const [buscaParaAlterar, setBuscaParaAlterar] = useState("")
@@ -101,14 +103,14 @@ export default function Formulario(props) {
 
     async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
-        if (imagens.length > 12) {
+        if (formulario.imagensPath.length > 12) {
             alert("SELECIONE ATÉ 12 IMAGENS")
             return
         }
         const classBuscaBD = new BuscaBD()// classe da Api onde está conf  o Axios
         const dadosImagens = new FormData()//FormData classe que permite o multer identificar as imagens
-        for (var i = 0; i < imagens.length; i++) {
-            dadosImagens.append("files", imagens[i])
+        for (var i = 0; i < formulario.imagensPath.length; i++) {
+            dadosImagens.append("files", formulario.imagensPath[i])
         }
         //para enviar imagens tem q ser pelo FormData
         //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
@@ -125,19 +127,12 @@ export default function Formulario(props) {
     }
 
 
-    async function ArmazenaDadosBD(imagensPath) {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
+    async function ArmazenaDadosBD(recebeLocationImagens) {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
         const classBuscaBD = new BuscaBD()
-        var imagensPath = JSON.stringify(imagensPath);//transforma a array de localização das imagens em uma array String
-        console.log(imagensPath)
-        const reuniDados =
-        {
-            valor, marca, ano, modelo, motor, kilometro, combustivel, porta, cambio, carroceria, finalPlaca, sobre, aceitaTroca, IPVA, licenciado,
-            airbag, alarme, cdplayer, dvdplayer, gps, radio, radioTocaFita, computadorBordo, controleTracao,
-            controleVelocidade, desembacadorTraseiro, limpadorTraseiro, arCondicionado, arQuente, freioAbs,
-            retrovisoresEletricos, travasEletricas, vidrosEletricos, retrovisoresFotocromicos, rodaLigaLeve, sensorChuva, sensorEstacionamento, tetoSolar,
-            direcaoHidraulica, volanteAltura, bancoCouro, encostoCabecaTraseiro,
-            bancosFrenteAquecimento, tracaoQuatroRodas, protetorCacamba, farolXenonio, imagensPath
-        }
+        var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String
+        console.log(imagensLocation)
+        var reuniDados = formulario
+        reuniDados = { ...reuniDados, imagensPath: imagensLocation }
         console.log(reuniDados)
         const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reuniDados)
         return EnviaDadosBD
@@ -152,54 +147,58 @@ export default function Formulario(props) {
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
         PreencheFormulario(resultado)
     }
+
     function PreencheFormulario(resultado) {
-        setValor(resultado.data[0].valor)
-        setMarca(resultado.data[0].marca)
-        setAno(resultado.data[0].ano)
-        setModelo(resultado.data[0].modelo)
-        setMotor(resultado.data[0].motor)
-        setKilometro(resultado.data[0].kilometro)
-        setCombustivel(resultado.data[0].combustivel)
-        setPorta(resultado.data[0].porta)
-        setCambio(resultado.data[0].cambio)
-        setCarroceria(resultado.data[0].carroceria)
-        setFinalPlaca(resultado.data[0].finalPlaca)
-        setSobre(resultado.data[0].sobre)
-        setAceitaTroca(resultado.data[0].aceitaTroca)
-        setIPVA(resultado.data[0].IPVA)
-        setLicenciado(resultado.data[0].licenciado)
-        setAirbag(resultado.data[0].airbag)
-        setAlarme(resultado.data[0].alarme)
-        setCdplayer(resultado.data[0].cdplayer)
-        setDvdplayer(resultado.data[0].dvdplayer)
-        setGps(resultado.data[0].gps)
-        setRadio(resultado.data[0].radio)
-        setRadioTocaFita(resultado.data[0].radioTocaFita)
-        setComputadorBordo(resultado.data[0].computadorBordo)
-        setControleTracao(resultado.data[0].controleTracao)
-        setControleVelocidade(resultado.data[0].controleVelocidade)
-        setDesembacadorTraseiro(resultado.data[0].desembacadorTraseiro)
-        setLimpadorTraseiro(resultado.data[0].limpadorTraseiro)
-        setArCondicionado(resultado.data[0].arCondicionado)
-        setArQuente(resultado.data[0].arQuente)
-        setFreioAbs(resultado.data[0].freioAbs)
-        setRetrovisoresEletricos(resultado.data[0].retrovisoresEletricos)
-        setRetrovisoresFotocromicos(resultado.data[0].retrovisoresFotocromicos)
-        setRodaLigaLeve(resultado.data[0].rodaLigaLeve)
-        setSensorChuva(resultado.data[0].sensorChuva)
-        setSensorEstacionamento(resultado.data[0].sensorEstacionamento)
-        setTetoSolar(resultado.data[0].tetoSolar)
-        setTravasEletricas(resultado.data[0].travasEletricas)
-        setVidrosEletricos(resultado.data[0].vidrosEletricos)
-        setDirecaoHidraulica(resultado.data[0].direcaoHidraulica)
-        setVolanteAltura(resultado.data[0].volanteAltura)
-        setBancoCouro(resultado.data[0].bancoCouro)
-        setEncostoCabecaTraseiro(resultado.data[0].encostoCabecaTraseiro)
-        setBancosFrenteAquecimento(resultado.data[0].bancosFrenteAquecimento)
-        setTracaoQuatroRodas(resultado.data[0].tracaoQuatroRodas)
-        setProtetorCacamba(resultado.data[0].protetorCacamba)
-        setFarolXenonio(resultado.data[0].farolXenonio)
-        setImagens(resultado.data[0].imagensPath)
+
+        SetFormulario({
+            valor: resultado.data[0].valor,
+            marca: resultado.data[0].marca,
+            ano: resultado.data[0].ano,
+            modelo: resultado.data[0].modelo,
+            motor: resultado.data[0].motor,
+            kilometro: resultado.data[0].kilometro,
+            combustivel: resultado.data[0].combustivel,
+            porta: resultado.data[0].porta,
+            cambio: resultado.data[0].cambio,
+            carroceria: resultado.data[0].carroceria,
+            finalPlaca: resultado.data[0].finalPlaca,
+            sobre: resultado.data[0].sobre,
+            aceitaTroca: resultado.data[0].aceitaTroca,
+            IPVA: resultado.data[0].IPVA,
+            licenciado: resultado.data[0].licenciado,
+            airbag: resultado.data[0].airbag,
+            alarme: resultado.data[0].alarme,
+            cdplayer: resultado.data[0].cdplayer,
+            dvdplayer: resultado.data[0].advdplayerno,
+            gps: resultado.data[0].gps,
+            radio: resultado.data[0].radio,
+            radioTocaFita: resultado.data[0].radioTocaFita,
+            computadorBordo: resultado.data[0].computadorBordo,
+            controleTracao: resultado.data[0].controleTracao,
+            controleVelocidade: resultado.data[0].controleVelocidade,
+            desembacadorTraseiro: resultado.data[0].desembacadorTraseiroano,
+            limpadorTraseiro: resultado.data[0].limpadorTraseiro,
+            arCondicionado: resultado.data[0].arCondicionado,
+            arQuente: resultado.data[0].arQuente,
+            freioAbs: resultado.data[0].freioAbs,
+            retrovisoresEletricos: resultado.data[0].retrovisoresEletricos,
+            retrovisoresFotocromicos: resultado.data[0].retrovisoresFotocromicos,
+            rodaLigaLeve: resultado.data[0].rodaLigaLeve,
+            sensorChuva: resultado.data[0].sensorChuva,
+            sensorEstacionamento: resultado.data[0].sensorEstacionamento,
+            tetoSolar: resultado.data[0].sensorEstacionamento,
+            travasEletricas: resultado.data[0].travasEletricas,
+            vidrosEletricos: resultado.data[0].vidrosEletricos,
+            direcaoHidraulica: resultado.data[0].direcaoHidraulica,
+            volanteAltura: resultado.data[0].volanteAltura,
+            bancoCouro: resultado.data[0].bancoCouro,
+            encostoCabecaTraseiro: resultado.data[0].encostoCabecaTraseiroano,
+            bancosFrenteAquecimento: resultado.data[0].bancosFrenteAquecimento,
+            tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
+            protetorCacamba: resultado.data[0].protetorCacamba,
+            farolXenonio: resultado.data[0].farolXenonio,
+            imagens: resultado.data[0].imagens
+        })
     }
 
     //manda os dados para o update do anúncio
@@ -247,8 +246,12 @@ export default function Formulario(props) {
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
                 <form className="formulario-div-formualario-form" >
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onChange={(recebe) => { setValor(recebe.target.value) }}
-                        value={valor}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, valor: envia.target.value }
+                            })
+                        }}
+                        value={formulario.valor}
                         id="Valor"
                         label="Valor automóvel"
                         variant="outlined"
@@ -266,7 +269,12 @@ export default function Formulario(props) {
                         <Select
 
                             native
-                            value={ano} onChange={(recebe) => { setAno(recebe.target.value) }}
+                            value={formulario.ano}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, ano: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             {render}
@@ -276,8 +284,12 @@ export default function Formulario(props) {
 
 
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onChange={(recebe) => { setMarca(recebe.target.value) }}
-                        value={marca}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, marca: envia.target.value }
+                            })
+                        }}
+                        value={formulario.marca}
                         id="marca"
                         label="MARCA - ex: FIAT"
                         variant="outlined"
@@ -288,8 +300,12 @@ export default function Formulario(props) {
                         }}
                     />
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onChange={(recebe) => { setModelo(recebe.target.value) }}
-                        value={modelo}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, modelo: envia.target.value }
+                            })
+                        }}
+                        value={formulario.modelo}
                         id="modelo"
                         label="MODELO - ex: UP"
                         variant="outlined"
@@ -300,8 +316,12 @@ export default function Formulario(props) {
                         }}
                     />
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onChange={(recebe) => { setMotor(recebe.target.value) }}
-                        value={motor}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, motor: envia.target.value }
+                            })
+                        }}
+                        value={formulario.motor}
                         id="motor"
                         label="MOTOR - ex: 2.0 TSI 16V"
                         variant="outlined"
@@ -314,11 +334,15 @@ export default function Formulario(props) {
 
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
 
-                        onChange={(recebe) => { setKilometro(recebe.target.value) }}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, kilometro: envia.target.value }
+                            })
+                        }}
                         id="filled-number"
                         label="KM"
                         type="number"
-                        value={kilometro}
+                        value={formulario.kilometro}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -329,7 +353,12 @@ export default function Formulario(props) {
                         <InputLabel shrink htmlFor="age-native-simple">COMBUSTÍVEL</InputLabel>
                         <Select
                             native
-                            value={combustivel} onChange={(recebe) => { setCombustivel(recebe.target.value) }}
+                            value={formulario.combustivel}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, combustivel: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             <option >GASOLINA</option>
@@ -346,7 +375,12 @@ export default function Formulario(props) {
                         <InputLabel shrink htmlFor="age-native-simple">PORTAS</InputLabel>
                         <Select
                             native
-                            value={porta} onChange={(recebe) => { setPorta(recebe.target.value) }}
+                            value={formulario.porta}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, porta: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             <option >1</option>
@@ -362,7 +396,12 @@ export default function Formulario(props) {
                         <InputLabel shrink htmlFor="age-native-simple">CÂMBIO</InputLabel>
                         <Select
                             native
-                            value={cambio} onChange={(recebe) => { setCambio(recebe.target.value) }}
+                            value={formulario.cambio}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, cambio: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             <option >MANUAL</option>
@@ -379,7 +418,12 @@ export default function Formulario(props) {
                         <InputLabel shrink htmlFor="age-native-simple">CARROCERIAS</InputLabel>
                         <Select
                             native
-                            value={carroceria} onChange={(recebe) => { setCarroceria(recebe.target.value) }}
+                            value={formulario.carroceria}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, carroceria: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             <option >HATCH</option>
@@ -400,7 +444,12 @@ export default function Formulario(props) {
                         <InputLabel shrink htmlFor="age-native-simple">FINAL PLACA</InputLabel>
                         <Select
                             native
-                            value={finalPlaca} onChange={(recebe) => { setFinalPlaca(recebe.target.value) }}
+                            value={formulario.finalPlaca}
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, finalPlaca: envia.target.value }
+                                })
+                            }}
                         >
                             <option aria-label="None" value="" />
                             <option >0</option>
@@ -419,9 +468,13 @@ export default function Formulario(props) {
                     <hr className="formulario-div-formualario-form-hr" />
 
                     <TextField style={{ marginLeft: '20px', width: '90%' }}
+                        value={formulario.sobre}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, sobre: envia.target.value }
+                            })
+                        }}
 
-                        onChange={(recebe) => { setSobre(recebe.target.value) }}
-                        value={sobre}
                         id="sobre"
                         label="SOBRE O VEÍCULO "
                         variant="outlined"
@@ -441,56 +494,98 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                checked={airbag}
-                                control={<Switch color="primary" onChange={(recebe) => { setAirbag(recebe.target.checked) }} />}
+                                checked={formulario.airbag}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, airbag: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="AIRBAG"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={alarme}
-                                control={<Switch color="primary" onChange={(recebe) => { setAlarme(recebe.target.checked) }} />}
+                                checked={formulario.alarme}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, alarme: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="ALARME"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={cdplayer}
-                                control={<Switch color="primary" onChange={(recebe) => { setCdplayer(recebe.target.checked) }} />}
+                                checked={formulario.cdplayer}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, cdplayer: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="CD PLAYER"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={dvdplayer}
-                                control={<Switch color="primary" onChange={(recebe) => { setDvdplayer(recebe.target.checked) }} />}
+                                checked={formulario.dvdplayer}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, dvdplayer: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="DVD PLAYER"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={gps}
-                                control={<Switch color="primary" onChange={(recebe) => { setGps(recebe.target.checked) }} />}
+                                checked={formulario.gps}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, gps: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="GPS"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={radio}
-                                control={<Switch color="primary" onChange={(recebe) => { setRadio(recebe.target.checked) }} />}
+                                checked={formulario.radio}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, radio: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="RÁDIO"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={radioTocaFita}
-                                control={<Switch color="primary" onChange={(recebe) => { setRadioTocaFita(recebe.target.checked) }} />}
+                                checked={formulario.radioTocaFita}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, radioTocaFita: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="RÁDIO/TOCA FITA"
                                 labelPlacement="start"
                             />
@@ -498,72 +593,133 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                checked={computadorBordo}
-                                control={<Switch color="primary" onChange={(recebe) => { setComputadorBordo(recebe.target.checked) }} />}
+                                checked={formulario.computadorBordo}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, computadorBordo: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="Computador de bordo"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={controleTracao}
-                                control={<Switch color="primary" onChange={(recebe) => { setControleTracao(recebe.target.checked) }} />}
+                                checked={formulario.controleTracao}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, controleTracao: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="Controle de tração"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={controleVelocidade}
-                                control={<Switch color="primary" onChange={(recebe) => { setControleVelocidade(recebe.target.checked) }} />}
+                                checked={formulario.ontroleVelocidade}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, controleVelocidade: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Controle de velocidade"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={desembacadorTraseiro}
-                                control={<Switch color="primary" onChange={(recebe) => { setDesembacadorTraseiro(recebe.target.checked) }} />}
+                                checked={formulario.desembacadorTraseiro}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, desembacadorTraseiro: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Desembaçador traseiro"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={limpadorTraseiro}
-                                control={<Switch color="primary" onChange={(recebe) => { setLimpadorTraseiro(recebe.target.checked) }} />}
+                                checked={formulario.limpadorTraseiro}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, limpadorTraseiro: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Limpador traseiro"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={farolXenonio}
-                                control={<Switch color="primary" onChange={(recebe) => { setFarolXenonio(recebe.target.checked) }} />}
+                                checked={formulario.farolXenonio}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, farolXenonio: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Farol de xenônio"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={arCondicionado}
-                                control={<Switch color="primary" onChange={(recebe) => { setArCondicionado(recebe.target.checked) }} />}
+                                checked={formulario.arCondicionado}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, arCondicionado: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Ar condicionado"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={arQuente}
-                                control={<Switch color="primary" onChange={(recebe) => { setArQuente(recebe.target.checked) }} />}
+                                checked={formulario.arQuente}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, arQuente: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Ar quente"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={freioAbs}
-                                control={<Switch color="primary" onChange={(recebe) => { setFreioAbs(recebe.target.checked) }} />}
+                                checked={formulario.freioAbs}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, freioAbs: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Freios ABS"
                                 labelPlacement="start"
                             />
@@ -571,112 +727,216 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                checked={retrovisoresEletricos}
-                                control={<Switch color="primary" onChange={(recebe) => { setRetrovisoresEletricos(recebe.target.checked) }} />}
+                                checked={formulario.retrovisoresEletricos}
+                                control={<Switch color="primary" o
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, retrovisoresEletricos: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Retrovisores elétricos"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={retrovisoresFotocromicos}
-                                control={<Switch color="primary" onChange={(recebe) => { setRetrovisoresFotocromicos(recebe.target.checked) }} />}
+                                checked={formulario.retrovisoresFotocromicos}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, retrovisoresFotocromicos: envia.target.checked }
+                                        })
+                                    }}
+                                />}
                                 label="Retrovisores fotocrômicos"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={rodaLigaLeve}
-                                control={<Switch color="primary" onChange={(recebe) => { setRodaLigaLeve(recebe.target.checked) }} />}
+                                checked={formulario.rodaLigaLeve}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, rodaLigaLeve: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Rodas de liga leve"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={sensorChuva}
-                                control={<Switch color="primary" onChange={(recebe) => { setSensorChuva(recebe.target.checked) }} />}
+                                checked={formulario.sensorChuva}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, sensorChuva: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Sensor de chuva"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={sensorEstacionamento}
-                                control={<Switch color="primary" onChange={(recebe) => { setSensorEstacionamento(recebe.target.checked) }} />}
+                                checked={formulario.sensorEstacionamento}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, sensorEstacionamento: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Sensor de estacionamento"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={tetoSolar}
-                                control={<Switch color="primary" onChange={(recebe) => { setTetoSolar(recebe.target.checked) }} />}
+                                checked={formulario.tetoSolar}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, tetoSolar: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Teto solar"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={travasEletricas}
-                                control={<Switch color="primary" onChange={(recebe) => { setTravasEletricas(recebe.target.checked) }} />}
+                                checked={formulario.travasEletricas}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, travasEletricas: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Travas elétricas"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={vidrosEletricos}
-                                control={<Switch color="primary" onChange={(recebe) => { setVidrosEletricos(recebe.target.checked) }} />}
+                                checked={formulario.vidrosEletricos}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, vidrosEletricos: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Vidros elétricos"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={direcaoHidraulica}
-                                control={<Switch color="primary" onChange={(recebe) => { setDirecaoHidraulica(recebe.target.checked) }} />}
+                                checked={formulario.direcaoHidraulica}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, direcaoHidraulica: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Direção hidráulica"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={volanteAltura}
-                                control={<Switch color="primary" onChange={(recebe) => { setVolanteAltura(recebe.target.checked) }} />}
+                                checked={formulario.volanteAltura}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, volanteAltura: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Volante regulagem altura"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={bancoCouro}
-                                control={<Switch color="primary" onChange={(recebe) => { setBancoCouro(recebe.target.checked) }} />}
+                                checked={formulario.bancoCouro}
+                                control={<Switch color="primary" o
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, bancoCouro: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Bancos em couro"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={encostoCabecaTraseiro}
-                                control={<Switch color="primary" onChange={(recebe) => { setEncostoCabecaTraseiro(recebe.target.checked) }} />}
+                                checked={formulario.encostoCabecaTraseiro}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, encostoCabecaTraseiro: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Encosto de cabeça traseiro"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={bancosFrenteAquecimento}
-                                control={<Switch color="primary" onChange={(recebe) => { setBancosFrenteAquecimento(recebe.target.checked) }} />}
+                                checked={formulario.bancosFrenteAquecimento}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, bancosFrenteAquecimento: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Bancos frente aquecimento"
                                 labelPlacement="start"
                             />
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={tracaoQuatroRodas}
-                                control={<Switch color="primary" onChange={(recebe) => { setTracaoQuatroRodas(recebe.target.checked) }} />}
+                                checked={formulario.tracaoQuatroRodas}
+                                control={<Switch color="primary"
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, tracaoQuatroRodas: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Tração 4x4"
                                 labelPlacement="start"
                             />
@@ -684,8 +944,16 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                checked={protetorCacamba}
-                                control={<Switch color="primary" onChange={(recebe) => { setProtetorCacamba(recebe.target.checked) }} />}
+                                checked={formulario.protetorCacamba}
+                                control={<Switch color="primary"
+
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, protetorCacamba: envia.target.checked }
+                                        })
+                                    }}
+
+                                />}
                                 label="Protetor de caçamba"
                                 labelPlacement="start"
                             />
@@ -697,25 +965,49 @@ export default function Formulario(props) {
                     <hr className="formulario-div-formualario-form-hr" />
 
                     <FormControlLabel style={{ marginRight: "20px" }}
-                        checked={aceitaTroca}
+                        checked={formulario.aceitaTroca}
                         value="start"
-                        control={<Switch color="primary" onChange={(recebe) => { setAceitaTroca(recebe.target.checked) }} />}
+                        control={<Switch color="primary"
+
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, aceitaTroca: envia.target.checked }
+                                })
+                            }}
+
+                        />}
                         label="Aceita troca"
                         labelPlacement="start"
                     />
 
                     <FormControlLabel style={{ marginRight: "20px" }}
-                        checked={IPVA}
+                        checked={formulario.IPVA}
                         value="start"
-                        control={<Switch color="primary" onChange={(recebe) => { setIPVA(recebe.target.checked) }} />}
+                        control={<Switch color="primary"
+
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, IPVA: envia.target.checked }
+                                })
+                            }}
+
+                        />}
                         label="IPVA pago"
                         labelPlacement="start"
                     />
 
                     <FormControlLabel
-                        checked={licenciado}
+                        checked={formulario.licenciado}
                         value="start"
-                        control={<Switch color="primary" onChange={(recebe) => { setLicenciado(recebe.target.checked) }} />}
+                        control={<Switch color="primary"
+
+                            onChange={(envia) => {
+                                SetFormulario(prevState => {
+                                    return { ...prevState, licenciado: envia.target.checked }
+                                })
+                            }}
+
+                        />}
                         label="Licenciado"
                         labelPlacement="start"
                     />
@@ -724,7 +1016,15 @@ export default function Formulario(props) {
                     {props.tipoFormulario === "criarAnuncio" &&
                         <label className="formulario-div-formualario-form-label-imagem">
                             Selecione as imagens:
-                    <input type="file" name="file" multiple="multiple" onChange={(recebe) => { setImagens(recebe.target.files) }}></input>
+                    <input type="file" name="file" multiple="multiple"
+
+                                onChange={(envia) => {
+                                    SetFormulario(prevState => {
+                                        return { ...prevState, imagensPath: envia.target.files }
+                                    })
+                                }}
+
+                            ></input>
                         </label>
                     }
                     <div className="formulario-div-formualario-form-botao-publicar"

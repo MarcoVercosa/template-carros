@@ -14,6 +14,7 @@ export default class BuscaBD {
         const resultado = await axios.post("http://localhost:9000/cadastraveiculo",
             dados
         )
+        console.log(resultado)
         return resultado
     }
     //busca infos para alteração do anuncio
