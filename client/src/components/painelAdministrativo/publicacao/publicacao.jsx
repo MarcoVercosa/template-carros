@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Formulario(props) {
     console.log(props.tipoFormulario)
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
-    const [buscaParaAlterar, setBuscaParaAlterar] = useState("")//campo pesquisa para alterar
 
-
-    const [marca, setMarca] = useState("")
-    const [ano, setAno] = useState("")
-    const [modelo, setModelo] = useState("")
-    const [motor, setMotor] = useState("")
+    const [valor, setValor] = useState()
+    const [marca, setMarca] = useState()
+    const [ano, setAno] = useState()
+    const [modelo, setModelo] = useState()
+    const [motor, setMotor] = useState()
     const [kilometro, setKilometro] = useState()
-    const [combustivel, setCombustivel] = useState("")
-    const [porta, setPorta] = useState("")
-    const [carroceria, setCarroceria] = useState("")
+    const [combustivel, setCombustivel] = useState()
+    const [porta, setPorta] = useState()
+    const [cambio, setCambio] = useState()
+    const [carroceria, setCarroceria] = useState()
+    const [finalPlaca, setFinalPlaca] = useState()
+    const [sobre, setSobre] = useState()
     const [aceitaTroca, setAceitaTroca] = useState(false)
     const [IPVA, setIPVA] = useState(false)
     const [licenciado, setLicenciado] = useState(false)
-
-
     const [airbag, setAirbag] = useState(false)
     const [alarme, setAlarme] = useState(false)
     const [cdplayer, setCdplayer] = useState(false)
@@ -76,6 +76,10 @@ export default function Formulario(props) {
     const [imagens, setImagens] = useState([])
 
 
+    const [buscaParaAlterar, setBuscaParaAlterar] = useState("")
+    //campo pesquisa para alterar
+
+
     const useStyles = makeStyles((theme) => ({
         button: {
             margin: theme.spacing(1),
@@ -83,9 +87,7 @@ export default function Formulario(props) {
     }));
     const classes = useStyles();
 
-
-
-
+    //########################  FUNÇÕES PARA CADASTRO //########################
     useEffect(() => {
         var anoAtual = new Date().getFullYear()
         var anoInicio = 1930
@@ -99,7 +101,6 @@ export default function Formulario(props) {
 
     async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
-
         if (imagens.length > 12) {
             alert("SELECIONE ATÉ 12 IMAGENS")
             return
@@ -112,16 +113,13 @@ export default function Formulario(props) {
         //para enviar imagens tem q ser pelo FormData
         //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
 
-
         const retornaImagenslLocationNodeMulter = await classBuscaBD.BuscaBDPostImagem(dadosImagens)
         //faz o upload das imagens e o node vai retornar as imagens recebidas
         console.log(retornaImagenslLocationNodeMulter)
-
         let imagensPath = []
         retornaImagenslLocationNodeMulter.data.map((dados) => {
             imagensPath.push("http://localhost:9000/static/" + dados.filename)
         })
-
         const GuardaDados = await ArmazenaDadosBD(imagensPath)
         console.log(GuardaDados)
     }
@@ -129,13 +127,11 @@ export default function Formulario(props) {
 
     async function ArmazenaDadosBD(imagensPath) {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
         const classBuscaBD = new BuscaBD()
-
         var imagensPath = JSON.stringify(imagensPath);//transforma a array de localização das imagens em uma array String
         console.log(imagensPath)
-
         const reuniDados =
         {
-            marca, ano, modelo, motor, kilometro, combustivel, porta, carroceria, aceitaTroca, IPVA, licenciado,
+            valor, marca, ano, modelo, motor, kilometro, combustivel, porta, cambio, carroceria, finalPlaca, sobre, aceitaTroca, IPVA, licenciado,
             airbag, alarme, cdplayer, dvdplayer, gps, radio, radioTocaFita, computadorBordo, controleTracao,
             controleVelocidade, desembacadorTraseiro, limpadorTraseiro, arCondicionado, arQuente, freioAbs,
             retrovisoresEletricos, travasEletricas, vidrosEletricos, retrovisoresFotocromicos, rodaLigaLeve, sensorChuva, sensorEstacionamento, tetoSolar,
@@ -143,14 +139,67 @@ export default function Formulario(props) {
             bancosFrenteAquecimento, tracaoQuatroRodas, protetorCacamba, farolXenonio, imagensPath
         }
         console.log(reuniDados)
-
         const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reuniDados)
         return EnviaDadosBD
     }
 
-    //buscar as infos e preencher o formulário
-    function BuscarBDDados() {
 
+    //########################  FUNÇÕES PARA EDITAR //########################
+
+    //buscar as infos e preencher o formulário
+    async function BuscarBDDados() {
+        const classBuscaBD = new BuscaBD()
+        const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
+        PreencheFormulario(resultado)
+    }
+    function PreencheFormulario(resultado) {
+        setValor(resultado.data[0].valor)
+        setMarca(resultado.data[0].marca)
+        setAno(resultado.data[0].ano)
+        setModelo(resultado.data[0].modelo)
+        setMotor(resultado.data[0].motor)
+        setKilometro(resultado.data[0].kilometro)
+        setCombustivel(resultado.data[0].combustivel)
+        setPorta(resultado.data[0].porta)
+        setCambio(resultado.data[0].cambio)
+        setCarroceria(resultado.data[0].carroceria)
+        setFinalPlaca(resultado.data[0].finalPlaca)
+        setSobre(resultado.data[0].sobre)
+        setAceitaTroca(resultado.data[0].aceitaTroca)
+        setIPVA(resultado.data[0].IPVA)
+        setLicenciado(resultado.data[0].licenciado)
+        setAirbag(resultado.data[0].airbag)
+        setAlarme(resultado.data[0].alarme)
+        setCdplayer(resultado.data[0].cdplayer)
+        setDvdplayer(resultado.data[0].dvdplayer)
+        setGps(resultado.data[0].gps)
+        setRadio(resultado.data[0].radio)
+        setRadioTocaFita(resultado.data[0].radioTocaFita)
+        setComputadorBordo(resultado.data[0].computadorBordo)
+        setControleTracao(resultado.data[0].controleTracao)
+        setControleVelocidade(resultado.data[0].controleVelocidade)
+        setDesembacadorTraseiro(resultado.data[0].desembacadorTraseiro)
+        setLimpadorTraseiro(resultado.data[0].limpadorTraseiro)
+        setArCondicionado(resultado.data[0].arCondicionado)
+        setArQuente(resultado.data[0].arQuente)
+        setFreioAbs(resultado.data[0].freioAbs)
+        setRetrovisoresEletricos(resultado.data[0].retrovisoresEletricos)
+        setRetrovisoresFotocromicos(resultado.data[0].retrovisoresFotocromicos)
+        setRodaLigaLeve(resultado.data[0].rodaLigaLeve)
+        setSensorChuva(resultado.data[0].sensorChuva)
+        setSensorEstacionamento(resultado.data[0].sensorEstacionamento)
+        setTetoSolar(resultado.data[0].tetoSolar)
+        setTravasEletricas(resultado.data[0].travasEletricas)
+        setVidrosEletricos(resultado.data[0].vidrosEletricos)
+        setDirecaoHidraulica(resultado.data[0].direcaoHidraulica)
+        setVolanteAltura(resultado.data[0].volanteAltura)
+        setBancoCouro(resultado.data[0].bancoCouro)
+        setEncostoCabecaTraseiro(resultado.data[0].encostoCabecaTraseiro)
+        setBancosFrenteAquecimento(resultado.data[0].bancosFrenteAquecimento)
+        setTracaoQuatroRodas(resultado.data[0].tracaoQuatroRodas)
+        setProtetorCacamba(resultado.data[0].protetorCacamba)
+        setFarolXenonio(resultado.data[0].farolXenonio)
+        setImagens(resultado.data[0].imagensPath)
     }
 
     //manda os dados para o update do anúncio
@@ -198,55 +247,74 @@ export default function Formulario(props) {
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
                 <form className="formulario-div-formualario-form" >
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onBlur={(recebe) => { setMotor(recebe.target.value) }}
+                        onChange={(recebe) => { setValor(recebe.target.value) }}
+                        value={valor}
                         id="Valor"
                         label="Valor automóvel"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
 
 
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">Ano</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">Ano</InputLabel>
+
                         <Select
+
                             native
                             value={ano} onChange={(recebe) => { setAno(recebe.target.value) }}
                         >
                             <option aria-label="None" value="" />
                             {render}
                         </Select>
+
                     </FormControl>
 
 
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onBlur={(recebe) => { setMarca(recebe.target.value) }}
+                        onChange={(recebe) => { setMarca(recebe.target.value) }}
+                        value={marca}
                         id="marca"
                         label="MARCA - ex: FIAT"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onBlur={(recebe) => { setModelo(recebe.target.value) }}
+                        onChange={(recebe) => { setModelo(recebe.target.value) }}
+                        value={modelo}
                         id="modelo"
                         label="MODELO - ex: UP"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
-                        onBlur={(recebe) => { setMotor(recebe.target.value) }}
+                        onChange={(recebe) => { setMotor(recebe.target.value) }}
+                        value={motor}
                         id="motor"
                         label="MOTOR - ex: 2.0 TSI 16V"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
 
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
 
-                        onBlur={(recebe) => { setKilometro(recebe.target.value) }}
+                        onChange={(recebe) => { setKilometro(recebe.target.value) }}
                         id="filled-number"
                         label="KM"
                         type="number"
@@ -258,7 +326,7 @@ export default function Formulario(props) {
                         margin="dense"
                     />
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">COMBUSTÍVEL</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">COMBUSTÍVEL</InputLabel>
                         <Select
                             native
                             value={combustivel} onChange={(recebe) => { setCombustivel(recebe.target.value) }}
@@ -275,7 +343,7 @@ export default function Formulario(props) {
                     </FormControl>
 
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">PORTAS</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">PORTAS</InputLabel>
                         <Select
                             native
                             value={porta} onChange={(recebe) => { setPorta(recebe.target.value) }}
@@ -291,10 +359,10 @@ export default function Formulario(props) {
                     </FormControl>
 
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">CÂMBIO</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">CÂMBIO</InputLabel>
                         <Select
                             native
-                            value={porta} onChange={(recebe) => { setPorta(recebe.target.value) }}
+                            value={cambio} onChange={(recebe) => { setCambio(recebe.target.value) }}
                         >
                             <option aria-label="None" value="" />
                             <option >MANUAL</option>
@@ -308,7 +376,7 @@ export default function Formulario(props) {
                     <hr className="formulario-div-formualario-form-hr" />
 
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">CARROCERIAS</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">CARROCERIAS</InputLabel>
                         <Select
                             native
                             value={carroceria} onChange={(recebe) => { setCarroceria(recebe.target.value) }}
@@ -329,10 +397,10 @@ export default function Formulario(props) {
                     </FormControl>
 
                     <FormControl style={{ marginLeft: '20px', width: '15%' }}>
-                        <InputLabel htmlFor="age-native-simple">FINAL PLACA</InputLabel>
+                        <InputLabel shrink htmlFor="age-native-simple">FINAL PLACA</InputLabel>
                         <Select
                             native
-                            value={porta} onChange={(recebe) => { setPorta(recebe.target.value) }}
+                            value={finalPlaca} onChange={(recebe) => { setFinalPlaca(recebe.target.value) }}
                         >
                             <option aria-label="None" value="" />
                             <option >0</option>
@@ -352,7 +420,8 @@ export default function Formulario(props) {
 
                     <TextField style={{ marginLeft: '20px', width: '90%' }}
 
-                        onBlur={(recebe) => { setModelo(recebe.target.value) }}
+                        onChange={(recebe) => { setSobre(recebe.target.value) }}
+                        value={sobre}
                         id="sobre"
                         label="SOBRE O VEÍCULO "
                         variant="outlined"
@@ -360,6 +429,9 @@ export default function Formulario(props) {
 
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
 
                     <hr className="formulario-div-formualario-form-hr" />
@@ -369,7 +441,7 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={airbag}
                                 control={<Switch color="primary" onChange={(recebe) => { setAirbag(recebe.target.checked) }} />}
                                 label="AIRBAG"
                                 labelPlacement="start"
@@ -377,7 +449,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={alarme}
                                 control={<Switch color="primary" onChange={(recebe) => { setAlarme(recebe.target.checked) }} />}
                                 label="ALARME"
                                 labelPlacement="start"
@@ -385,7 +457,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={cdplayer}
                                 control={<Switch color="primary" onChange={(recebe) => { setCdplayer(recebe.target.checked) }} />}
                                 label="CD PLAYER"
                                 labelPlacement="start"
@@ -393,7 +465,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={dvdplayer}
                                 control={<Switch color="primary" onChange={(recebe) => { setDvdplayer(recebe.target.checked) }} />}
                                 label="DVD PLAYER"
                                 labelPlacement="start"
@@ -401,7 +473,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={gps}
                                 control={<Switch color="primary" onChange={(recebe) => { setGps(recebe.target.checked) }} />}
                                 label="GPS"
                                 labelPlacement="start"
@@ -409,7 +481,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={radio}
                                 control={<Switch color="primary" onChange={(recebe) => { setRadio(recebe.target.checked) }} />}
                                 label="RÁDIO"
                                 labelPlacement="start"
@@ -417,7 +489,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={radioTocaFita}
                                 control={<Switch color="primary" onChange={(recebe) => { setRadioTocaFita(recebe.target.checked) }} />}
                                 label="RÁDIO/TOCA FITA"
                                 labelPlacement="start"
@@ -426,7 +498,7 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={computadorBordo}
                                 control={<Switch color="primary" onChange={(recebe) => { setComputadorBordo(recebe.target.checked) }} />}
                                 label="Computador de bordo"
                                 labelPlacement="start"
@@ -434,7 +506,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={controleTracao}
                                 control={<Switch color="primary" onChange={(recebe) => { setControleTracao(recebe.target.checked) }} />}
                                 label="Controle de tração"
                                 labelPlacement="start"
@@ -442,7 +514,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={controleVelocidade}
                                 control={<Switch color="primary" onChange={(recebe) => { setControleVelocidade(recebe.target.checked) }} />}
                                 label="Controle de velocidade"
                                 labelPlacement="start"
@@ -450,7 +522,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={desembacadorTraseiro}
                                 control={<Switch color="primary" onChange={(recebe) => { setDesembacadorTraseiro(recebe.target.checked) }} />}
                                 label="Desembaçador traseiro"
                                 labelPlacement="start"
@@ -458,7 +530,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={limpadorTraseiro}
                                 control={<Switch color="primary" onChange={(recebe) => { setLimpadorTraseiro(recebe.target.checked) }} />}
                                 label="Limpador traseiro"
                                 labelPlacement="start"
@@ -466,7 +538,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={farolXenonio}
                                 control={<Switch color="primary" onChange={(recebe) => { setFarolXenonio(recebe.target.checked) }} />}
                                 label="Farol de xenônio"
                                 labelPlacement="start"
@@ -474,7 +546,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={arCondicionado}
                                 control={<Switch color="primary" onChange={(recebe) => { setArCondicionado(recebe.target.checked) }} />}
                                 label="Ar condicionado"
                                 labelPlacement="start"
@@ -482,7 +554,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={arQuente}
                                 control={<Switch color="primary" onChange={(recebe) => { setArQuente(recebe.target.checked) }} />}
                                 label="Ar quente"
                                 labelPlacement="start"
@@ -490,7 +562,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={freioAbs}
                                 control={<Switch color="primary" onChange={(recebe) => { setFreioAbs(recebe.target.checked) }} />}
                                 label="Freios ABS"
                                 labelPlacement="start"
@@ -499,7 +571,7 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={retrovisoresEletricos}
                                 control={<Switch color="primary" onChange={(recebe) => { setRetrovisoresEletricos(recebe.target.checked) }} />}
                                 label="Retrovisores elétricos"
                                 labelPlacement="start"
@@ -507,7 +579,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={retrovisoresFotocromicos}
                                 control={<Switch color="primary" onChange={(recebe) => { setRetrovisoresFotocromicos(recebe.target.checked) }} />}
                                 label="Retrovisores fotocrômicos"
                                 labelPlacement="start"
@@ -515,7 +587,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={rodaLigaLeve}
                                 control={<Switch color="primary" onChange={(recebe) => { setRodaLigaLeve(recebe.target.checked) }} />}
                                 label="Rodas de liga leve"
                                 labelPlacement="start"
@@ -523,7 +595,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={sensorChuva}
                                 control={<Switch color="primary" onChange={(recebe) => { setSensorChuva(recebe.target.checked) }} />}
                                 label="Sensor de chuva"
                                 labelPlacement="start"
@@ -531,7 +603,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={sensorEstacionamento}
                                 control={<Switch color="primary" onChange={(recebe) => { setSensorEstacionamento(recebe.target.checked) }} />}
                                 label="Sensor de estacionamento"
                                 labelPlacement="start"
@@ -539,7 +611,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={tetoSolar}
                                 control={<Switch color="primary" onChange={(recebe) => { setTetoSolar(recebe.target.checked) }} />}
                                 label="Teto solar"
                                 labelPlacement="start"
@@ -547,7 +619,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={travasEletricas}
                                 control={<Switch color="primary" onChange={(recebe) => { setTravasEletricas(recebe.target.checked) }} />}
                                 label="Travas elétricas"
                                 labelPlacement="start"
@@ -555,7 +627,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={vidrosEletricos}
                                 control={<Switch color="primary" onChange={(recebe) => { setVidrosEletricos(recebe.target.checked) }} />}
                                 label="Vidros elétricos"
                                 labelPlacement="start"
@@ -563,7 +635,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={direcaoHidraulica}
                                 control={<Switch color="primary" onChange={(recebe) => { setDirecaoHidraulica(recebe.target.checked) }} />}
                                 label="Direção hidráulica"
                                 labelPlacement="start"
@@ -571,7 +643,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={volanteAltura}
                                 control={<Switch color="primary" onChange={(recebe) => { setVolanteAltura(recebe.target.checked) }} />}
                                 label="Volante regulagem altura"
                                 labelPlacement="start"
@@ -579,7 +651,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={bancoCouro}
                                 control={<Switch color="primary" onChange={(recebe) => { setBancoCouro(recebe.target.checked) }} />}
                                 label="Bancos em couro"
                                 labelPlacement="start"
@@ -587,7 +659,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={encostoCabecaTraseiro}
                                 control={<Switch color="primary" onChange={(recebe) => { setEncostoCabecaTraseiro(recebe.target.checked) }} />}
                                 label="Encosto de cabeça traseiro"
                                 labelPlacement="start"
@@ -595,7 +667,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={bancosFrenteAquecimento}
                                 control={<Switch color="primary" onChange={(recebe) => { setBancosFrenteAquecimento(recebe.target.checked) }} />}
                                 label="Bancos frente aquecimento"
                                 labelPlacement="start"
@@ -603,7 +675,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={tracaoQuatroRodas}
                                 control={<Switch color="primary" onChange={(recebe) => { setTracaoQuatroRodas(recebe.target.checked) }} />}
                                 label="Tração 4x4"
                                 labelPlacement="start"
@@ -612,7 +684,7 @@ export default function Formulario(props) {
 
                         <div>
                             <FormControlLabel
-                                value="start"
+                                checked={protetorCacamba}
                                 control={<Switch color="primary" onChange={(recebe) => { setProtetorCacamba(recebe.target.checked) }} />}
                                 label="Protetor de caçamba"
                                 labelPlacement="start"
@@ -625,6 +697,7 @@ export default function Formulario(props) {
                     <hr className="formulario-div-formualario-form-hr" />
 
                     <FormControlLabel style={{ marginRight: "20px" }}
+                        checked={aceitaTroca}
                         value="start"
                         control={<Switch color="primary" onChange={(recebe) => { setAceitaTroca(recebe.target.checked) }} />}
                         label="Aceita troca"
@@ -632,6 +705,7 @@ export default function Formulario(props) {
                     />
 
                     <FormControlLabel style={{ marginRight: "20px" }}
+                        checked={IPVA}
                         value="start"
                         control={<Switch color="primary" onChange={(recebe) => { setIPVA(recebe.target.checked) }} />}
                         label="IPVA pago"
@@ -639,6 +713,7 @@ export default function Formulario(props) {
                     />
 
                     <FormControlLabel
+                        checked={licenciado}
                         value="start"
                         control={<Switch color="primary" onChange={(recebe) => { setLicenciado(recebe.target.checked) }} />}
                         label="Licenciado"
