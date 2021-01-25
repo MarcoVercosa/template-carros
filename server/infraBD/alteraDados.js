@@ -31,5 +31,20 @@ class AlteraDadosBD {
         })
     }
 
+    AtualizaBDDados(atendimento, idDaBusca, res) {
+
+        const sql = `UPDATE carros SET ? WHERE id=${idDaBusca}`
+        conectaBD.query(sql, atendimento, (erro, resultado) => {
+
+            if (erro) {
+                res.json("OCORREU UM ERRO AO ATUALIZAR ANÚNCIO: " + erro)
+            } else {
+                res.json(resultado)
+            }
+
+        })
+
+    }
+
 }
 module.exports = new AlteraDadosBD

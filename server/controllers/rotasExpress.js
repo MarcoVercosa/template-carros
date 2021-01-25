@@ -41,16 +41,24 @@ module.exports = (app) => {
 
         // res.json(req.body)
     })
-    //deixa a pasta upload das imagens online
-    app.use("/static", express.static("./uploads/images"))
+
 
     app.get("/buscacarro/:id", (req, res) => {
         console.log("Busca dados para editar")
         // console.log(req.params)
         const resultado = AlteraDadosBD.BuscaParaAlterar(req.params.id, res)
-
-
     })
+
+    app.post("/atualizacarro", (req, res) => {
+
+        console.log("UPDATE de dados no BD solicitado.")
+        const resultado = AlteraDadosBD.AtualizaBDDados(req.body.dados, req.body.idDaBusca, res)
+        // console.log(req.body)
+    })
+
+
+    //deixa a pasta upload das imagens online
+    app.use("/static", express.static("./uploads/images"))
 
 
 

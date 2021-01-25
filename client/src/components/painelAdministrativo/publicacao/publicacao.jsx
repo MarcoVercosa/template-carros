@@ -15,15 +15,23 @@ import {
 
 import Switch from '@material-ui/core/Switch';
 
-const useStyles = makeStyles((theme) => ({
-    button: {
-        margin: theme.spacing(1),
-    },
-}));
+
 
 
 
 export default function Formulario(props) {
+
+
+
+    const useStyles = makeStyles((theme) => ({
+        button: {
+            margin: theme.spacing(1),
+        },
+    }));
+    const classes = useStyles();
+
+
+
     console.log(props.tipoFormulario)
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
 
@@ -79,16 +87,12 @@ export default function Formulario(props) {
 
 
     const [buscaParaAlterar, setBuscaParaAlterar] = useState("")
-    //campo pesquisa para alterar
+    //RECEBE PALAVRA PARA PESQUISAR NO BANCO DE DADOS
 
 
-    const useStyles = makeStyles((theme) => ({
-        button: {
-            margin: theme.spacing(1),
-        },
-    }));
-    const classes = useStyles();
 
+    //########################  FUNÇÕES PARA CADASTRO //########################
+    //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
     useEffect(() => {
         var anoAtual = new Date().getFullYear()
@@ -140,11 +144,20 @@ export default function Formulario(props) {
 
 
     //########################  FUNÇÕES PARA EDITAR //########################
+    //########################  FUNÇÕES PARA EDITAR //########################
+    //########################  FUNÇÕES PARA EDITAR //########################
+
 
     //buscar as infos e preencher o formulário
     async function BuscarBDDados() {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
+        if (resultado.data.length < 1) {
+            {
+                alert("Anúncio não encontrado")
+                return
+            }
+        }
         PreencheFormulario(resultado)
     }
 
@@ -202,8 +215,10 @@ export default function Formulario(props) {
     }
 
     //manda os dados para o update do anúncio
-    function AtualizarDadosBd() {
-
+    async function AtualizarDadosBD() {
+        const classBuscaBD = new BuscaBD()
+        const resultado = await classBuscaBD.AtualizaBDDados(formulario, buscaParaAlterar)
+        console.log(resultado)
     }
 
 
@@ -1045,7 +1060,7 @@ export default function Formulario(props) {
                         }
                         {props.tipoFormulario === "alterarAnuncio" &&
                             <Button
-                                onClick={() => { AtualizarDadosBd() }}
+                                onClick={() => { AtualizarDadosBD() }}
                                 variant="contained"
                                 color="default"
                                 className={classes.button}

@@ -100,7 +100,6 @@ export default function Paineladministrativo() {
                         <Formulario tipoFormulario="criarAnuncio" />
                     </>
                 }
-
             </div>
             <div className="seletorformulario">
 
@@ -111,7 +110,6 @@ export default function Paineladministrativo() {
                         <Formulario tipoFormulario="alterarAnuncio" />
                     </>
                 }
-
             </div>
             <div className="seletorformulario">
 
@@ -121,16 +119,11 @@ export default function Paineladministrativo() {
                         <Formulario tipoFormulario="deletarAnuncio" />
                     </>
                 }
-
             </div>
 
             {/* <div className="animacao">
-
                 {alterarAnuncio && <AlteracaoPublicacao />}
-
             </div> */}
         </>
-
     )
-
 }

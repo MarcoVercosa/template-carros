@@ -1,79 +1,79 @@
 .formulario-div-formualario{
-    margin: 0 auto;    
-    width: 90%;   
-    border-radius: 15px;
-    background-color: rgb(245, 243, 234);
-    border-radius: 15px;
-    padding: 10px;
-    animation-duration: 1.1s;
-    animation-name: slidein;
+  margin: 0 auto;    
+  width: 90%;   
+  border-radius: 15px;
+  background-color: rgb(245, 243, 234);
+  border-radius: 15px;
+  padding: 10px;
+  animation-duration: 1.1s;
+  animation-name: slidein;
 }
 
 /* move a div d esquerda para a direita */
 /* @keyframes slidein {
-    from {
-      margin-left: 90%;
-      width: 90%
-    }  
-    to {
-      margin-left: 4%;
-      width: 90%;
-    }
-  } */
+  from {
+    margin-left: 90%;
+    width: 90%
+  }  
+  to {
+    margin-left: 4%;
+    width: 90%;
+  }
+} */
 
-  @keyframes slidein {
-    from {
-      opacity: 0;
-    }  
-    to {
-      opacity: 1;
-    }
-  }v
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }  
+  to {
+    opacity: 1;
+  }
+}v
 
 .formulario-div-formualario-form{
-    width: 100%;
+  width: 100%;
 }
 
 .formulario-div-formualario-form-hr{
-    margin: 30px 0 30px 0;
-    border-width: 2px;
-    border-style: dashed;
-    border-color: rgb(114, 114, 114);
-    width: 100%;
-    
+  margin: 30px 0 30px 0;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: rgb(114, 114, 114);
+  width: 100%;
+  
 }
 
 .formulario-div-formualario-form h4{
-    color:rgb(104, 104, 104);
-    margin-left: 15px;
+  color:rgb(104, 104, 104);
+  margin-left: 15px;
 }
 .formulario-div-formualario-form-div-grid{
-    display: grid;
-    
-    grid-template-columns: 20%  20% 20% 20%;
-    gap: 10px;
-    justify-content: center;
-    text-align: center;
-    
+  display: grid;
+  
+  grid-template-columns: 20%  20% 20% 20%;
+  gap: 10px;
+  justify-content: center;
+  text-align: center;
+  
 }
 .formulario-div-formualario-form-div-grid div{
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 15px;
-    background-color:rgb(176, 176, 197);
-    border-radius: 25px;
-    font-family: 'Lora', serif;
-    color: rgb(68, 68, 68);
-    padding: 2px;    
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 15px;
+  background-color:rgb(176, 176, 197);
+  border-radius: 25px;
+  font-family: 'Lora', serif;
+  color: rgb(68, 68, 68);
+  padding: 2px;    
 }
 
 .formulario-div-formualario-form-botao-publicar{
-    display: flex;
-    justify-content: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .formulario-div-formualario-form-label-imagem{
-    color:rgb(58, 58, 58);
-    margin-left: 15px;
+  color:rgb(58, 58, 58);
+  margin-left: 15px;
 }

@@ -19,7 +19,18 @@ export default class BuscaBD {
     }
     //busca infos para alteração do anuncio
     async BuscaBDGetDados(dados) {
-        const resultado = await axios(`http://localhost:9000/buscacarro/${dados}`,
+        const resultado = await axios.get(`http://localhost:9000/buscacarro/${dados}`,
+        )
+        console.log(resultado)
+        return resultado
+    }
+
+    async AtualizaBDDados(dados, idDaBusca) {
+        console.log(dados)
+        const resultado = await axios.post("http://localhost:9000/atualizacarro", {
+            dados,
+            idDaBusca
+        }
         )
         return resultado
     }
