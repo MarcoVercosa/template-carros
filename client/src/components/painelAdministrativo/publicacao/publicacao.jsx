@@ -127,7 +127,7 @@ export default function Formulario(props) {
         console.log(retornaImagenslLocationNodeMulter)
         let imagensPath = []
         retornaImagenslLocationNodeMulter.data.map((dados) => {
-            imagensPath.push("http://localhost:9000/static/" + dados.filename)
+            imagensPath.push(dados.filename)
         })
         const GuardaDados = await ArmazenaDadosBD(imagensPath)
         console.log(GuardaDados)
@@ -1049,10 +1049,6 @@ export default function Formulario(props) {
                     {props.tipoFormulario === "alterarAnuncio" &&
                         <>
                             <a href="#abrirModal" className="modalbotao"><button type="button"
-                                onClick={() => {
-
-                                    console.log(JSON.parse(formulario.imagensPath))
-                                }}
                             ><i class="fas fa-image fa-3x"></i></button></a>
 
 
@@ -1066,15 +1062,22 @@ export default function Formulario(props) {
                                     <hr></hr>
 
                                     {formulario.imagensPath &&
-                                        JSON.parse(formulario.imagensPath).map((recebe) => {
+                                        JSON.parse(formulario.imagensPath).map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
                                             return (
-                                                <img src={recebe}></img>
+                                                <>
+                                                    <a href={"http://localhost:9000/static/" + recebe} target="_blank">
+                                                        <img src={"http://localhost:9000/static/" + recebe}></img>
+                                                    </a>
+                                                </>
                                             )
                                         })
                                     }
 
+
                                 </div>
+
                             </div>
+                            <label className="label-imagens-altera-anuncio">{JSON.parse(formulario.imagensPath).length} Imagens do anúncio</label>
                         </>
                     }
 

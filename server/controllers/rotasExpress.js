@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(
             null,
-            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+            file.fieldname + "-" + Math.floor(Math.random() * 9999999999) + path.extname(file.originalname)
         )
     }
 })
@@ -28,6 +28,8 @@ module.exports = (app) => {
         console.log("Solicitado post de IMAGENS")
         // console.log(req.files)
         //PRECISSA TRATAR ERROS
+        console.log("IMAGENS RECEBIDAS")
+        console.log(req.files)
         res.json(req.files)
     })
 

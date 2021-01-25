@@ -151,3 +151,9 @@ background-color: red;
 padding: 7px;
 color: white
 }
+
+.label-imagens-altera-anuncio{
+  margin-left: 25px;
+  font-family: 'Lora', serif;
+  color: rgb(68, 68, 68);
+}
