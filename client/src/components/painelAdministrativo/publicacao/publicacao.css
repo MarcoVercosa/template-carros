@@ -77,3 +77,77 @@
   color:rgb(58, 58, 58);
   margin-left: 15px;
 }
+
+
+.modalbotao button{
+  border: none;
+  background-color: rgb(80, 80, 80);
+  /* padding: 10px; */
+  border-radius: 10px;
+  margin-left: 105px;
+  color: rgb(255, 255, 255);
+  width: 6%;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+.modalbotao button:hover{
+  transform: scale(1.1);
+  filter: drop-shadow(15px 10px 5px rgba(0,0,0,.5));
+} 
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+.modal img{
+display: block;
+  width: 30%;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  border-radius: 10px;
+}
+
+.modal div{
+  position: fixed;
+  width: 70%;
+  height: 70%;
+  margin: 10% 25% 25% 15%;
+  left: 0;
+  justify-content: center;
+  text-align: center;
+  background-color:rgb(77, 115, 185);
+  border-radius: 15px;
+  overflow: auto;
+  opacity: 0.7;
+  
+}
+
+.modal:target {
+  opacity: 1.5;
+  pointer-events: auto;
+}
+
+.fechar {
+  position: fixed;
+  width: 30px;
+  right: 220px;
+  top: 145px;
+}
+
+.fechar button{
+  border: none;
+  border-radius: 5px;
+background-color: red;
+padding: 7px;
+color: white
+}

@@ -9,7 +9,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    TextField, FormControlLabel,
+    TextField, Modal, FormControlLabel,
     InputLabel, Select, FormControl
 } from '@material-ui/core/';
 
@@ -33,6 +33,9 @@ export default function Formulario(props) {
 
 
     console.log(props.tipoFormulario)
+
+
+
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
 
     const [formulario, SetFormulario] = useState({
@@ -210,7 +213,7 @@ export default function Formulario(props) {
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
             farolXenonio: resultado.data[0].farolXenonio,
-            imagens: resultado.data[0].imagens
+            imagensPath: resultado.data[0].imagensPath
         })
     }
 
@@ -1042,6 +1045,40 @@ export default function Formulario(props) {
                             ></input>
                         </label>
                     }
+
+                    {props.tipoFormulario === "alterarAnuncio" &&
+                        <>
+                            <a href="#abrirModal" className="modalbotao"><button type="button"
+                                onClick={() => {
+
+                                    console.log(JSON.parse(formulario.imagensPath))
+                                }}
+                            ><i class="fas fa-image fa-3x"></i></button></a>
+
+
+                            <div id="abrirModal" class="modal">
+                                <div>
+                                    <a href="#fechar" title="Fechar" class="fechar">
+                                        <button type="button">X</button>
+
+                                    </a>
+                                    <h3>IMAGENS DO ANÚNCIO</h3>
+                                    <hr></hr>
+
+                                    {formulario.imagensPath &&
+                                        JSON.parse(formulario.imagensPath).map((recebe) => {
+                                            return (
+                                                <img src={recebe}></img>
+                                            )
+                                        })
+                                    }
+
+                                </div>
+                            </div>
+                        </>
+                    }
+
+
                     <div className="formulario-div-formualario-form-botao-publicar"
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >
