@@ -1049,11 +1049,11 @@ export default function Formulario(props) {
                     {props.tipoFormulario === "alterarAnuncio" &&
                         <>
                             <a href="#abrirModal" className="modalbotao"><button type="button"
-                            ><i class="fas fa-image fa-3x"></i></button></a>
-
+                                className="modalbotao-abririmagem"><i class="fas fa-image fa-4x"></i></button></a>
+                            <label className="label-imagens-altera-anuncio">{JSON.parse(formulario.imagensPath).length} Imagens do anúncio</label>
 
                             <div id="abrirModal" class="modal">
-                                <div>
+                                <div >
                                     <a href="#fechar" title="Fechar" class="fechar">
                                         <button type="button">X</button>
 
@@ -1062,22 +1062,48 @@ export default function Formulario(props) {
                                     <hr></hr>
 
                                     {formulario.imagensPath &&
+
                                         JSON.parse(formulario.imagensPath).map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
                                             return (
                                                 <>
-                                                    <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                                        <img src={"http://localhost:9000/static/" + recebe}></img>
-                                                    </a>
+                                                    <div class="formulario-div-formualario-form-imagem-div" >
+                                                        <a href={"http://localhost:9000/static/" + recebe} target="_blank">
+                                                            <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                                        </a>
+
+                                                    </div>
+                                                    <div className="foromulario-div-formualario-form-imagem-div-div">
+                                                        <i class="fas fa-trash fa-2x icon-trash"
+                                                            onClick={() => {
+                                                                var tranformaArray = JSON.parse(formulario.imagensPath)
+                                                                var atualiza = tranformaArray.filter(temp => temp !== recebe)
+                                                                console.log(atualiza)
+                                                                SetFormulario((prevState) => {
+                                                                    return { ...prevState, imagensPath: atualiza }
+                                                                })
+
+                                                            }}
+                                                        ></i>
+                                                    </div>
                                                 </>
                                             )
                                         })
                                     }
-
-
+                                    <div className="modalbotao-salvar">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            size="large"
+                                            className={classes.button}
+                                            startIcon={<SaveIcon />}
+                                        >
+                                            Save
+                                        </Button>
+                                    </div>
                                 </div>
 
                             </div>
-                            <label className="label-imagens-altera-anuncio">{JSON.parse(formulario.imagensPath).length} Imagens do anúncio</label>
+
                         </>
                     }
 
