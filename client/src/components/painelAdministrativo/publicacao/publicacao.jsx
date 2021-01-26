@@ -213,7 +213,7 @@ export default function Formulario(props) {
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
             farolXenonio: resultado.data[0].farolXenonio,
-            imagensPath: resultado.data[0].imagensPath
+            imagensPath: JSON.parse(resultado.data[0].imagensPath)
         })
     }
 
@@ -1050,7 +1050,7 @@ export default function Formulario(props) {
                         <>
                             <a href="#abrirModal" className="modalbotao"><button type="button"
                                 className="modalbotao-abririmagem"><i class="fas fa-image fa-4x"></i></button></a>
-                            <label className="label-imagens-altera-anuncio">{JSON.parse(formulario.imagensPath).length} Imagens do anúncio</label>
+                            <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label>
 
                             <div id="abrirModal" class="modal">
                                 <div >
@@ -1063,7 +1063,7 @@ export default function Formulario(props) {
 
                                     {formulario.imagensPath &&
 
-                                        JSON.parse(formulario.imagensPath).map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
+                                        formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
                                             return (
                                                 <>
                                                     <div class="formulario-div-formualario-form-imagem-div" >
@@ -1075,8 +1075,8 @@ export default function Formulario(props) {
                                                     <div className="foromulario-div-formualario-form-imagem-div-div">
                                                         <i class="fas fa-trash fa-2x icon-trash"
                                                             onClick={() => {
-                                                                var tranformaArray = JSON.parse(formulario.imagensPath)
-                                                                var atualiza = tranformaArray.filter(temp => temp !== recebe)
+
+                                                                var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
                                                                 console.log(atualiza)
                                                                 SetFormulario((prevState) => {
                                                                     return { ...prevState, imagensPath: atualiza }
@@ -1101,17 +1101,13 @@ export default function Formulario(props) {
                                         </Button>
                                     </div>
                                 </div>
-
                             </div>
 
                         </>
                     }
-
-
                     <div className="formulario-div-formualario-form-botao-publicar"
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >
-
                         {props.tipoFormulario === "criarAnuncio" &&
                             < Button
                                 type="submit"
@@ -1135,7 +1131,6 @@ export default function Formulario(props) {
                                 ALTERAR ANÚNCIO
                         </Button>
                         }
-
                         {props.tipoFormulario === "deletarAnuncio" &&
                             <Button
                                 variant="contained"
@@ -1153,6 +1148,4 @@ export default function Formulario(props) {
 
         </>
     )
-
-
 }
