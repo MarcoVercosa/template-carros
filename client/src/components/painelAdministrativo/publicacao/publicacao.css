@@ -133,7 +133,7 @@ display: block;
 }
 
 .modal:target {
-  opacity: 1.5;
+  opacity: 1;
   pointer-events: auto;
 }
 
@@ -187,7 +187,7 @@ margin-top: 100% !important;
 
 .icon-trash:hover{
   color: red;
-  cursor: pointer
+  /* cursor: pointer */
 }
 
 .modalbotao-salvar{
