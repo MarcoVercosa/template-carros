@@ -7,6 +7,7 @@ export default class BuscaBD {
         const resultado = await axios.post("http://localhost:9000/cadastraimagem",
             imagens
         )
+        console.log(resultado)
         return resultado
     }
     //cadastra dados no BD
@@ -25,16 +26,26 @@ export default class BuscaBD {
         return resultado
     }
 
+    //envia os dados para atualização de anuncio ja criado
     async AtualizaBDDados(dados, idDaBusca) {
-        console.log(dados)
+
         const resultado = await axios.post("http://localhost:9000/atualizacarro", {
-            dados,
-            idDaBusca
-        }
-        )
+            dados, //array dos dados
+            idDaBusca //id no bd da linha que será alterada
+        })
+        console.log(resultado)
         return resultado
     }
 
+    async DeletaImagem(dados) {
+        console.log("API solicitada para remoção de imagem")
+        const resultado = await axios.post("http://localhost:9000/deletaimagens",
+            {
+                dados
+            })
+        console.log(resultado)
+        return resultado
+    }
 
 }
 

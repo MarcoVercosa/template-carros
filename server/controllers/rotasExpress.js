@@ -1,7 +1,8 @@
 const express = require("express")
-const AlteraDadosBD = require("../infraBD/alteraDados")
-const path = require('path')
-const multer = require("multer")
+const AlteraDadosBD = require("../infraBD/alteraDados") //importa class para alteração no BD
+const path = require('path') //lib que gerencia extenções de arquivos. Usado no Multer
+const multer = require("multer") // upload de imagens
+const fs = require("fs") //gerenciamento de arquivos no disco
 
 //conf MULTER
 const storage = multer.diskStorage({
@@ -19,6 +20,7 @@ const upload = multer({
 }).array("files", 12)
 
 
+
 module.exports = (app) => {
 
     console.log("MÓDULO DE ROTAS CAREGADO")
@@ -33,6 +35,34 @@ module.exports = (app) => {
         res.json(req.files)
     })
 
+    app.post("/deletaimagens", (req, res) => {
+
+        console.log("Solicitado remocao de imagem" + req.body)
+        console.log(req.body)
+
+        for (var i = 0; i < req.body.dados.length; i++) {
+            var erro = false
+            var sucesso = false
+
+            fs.unlink(`./uploads/images/${req.body.dados[i]}`, function (err) {
+
+                if (err) {
+                    erro = err
+                } else {
+                    sucesso = "Imagens deletadas com sucesso."
+                }
+            })
+        }
+
+        if (erro) {
+            res.json(erro)
+        } else {
+            res.json(sucesso)
+        }
+    })
+
+
+
     //cadastra anuncio no BD
 
     app.post("/cadastraveiculo", (req, res) => {
@@ -44,18 +74,19 @@ module.exports = (app) => {
         // res.json(req.body)
     })
 
-
+    //Busca anuncio com o número do ID do BD
     app.get("/buscacarro/:id", (req, res) => {
         console.log("Busca dados para editar")
         // console.log(req.params)
         const resultado = AlteraDadosBD.BuscaParaAlterar(req.params.id, res)
     })
 
+    //atualiza as infod do carro
     app.post("/atualizacarro", (req, res) => {
 
         console.log("UPDATE de dados no BD solicitado.")
         const resultado = AlteraDadosBD.AtualizaBDDados(req.body.dados, req.body.idDaBusca, res)
-        // console.log(req.body)
+        // console.log(req.body.dados)
     })
 
 

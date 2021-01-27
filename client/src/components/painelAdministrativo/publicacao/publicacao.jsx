@@ -90,12 +90,13 @@ export default function Formulario(props) {
     const [buscaParaAlterar, setBuscaParaAlterar] = useState("")
     //RECEBE PALAVRA PARA PESQUISAR NO BANCO DE DADOS
 
-    const [abreModal, setAbreModal] = useState(false)
+    const [abreModal, setAbreModal] = useState(false) //usado para abrir e fechar modal
+    const [imagensParaDeletar, setImagensParaDeletar] = useState({
+        imagensDeletadas: [],
+        mensagem: "",
+        display: "none"
+    })
 
-
-    //########################  FUNÇÕES PARA CADASTRO //########################
-    //########################  FUNÇÕES PARA CADASTRO //########################
-    //########################  FUNÇÕES PARA CADASTRO //########################
     useEffect(() => {
         var anoAtual = new Date().getFullYear()
         var anoInicio = 1930
@@ -106,6 +107,12 @@ export default function Formulario(props) {
         }
         setRender(render)
     }, [])
+
+
+
+    //########################  FUNÇÕES PARA CADASTRO //########################
+    //########################  FUNÇÕES PARA CADASTRO //########################
+    //########################  FUNÇÕES PARA CADASTRO //########################
 
     async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
@@ -184,14 +191,14 @@ export default function Formulario(props) {
             airbag: resultado.data[0].airbag,
             alarme: resultado.data[0].alarme,
             cdplayer: resultado.data[0].cdplayer,
-            dvdplayer: resultado.data[0].advdplayerno,
+            dvdplayer: resultado.data[0].dvdplayer,
             gps: resultado.data[0].gps,
             radio: resultado.data[0].radio,
             radioTocaFita: resultado.data[0].radioTocaFita,
             computadorBordo: resultado.data[0].computadorBordo,
             controleTracao: resultado.data[0].controleTracao,
             controleVelocidade: resultado.data[0].controleVelocidade,
-            desembacadorTraseiro: resultado.data[0].desembacadorTraseiroano,
+            desembacadorTraseiro: resultado.data[0].desembacadorTraseiro,
             limpadorTraseiro: resultado.data[0].limpadorTraseiro,
             arCondicionado: resultado.data[0].arCondicionado,
             arQuente: resultado.data[0].arQuente,
@@ -207,7 +214,7 @@ export default function Formulario(props) {
             direcaoHidraulica: resultado.data[0].direcaoHidraulica,
             volanteAltura: resultado.data[0].volanteAltura,
             bancoCouro: resultado.data[0].bancoCouro,
-            encostoCabecaTraseiro: resultado.data[0].encostoCabecaTraseiroano,
+            encostoCabecaTraseiro: resultado.data[0].encostoCabecaTraseiro,
             bancosFrenteAquecimento: resultado.data[0].bancosFrenteAquecimento,
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
@@ -220,8 +227,21 @@ export default function Formulario(props) {
     //manda os dados para o update do anúncio
     async function AtualizarDadosBD() {
         const classBuscaBD = new BuscaBD()
-        const resultado = await classBuscaBD.AtualizaBDDados(formulario, buscaParaAlterar)
-        console.log(resultado)
+        if(imagensParaDeletar.imagensDeletadas.length > 0){
+           
+            const resultado = await classBuscaBD.DeletaImagem(imagensParaDeletar.imagensDeletadas)
+            console.log(resultado)
+            AtualizaTabelas()
+        }
+        AtualizaTabelas()
+        async function AtualizaTabelas() {
+            var stringiFy = JSON.stringify(formulario.imagensPath)
+            var formularioTemp = formulario
+           formularioTemp = {... formularioTemp, imagensPath: stringiFy}
+            const resultado = await classBuscaBD.AtualizaBDDados(formularioTemp, buscaParaAlterar)
+            console.log(resultado)
+        }
+    
     }
 
 
@@ -639,7 +659,7 @@ export default function Formulario(props) {
                         </div>
                         <div>
                             <FormControlLabel
-                                checked={formulario.ontroleVelocidade}
+                                checked={formulario.controleVelocidade}
                                 control={<Switch color="primary"
                                     onChange={(envia) => {
                                         SetFormulario(prevState => {
@@ -1054,6 +1074,9 @@ export default function Formulario(props) {
                                 onClick={() => { setAbreModal(true) }}
                             ><i class="fas fa-image fa-4x"></i></button></a>
                             <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label>
+                            <div className="modal-mensagem-alteração" style={{display: imagensParaDeletar.display}}>
+                                 {imagensParaDeletar.mensagem}
+                                </div>
 
                             {abreModal && 
                             <div id="abrirModal" class="modal">
@@ -1074,16 +1097,21 @@ export default function Formulario(props) {
                                                     <a href={"http://localhost:9000/static/" + recebe} target="_blank">
                                                         <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
                                                     </a>
-            
+
                                                 </div>
                                                 <div className="foromulario-div-formualario-form-imagem-div-div">
                                                     <i class="fas fa-trash fa-2x icon-trash"
                                                         onClick={() => {            
-                                                            var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
-                                                            console.log(atualiza)
+                                                            
+                                                            setImagensParaDeletar((prevState => {                                                                 
+                                                                return { ...prevState, imagensDeletadas: [...imagensParaDeletar.imagensDeletadas, recebe] }}))  //armazena a imagem deletada
+                                                                
+
+                                                            var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)//permaceça imagens que sao diferentes da deletada
                                                             SetFormulario((prevState => {
                                                                 return { ...prevState, imagensPath: atualiza }
-                                                            }))           
+                                                            }))                 
+                                                            console.log(imagensParaDeletar)
                                                         }}
                                                     ></i>
                                                 </div>
@@ -1091,6 +1119,7 @@ export default function Formulario(props) {
                                         )
                                     })
                                 }
+                               
                                 <div className="modalbotao-salvar">
                                     <Button
                                         variant="contained"
@@ -1098,7 +1127,14 @@ export default function Formulario(props) {
                                         size="large"
                                         className={classes.button}
                                         startIcon={<SaveIcon />}
-                                        onClick={() => { alert("OK") }} >
+                                        onClick={() => { 
+                                            setImagensParaDeletar((prevState =>                                                 
+                                                { 
+                                                    setAbreModal(false) 
+                                                    return { ... prevState, mensagem: "ALTERAÇÕES DE IMAGENS PRONTAS PARA SEREM ARMAZENADAS !", display:"flex"}
+                                                }))
+
+                                        }} >
                                         GUARDAR
                                         
                                     </Button>
