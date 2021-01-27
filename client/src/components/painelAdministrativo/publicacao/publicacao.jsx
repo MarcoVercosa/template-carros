@@ -1,3 +1,4 @@
+
 import { React, useState, useEffect } from 'react';
 import BuscaBD from "../../fetchBackEnd/api"
 import FormData from 'form-data'
@@ -215,79 +216,7 @@ export default function Formulario(props) {
         })
     }
 
-    const ModalImagens = () => {
-        return (
-
-            <div id="abrirModal" class="modal">
-                <div >
-                    <a href="#fechar" title="Fechar" class="fechar">
-                        <button type="button">X</button>
-
-                    </a>
-                    <h3>IMAGENS DO ANÚNCIO</h3>
-                    <hr></hr>
-
-                    {abreModal &&
-
-                        formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
-                            return (
-                                <>
-                                    <div class="formulario-div-formualario-form-imagem-div" >
-                                        <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                            <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
-                                        </a>
-
-                                    </div>
-                                    <div className="foromulario-div-formualario-form-imagem-div-div">
-                                        <i class="fas fa-trash fa-2x icon-trash"
-                                            onClick={() => {
-
-                                                var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
-                                                console.log(atualiza)
-                                                SetFormulario((prevState => {
-                                                    return { ...prevState, imagensPath: atualiza }
-                                                }))
-
-
-                                            }}
-                                        ></i>
-                                    </div>
-                                </>
-                            )
-                        })
-                    }
-                    <div className="modalbotao-salvar">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            className={classes.button}
-                            startIcon={<SaveIcon />} >
-                            GUARDAR
-                        </Button>
-                    </div>
-                    <div className="modalbotao-salvar">
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            size="large"
-                            className={classes.button}
-                            startIcon={<i class="far fa-window-close"></i>}
-                            onClick={() => { setAbreModal(false) }}
-                        >
-                            CANCELAR
-                            </Button>
-                    </div>
-
-                </div>
-            </div>
-
-        )
-
-
-
-    }
-
+    
     //manda os dados para o update do anúncio
     async function AtualizarDadosBD() {
         const classBuscaBD = new BuscaBD()
@@ -1126,7 +1055,71 @@ export default function Formulario(props) {
                             ><i class="fas fa-image fa-4x"></i></button></a>
                             <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label>
 
-                            {abreModal && <ModalImagens />}
+                            {abreModal && 
+                            <div id="abrirModal" class="modal">
+                            <div >
+                                <a href="#fechar" title="Fechar" class="fechar">
+                                    <button type="button">X</button>
+            
+                                </a>
+                                <h3>IMAGENS DO ANÚNCIO</h3>
+                                <hr></hr>
+            
+                                {abreModal &&
+            
+                                    formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
+                                        return (
+                                            <>
+                                                <div class="formulario-div-formualario-form-imagem-div" >
+                                                    <a href={"http://localhost:9000/static/" + recebe} target="_blank">
+                                                        <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                                    </a>
+            
+                                                </div>
+                                                <div className="foromulario-div-formualario-form-imagem-div-div">
+                                                    <i class="fas fa-trash fa-2x icon-trash"
+                                                        onClick={() => {            
+                                                            var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
+                                                            console.log(atualiza)
+                                                            SetFormulario((prevState => {
+                                                                return { ...prevState, imagensPath: atualiza }
+                                                            }))           
+                                                        }}
+                                                    ></i>
+                                                </div>
+                                            </>
+                                        )
+                                    })
+                                }
+                                <div className="modalbotao-salvar">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        className={classes.button}
+                                        startIcon={<SaveIcon />}
+                                        onClick={() => { alert("OK") }} >
+                                        GUARDAR
+                                        
+                                    </Button>
+                                </div>
+                                <div className="modalbotao-salvar">
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        size="large"
+                                        className={classes.button}
+                                        startIcon={<i class="far fa-window-close"></i>}
+                                        onClick={() => { setAbreModal(false) }}
+                                    >
+                                        CANCELAR
+                                        </Button>
+                                </div>
+            
+                            </div>
+                        </div>
+                            
+                            }
 
                         </>
                     }
