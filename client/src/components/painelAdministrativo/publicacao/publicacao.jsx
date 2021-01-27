@@ -29,9 +29,6 @@ export default function Formulario(props) {
         },
     }));
     const classes = useStyles();
-
-
-
     console.log(props.tipoFormulario)
 
 
@@ -92,6 +89,7 @@ export default function Formulario(props) {
     const [buscaParaAlterar, setBuscaParaAlterar] = useState("")
     //RECEBE PALAVRA PARA PESQUISAR NO BANCO DE DADOS
 
+    const [abreModal, setAbreModal] = useState(false)
 
 
     //########################  FUNÇÕES PARA CADASTRO //########################
@@ -215,6 +213,79 @@ export default function Formulario(props) {
             farolXenonio: resultado.data[0].farolXenonio,
             imagensPath: JSON.parse(resultado.data[0].imagensPath)
         })
+    }
+
+    const ModalImagens = () => {
+        return (
+
+            <div id="abrirModal" class="modal">
+                <div >
+                    <a href="#fechar" title="Fechar" class="fechar">
+                        <button type="button">X</button>
+
+                    </a>
+                    <h3>IMAGENS DO ANÚNCIO</h3>
+                    <hr></hr>
+
+                    {abreModal &&
+
+                        formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
+                            return (
+                                <>
+                                    <div class="formulario-div-formualario-form-imagem-div" >
+                                        <a href={"http://localhost:9000/static/" + recebe} target="_blank">
+                                            <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                        </a>
+
+                                    </div>
+                                    <div className="foromulario-div-formualario-form-imagem-div-div">
+                                        <i class="fas fa-trash fa-2x icon-trash"
+                                            onClick={() => {
+
+                                                var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
+                                                console.log(atualiza)
+                                                SetFormulario((prevState => {
+                                                    return { ...prevState, imagensPath: atualiza }
+                                                }))
+
+
+                                            }}
+                                        ></i>
+                                    </div>
+                                </>
+                            )
+                        })
+                    }
+                    <div className="modalbotao-salvar">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            className={classes.button}
+                            startIcon={<SaveIcon />} >
+                            GUARDAR
+                        </Button>
+                    </div>
+                    <div className="modalbotao-salvar">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="large"
+                            className={classes.button}
+                            startIcon={<i class="far fa-window-close"></i>}
+                            onClick={() => { setAbreModal(false) }}
+                        >
+                            CANCELAR
+                            </Button>
+                    </div>
+
+                </div>
+            </div>
+
+        )
+
+
+
     }
 
     //manda os dados para o update do anúncio
@@ -1046,62 +1117,16 @@ export default function Formulario(props) {
                         </label>
                     }
 
+                    {/* ABRE O MODAL*/}
                     {props.tipoFormulario === "alterarAnuncio" &&
                         <>
                             <a href="#abrirModal" className="modalbotao"><button type="button"
-                                className="modalbotao-abririmagem"><i class="fas fa-image fa-4x"></i></button></a>
+                                className="modalbotao-abririmagem"
+                                onClick={() => { setAbreModal(true) }}
+                            ><i class="fas fa-image fa-4x"></i></button></a>
                             <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label>
 
-                            <div id="abrirModal" class="modal">
-                                <div >
-                                    <a href="#fechar" title="Fechar" class="fechar">
-                                        <button type="button">X</button>
-
-                                    </a>
-                                    <h3>IMAGENS DO ANÚNCIO</h3>
-                                    <hr></hr>
-
-                                    {formulario.imagensPath &&
-
-                                        formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
-                                            return (
-                                                <>
-                                                    <div class="formulario-div-formualario-form-imagem-div" >
-                                                        <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                                            <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
-                                                        </a>
-
-                                                    </div>
-                                                    <div className="foromulario-div-formualario-form-imagem-div-div">
-                                                        <i class="fas fa-trash fa-2x icon-trash"
-                                                            onClick={() => {
-
-                                                                var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
-                                                                console.log(atualiza)
-                                                                SetFormulario((prevState) => {
-                                                                    return { ...prevState, imagensPath: atualiza }
-                                                                })
-
-                                                            }}
-                                                        ></i>
-                                                    </div>
-                                                </>
-                                            )
-                                        })
-                                    }
-                                    <div className="modalbotao-salvar">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            size="large"
-                                            className={classes.button}
-                                            startIcon={<SaveIcon />}
-                                        >
-                                            Save
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
+                            {abreModal && <ModalImagens />}
 
                         </>
                     }
@@ -1139,7 +1164,7 @@ export default function Formulario(props) {
                                 startIcon={<DeleteIcon />}
                             >
                                 REMOVER ANÚNCIO
-                        </Button>
+                            </Button>
                         }
                     </div>
 
