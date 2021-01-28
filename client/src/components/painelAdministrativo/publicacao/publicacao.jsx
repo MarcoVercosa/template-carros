@@ -114,6 +114,30 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
+    const PreviewImagem = () => {
+        var armazena = []
+        for(var i = 0; i < formulario.imagensPath.length; i++){
+          
+            armazena.push(
+                <>
+                    <h3>Preview Imagens</h3>
+                    <div className="formulario-preview-imagens-div">
+                        <img className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
+                    </div>
+                </>
+            )
+        }
+        console.log(formulario.imagensPath)
+        return(
+            <div>
+                {armazena}
+            </div>
+        )
+
+       
+
+    }
+
     async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
         if (formulario.imagensPath.length > 12) {
@@ -1052,6 +1076,7 @@ export default function Formulario(props) {
 
                     <hr className="formulario-div-formualario-form-hr" />
                     {props.tipoFormulario === "criarAnuncio" &&
+                    <>
                         <label className="formulario-div-formualario-form-label-imagem">
                             Selecione as imagens:
                     <input type="file" name="file" multiple="multiple"
@@ -1061,9 +1086,15 @@ export default function Formulario(props) {
                                         return { ...prevState, imagensPath: envia.target.files }
                                     })
                                 }}
-
                             ></input>
                         </label>
+                        
+                        {formulario.imagensPath.length > 0 &&
+                            <div>         
+                             <PreviewImagem/>
+                             </div>   
+                        }
+                    </>
                     }
 
                     {/* ABRE O MODAL*/}
@@ -1088,7 +1119,7 @@ export default function Formulario(props) {
                                 <h3>IMAGENS DO ANÚNCIO</h3>
                                 <hr></hr>
             
-                                {abreModal &&
+                                {formulario.imagensPath.length > 0 && //se existir imagem
             
                                     formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
                                         return (
@@ -1131,7 +1162,8 @@ export default function Formulario(props) {
                                             setImagensParaDeletar((prevState =>                                                 
                                                 { 
                                                     setAbreModal(false) 
-                                                    return { ... prevState, mensagem: "ALTERAÇÕES DE IMAGENS PRONTAS PARA SEREM ARMAZENADAS !", display:"flex"}
+                                                    
+                                                    return { ... prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
                                                 }))
 
                                         }} >
@@ -1139,7 +1171,7 @@ export default function Formulario(props) {
                                         
                                     </Button>
                                 </div>
-                                <div className="modalbotao-salvar">
+                                {/* <div className="modalbotao-salvar">
                                     <Button
                                         variant="contained"
                                         color="secondary"
@@ -1150,7 +1182,7 @@ export default function Formulario(props) {
                                     >
                                         CANCELAR
                                         </Button>
-                                </div>
+                                </div> */}
             
                             </div>
                         </div>

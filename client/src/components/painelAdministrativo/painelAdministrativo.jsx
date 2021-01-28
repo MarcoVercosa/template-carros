@@ -24,7 +24,6 @@ export default function Paineladministrativo() {
     const [alterarAnuncio, setAlterarAnuncio] = useState(false)
     const [deletarAnuncio, setDeletarAnuncio] = useState(false)
 
-
     const classes = useStyles();
 
     function SelecionaFormulario(dadosBotao, recebe) {
@@ -124,6 +123,9 @@ export default function Paineladministrativo() {
             {/* <div className="animacao">
                 {alterarAnuncio && <AlteracaoPublicacao />}
             </div> */}
+
         </>
     )
+
+
 }
