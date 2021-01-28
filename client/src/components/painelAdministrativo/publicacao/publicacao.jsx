@@ -115,12 +115,13 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
 
     const PreviewImagem = () => {
+ 
         var armazena = []
         for(var i = 0; i < formulario.imagensPath.length; i++){
-          
+            
             armazena.push(
                 <>
-                    <h3>Preview Imagens</h3>
+                    
                     <div className="formulario-preview-imagens-div">
                         <img className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
                     </div>
@@ -129,12 +130,11 @@ export default function Formulario(props) {
         }
         console.log(formulario.imagensPath)
         return(
-            <div>
+            
+            <>
                 {armazena}
-            </div>
-        )
-
-       
+            </>
+        )      
 
     }
 
@@ -1090,9 +1090,13 @@ export default function Formulario(props) {
                         </label>
                         
                         {formulario.imagensPath.length > 0 &&
-                            <div>         
-                             <PreviewImagem/>
-                             </div>   
+                        <>
+                                <h2>Preview Imagens</h2> 
+                                <div className="formulario-preview-div"> 
+                                        
+                                <PreviewImagem/>
+                                </div>   
+                        </>
                         }
                     </>
                     }
@@ -1171,19 +1175,7 @@ export default function Formulario(props) {
                                         
                                     </Button>
                                 </div>
-                                {/* <div className="modalbotao-salvar">
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        size="large"
-                                        className={classes.button}
-                                        startIcon={<i class="far fa-window-close"></i>}
-                                        onClick={() => { setAbreModal(false) }}
-                                    >
-                                        CANCELAR
-                                        </Button>
-                                </div> */}
-            
+                      
                             </div>
                         </div>
                             
