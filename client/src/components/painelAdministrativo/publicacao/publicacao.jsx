@@ -1,5 +1,5 @@
 
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useCallback } from 'react';
 import BuscaBD from "../../fetchBackEnd/api"
 import FormData from 'form-data'
 import "./publicacao.css"
@@ -46,7 +46,7 @@ export default function Formulario(props) {
         combustivel: "",
         porta: 4,
         cambio: "",
-        carroceria: "",
+        carroceria:"",
         finalPlaca: 0,
         sobre: "",
         aceitaTroca: false,
@@ -114,7 +114,7 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
-    const PreviewImagem = () => {
+    const PreviewImagem = useCallback(() => {
  
         var armazena = []
         for(var i = 0; i < formulario.imagensPath.length; i++){
@@ -136,10 +136,16 @@ export default function Formulario(props) {
             </>
         )      
 
-    }
+    },[formulario.imagensPath])
 
-    async function UploadImagens(event) {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
+    const UploadImagens =   useCallback  (async(event)  =>  {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
+        if(formulario.marca == "" || formulario.modelo == "" || formulario.motor == ""
+            || formulario.combustivel == "" || formulario.cambio == "" || formulario. carroceria == ""
+            || formulario.sobre == ""){
+                alert("OS CAMPOS EM VERMELHO SÃO OBRIGATÓRIOS")
+                return
+            }
         if (formulario.imagensPath.length > 12) {
             alert("SELECIONE ATÉ 12 IMAGENS")
             return
@@ -161,10 +167,10 @@ export default function Formulario(props) {
         })
         const GuardaDados = await ArmazenaDadosBD(imagensPath)
         console.log(GuardaDados)
-    }
+    },[formulario])
 
 
-    async function ArmazenaDadosBD(recebeLocationImagens) {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
+     const ArmazenaDadosBD = useCallback(async(recebeLocationImagens) => {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
         const classBuscaBD = new BuscaBD()
         var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String
         console.log(imagensLocation)
@@ -173,7 +179,7 @@ export default function Formulario(props) {
         console.log(reuniDados)
         const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reuniDados)
         return EnviaDadosBD
-    }
+    },[formulario.imagensPath])
 
 
     //########################  FUNÇÕES PARA EDITAR //########################
@@ -182,7 +188,7 @@ export default function Formulario(props) {
 
 
     //buscar as infos e preencher o formulário
-    async function BuscarBDDados() {
+    const BuscarBDDados = useCallback(async() => {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
         if (resultado.data.length < 1) {
@@ -190,11 +196,7 @@ export default function Formulario(props) {
                 alert("Anúncio não encontrado")
                 return
             }
-        }
-        PreencheFormulario(resultado)
-    }
-
-    function PreencheFormulario(resultado) {
+        }       
 
         SetFormulario({
             valor: resultado.data[0].valor,
@@ -244,12 +246,11 @@ export default function Formulario(props) {
             protetorCacamba: resultado.data[0].protetorCacamba,
             farolXenonio: resultado.data[0].farolXenonio,
             imagensPath: JSON.parse(resultado.data[0].imagensPath)
-        })
-    }
-
+        })    
+        
+    },[buscaParaAlterar])  
     
-    //manda os dados para o update do anúncio
-    async function AtualizarDadosBD() {
+    const AtualizarDadosBD = useCallback(async()  =>{   //primeiro deleta as imagens do storage
         const classBuscaBD = new BuscaBD()
         if(imagensParaDeletar.imagensDeletadas.length > 0){
            
@@ -257,7 +258,7 @@ export default function Formulario(props) {
             console.log(resultado)
             AtualizaTabelas()
         }
-        AtualizaTabelas()
+        AtualizaTabelas() //depois update dados  do anúncio no BD
         async function AtualizaTabelas() {
             var stringiFy = JSON.stringify(formulario.imagensPath)
             var formularioTemp = formulario
@@ -266,7 +267,8 @@ export default function Formulario(props) {
             console.log(resultado)
         }
     
-    }
+    }, [formulario])
+
 
 
     return (
@@ -300,13 +302,14 @@ export default function Formulario(props) {
 
             <div className="formulario-div-formualario"
                 onSubmit={(event) => {
-                    event.preventDefault()
+                    // event.preventDefault()
                     UploadImagens(event)
 
                 }}>
 
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
                 <form className="formulario-div-formualario-form" >
+        
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -357,6 +360,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        error = {!formulario.marca}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -373,6 +377,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        error = {!formulario.modelo}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -389,6 +394,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        error = {!formulario.motor}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -416,6 +422,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.combustivel}
+                            error = {!formulario.combustivel}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, combustivel: envia.target.value }
@@ -459,6 +466,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.cambio}
+                            error = {!formulario.cambio}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, cambio: envia.target.value }
@@ -481,6 +489,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.carroceria}
+                            error = {!formulario.carroceria}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, carroceria: envia.target.value }
@@ -544,6 +553,7 @@ export default function Formulario(props) {
 
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        error = {!formulario.sobre}
                         InputLabelProps={{
                             shrink: true,
                         }}
