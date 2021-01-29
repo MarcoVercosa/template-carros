@@ -254,7 +254,7 @@ function Opcionais(props) {
                 <div>
                     <FormControlLabel
                         checked={props.formulario.sensorEstacionamento}
-                        name="sensosensorEstacionamentorChuva"
+                        name="sensorEstacionamento"
                         control={<Switch color="primary"
 
                             onChange={(envia) => { props.Opcionais(envia) }}

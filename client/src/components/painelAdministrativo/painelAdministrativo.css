@@ -2,7 +2,7 @@
 
 .paineladministrativo-div{
     
-    display: flex;
+    
     justify-content: center;
     text-align: center;
     background-color: rgb(70, 70, 208);
@@ -15,6 +15,21 @@
     margin-top: 10px;
     margin-bottom: 55px;
     
+}
+
+.paineladministrativo-div-mensagem{
+
+    background-color: rgb(142, 189, 142);
+    justify-content: center;
+    text-align: center; 
+    width: auto;
+    margin: 0 auto;
+    font-family: 'Lora', serif;
+    font-size: 25px;
+    border-radius: 20px;
+    padding: 15px;
+    
+
 }
 
 .paineladministrativo-article h4{

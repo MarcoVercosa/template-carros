@@ -23,6 +23,7 @@ export default function Paineladministrativo() {
     const [criarAnuncio, setCriarAnuncio] = useState(false)
     const [alterarAnuncio, setAlterarAnuncio] = useState(false)
     const [deletarAnuncio, setDeletarAnuncio] = useState(false)
+    const [mensagemDeRetorno, setMensagemDeRetorno] = useState(false)
 
     const classes = useStyles();
 
@@ -31,17 +32,27 @@ export default function Paineladministrativo() {
             setCriarAnuncio(true)
             setAlterarAnuncio(false)
             setDeletarAnuncio(false)
+            setMensagemDeRetorno(false)
         }
         if (recebe === "alterarAnuncio") {
             setCriarAnuncio(false)
             setAlterarAnuncio(true)
             setDeletarAnuncio(false)
+            setMensagemDeRetorno(false)
         }
         if (recebe === "deletarAnuncio") {
             setCriarAnuncio(false)
             setAlterarAnuncio(false)
             setDeletarAnuncio(true)
+            setMensagemDeRetorno(false)
         }
+    }
+
+    function MensagemDeRetorno(recebe) {
+
+        setMensagemDeRetorno(recebe)
+        alert(recebe)
+
     }
 
 
@@ -51,7 +62,8 @@ export default function Paineladministrativo() {
             <div className="paineladministrativo-div">
                 <h2>Bem vindo ao PAINEL ADMINISTRATIVO DE OFERTAS</h2>
             </div>
-
+            <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: mensagemDeRetorno ? "flex" : "none" }}>{mensagemDeRetorno}</div>
+            {/* <div className="paineladministrativo-div-mensagem">{mensagemDeRetorno}</div> */}
 
             <article className="paineladministrativo-article">
 
@@ -96,7 +108,7 @@ export default function Paineladministrativo() {
                 {criarAnuncio &&
                     <>
                         <h2>PUBLICADOR DE ANÚNCIOS</h2>
-                        <Formulario tipoFormulario="criarAnuncio" />
+                        <Formulario tipoFormulario="criarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
                     </>
                 }
             </div>
@@ -106,7 +118,7 @@ export default function Paineladministrativo() {
                     <>
                         <h2>EDIÇÃO DE ANÚNCIOS</h2>
 
-                        <Formulario tipoFormulario="alterarAnuncio" />
+                        <Formulario tipoFormulario="alterarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
                     </>
                 }
             </div>
@@ -115,7 +127,7 @@ export default function Paineladministrativo() {
                 {deletarAnuncio &&
                     <>
                         <h2>REMOVER ANÚNCIOS</h2>
-                        <Formulario tipoFormulario="deletarAnuncio" />
+                        <Formulario tipoFormulario="deletarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
                     </>
                 }
             </div>

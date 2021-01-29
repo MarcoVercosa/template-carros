@@ -1,5 +1,6 @@
 
 import { React, useState, useEffect, useCallback } from 'react';
+
 import DadosOpcionais from "./opcionais"
 import BuscaBD from "../../fetchBackEnd/api"
 import FormData from 'form-data'
@@ -11,8 +12,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    TextField, FormControlLabel,
-    InputLabel, Select,Switch, FormControl
+    TextField,
+    InputLabel, Select, FormControl
 } from '@material-ui/core/';
 
 // import Switch from '@material-ui/core/Switch';
@@ -46,6 +47,10 @@ export default function Formulario(props) {
         carroceria:"",
         finalPlaca: 0,
         sobre: "",
+        imagensPath: false
+    })
+
+    const [formularioOpcionais, setFormularioOpcionais] = useState({
         aceitaTroca: false,
         IPVA: false,
         licenciado: false,
@@ -80,7 +85,7 @@ export default function Formulario(props) {
         tracaoQuatroRodas: false,
         protetorCacamba: false,
         farolXenonio: false,
-        imagensPath: false
+        
     })
 
 
@@ -111,7 +116,7 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
-    const PreviewImagem = useCallback(() => { //Gera preview da simagens ao adicioná-las
+    function PreviewImagem ()  { //Gera preview da simagens ao adicioná-las
         var armazena = []
         for(var i = 0; i < formulario.imagensPath.length; i++){            
             armazena.push(
@@ -128,25 +133,29 @@ export default function Formulario(props) {
                 {armazena}
             </>
         )      
-    },[formulario.imagensPath])
-
-    function Opcionais(dados){//Essa func é chamada pelo componente externo Opcionais
-        const {name} = dados.target //retira o campo name do obj que será o nome do campo no obj formulario
-        SetFormulario(prevState => {
-            return {...prevState, [name]: dados.target.checked }
-        })
     }
 
-    const UploadImagens =   useCallback  (async(event)  =>  {//faz upload imagens e retornar o nome e caminho de cada imagem no node
+    const FunctionOpcionais = useCallback((dados)=> {//Essa func é chamada pelo componente externo Opcionais
+        const {name} = dados.target //retira o campo name do obj que será o nome do campo no obj formulario
+        setFormularioOpcionais(prevState => {
+            return {...prevState, [name]: dados.target.checked }
+        })
+        console.log(formularioOpcionais)
+    },[formularioOpcionais])
+
+
+    async function UploadImagens (event) {//fazupload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
-        if(formulario.marca == "" || formulario.modelo == "" || formulario.motor == ""
-            || formulario.combustivel == "" || formulario.cambio == "" || formulario. carroceria == ""
-            || formulario.sobre == ""){
+        if(formulario.marca === "" || formulario.modelo === "" || formulario.motor === ""
+            || formulario.combustivel === "" || formulario.cambio === "" || formulario.carroceria === ""
+            || formulario.sobre === ""){
                 alert("OS CAMPOS EM VERMELHO SÃO OBRIGATÓRIOS")
+                event.preventDefault()
                 return
-            }
+        }
         if (formulario.imagensPath.length > 12) {
             alert("SELECIONE ATÉ 12 IMAGENS")
+            event.preventDefault()
             return
         }
         const classBuscaBD = new BuscaBD()// classe da Api onde está conf  o Axios
@@ -161,24 +170,28 @@ export default function Formulario(props) {
         //faz o upload das imagens e o node vai retornar as imagens recebidas
         console.log(retornaImagenslLocationNodeMulter)
         let imagensPath = []
+        //faz um map na array nos nomes das imagens retornadas do Node
         retornaImagenslLocationNodeMulter.data.map((dados) => {
-            imagensPath.push(dados.filename)
+            imagensPath.push(dados.filename)//armezeneo nome das imagens em array
         })
-        const GuardaDados = await ArmazenaDadosBD(imagensPath)
+        const GuardaDados = await ArmazenaDadosBD(imagensPath) //chama a func armazena dados enviado o nome das imagens recebidas em array
         console.log(GuardaDados)
-    },[formulario])
+        
+        props.mensagemDeRetorno(GuardaDados.data)
+        
+    }
 
-
-     const ArmazenaDadosBD = useCallback(async(recebeLocationImagens) => {//com os nomes dos arquivos no node, reuni todos os dados do carro e junta com o nome das imagens
+    //com os nomes das imagens no node, reuni todos os dados do carro e junta com o nome das imagens
+    async function ArmazenaDadosBD (recebeLocationImagens){ 
         const classBuscaBD = new BuscaBD()
-        var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String
-        console.log(imagensLocation)
+        var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String, para poder ser gravado em um único campo no BD
         var reuniDados = formulario
-        reuniDados = { ...reuniDados, imagensPath: imagensLocation }
+        reuniDados = { ...reuniDados, imagensPath: imagensLocation } //add os nomes da imagem no obj reunidados, que é o formulario
+        var reunidadosFinal = Object.assign(reuniDados, formularioOpcionais) // Object.assign torna dois objs em um só
         console.log(reuniDados)
-        const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reuniDados)
+        const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reunidadosFinal)
         return EnviaDadosBD
-    },[formulario.imagensPath])
+    }
 
 
     //########################  FUNÇÕES PARA EDITAR //########################
@@ -187,7 +200,7 @@ export default function Formulario(props) {
 
 
     //buscar as infos e preencher o formulário
-    const BuscarBDDados = useCallback(async() => {
+    async function BuscarBDDados () {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
         if (resultado.data.length < 1) {
@@ -210,6 +223,9 @@ export default function Formulario(props) {
             carroceria: resultado.data[0].carroceria,
             finalPlaca: resultado.data[0].finalPlaca,
             sobre: resultado.data[0].sobre,
+            imagensPath: JSON.parse(resultado.data[0].imagensPath) // volta a origem da transformação do JSON.stringify, voltando a ser uma array
+        }) 
+        setFormularioOpcionais({
             aceitaTroca: resultado.data[0].aceitaTroca,
             IPVA: resultado.data[0].IPVA,
             licenciado: resultado.data[0].licenciado,
@@ -244,10 +260,8 @@ export default function Formulario(props) {
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
             farolXenonio: resultado.data[0].farolXenonio,
-            imagensPath: JSON.parse(resultado.data[0].imagensPath)
-        })    
-        
-    },[buscaParaAlterar])  
+        })        
+    }
     
     const AtualizarDadosBD = useCallback(async()  =>{   //primeiro deleta as imagens do storage
         const classBuscaBD = new BuscaBD()
@@ -261,12 +275,15 @@ export default function Formulario(props) {
         async function AtualizaTabelas() {
             var stringiFy = JSON.stringify(formulario.imagensPath)
             var formularioTemp = formulario
-           formularioTemp = {... formularioTemp, imagensPath: stringiFy}
-            const resultado = await classBuscaBD.AtualizaBDDados(formularioTemp, buscaParaAlterar)
+           formularioTemp = {...formularioTemp, imagensPath: stringiFy}
+           var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
+
+            const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
+            props.mensagemDeRetorno(resultado.data)
         }
     
-    }, [formulario])
+    },[formulario, formularioOpcionais])
 
 
 
@@ -559,7 +576,7 @@ export default function Formulario(props) {
                     />
 
                     <hr className="formulario-div-formualario-form-hr" />
-                    <DadosOpcionais formulario = {formulario} Opcionais = {Opcionais}/>
+                    <DadosOpcionais formulario = {formularioOpcionais} Opcionais = {FunctionOpcionais}/>
                    
                     <hr className="formulario-div-formualario-form-hr" />
                     {props.tipoFormulario === "criarAnuncio" &&
@@ -633,7 +650,7 @@ export default function Formulario(props) {
                                                             SetFormulario((prevState => {
                                                                 return { ...prevState, imagensPath: atualiza }
                                                             }))                 
-                                                            console.log(imagensParaDeletar)
+                                                            
                                                         }}
                                                     ></i>
                                                 </div>
@@ -654,7 +671,7 @@ export default function Formulario(props) {
                                                 { 
                                                     setAbreModal(false) 
                                                     
-                                                    return { ... prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
+                                                    return {...prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
                                                 }))
 
                                         }} >
@@ -674,7 +691,9 @@ export default function Formulario(props) {
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >
                         {props.tipoFormulario === "criarAnuncio" &&
-                            < Button
+                           
+                          
+                           < Button
                                 type="submit"
                                 variant="contained"
                                 color="primary"
@@ -684,6 +703,7 @@ export default function Formulario(props) {
                             >
                                 PUBLICAR
                         </Button>
+                        
                         }
                         {props.tipoFormulario === "alterarAnuncio" &&
                             <Button

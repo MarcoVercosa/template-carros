@@ -9,10 +9,10 @@ class AlteraDadosBD {
         conectaBD.query(sql, atendimento, (erro, resultado) => {
 
             if (erro) {
-                console.log(erro)
-                res.json(erro)
+                // console.log("Ocorreu o seguinte erro ao cadastrar o anúncio" + erro)
+                res.json("Ocorreu o seguinte erro ao cadastrar o anúncio" + erro)
             } else {
-                res.json(resultado)
+                res.json("Cadastro executado com sucesso")
             }
         })
     }
@@ -39,7 +39,7 @@ class AlteraDadosBD {
             if (erro) {
                 res.json("OCORREU UM ERRO AO ATUALIZAR ANÚNCIO: " + erro)
             } else {
-                res.json(resultado)
+                res.json("DADOS ALTERADOS COM SUCESSO.")
             }
 
         })
