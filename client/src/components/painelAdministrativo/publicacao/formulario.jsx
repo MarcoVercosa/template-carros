@@ -1,8 +1,9 @@
 
 import { React, useState, useEffect, useCallback } from 'react';
+import DadosOpcionais from "./opcionais"
 import BuscaBD from "../../fetchBackEnd/api"
 import FormData from 'form-data'
-import "./publicacao.css"
+import "./formulario.css"
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -10,14 +11,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    TextField, Modal, FormControlLabel,
-    InputLabel, Select, FormControl
+    TextField, FormControlLabel,
+    InputLabel, Select,Switch, FormControl
 } from '@material-ui/core/';
 
-import Switch from '@material-ui/core/Switch';
-
-
-
+// import Switch from '@material-ui/core/Switch';
 
 
 export default function Formulario(props) {
@@ -35,7 +33,6 @@ export default function Formulario(props) {
 
 
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
-
     const [formulario, SetFormulario] = useState({
         valor: 0,
         marca: "",
@@ -114,14 +111,11 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
-    const PreviewImagem = useCallback(() => {
- 
+    const PreviewImagem = useCallback(() => { //Gera preview da simagens ao adicioná-las
         var armazena = []
-        for(var i = 0; i < formulario.imagensPath.length; i++){
-            
+        for(var i = 0; i < formulario.imagensPath.length; i++){            
             armazena.push(
-                <>
-                    
+                <>                    
                     <div className="formulario-preview-imagens-div">
                         <img className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
                     </div>
@@ -129,16 +123,21 @@ export default function Formulario(props) {
             )
         }
         console.log(formulario.imagensPath)
-        return(
-            
+        return(            
             <>
                 {armazena}
             </>
         )      
-
     },[formulario.imagensPath])
 
-    const UploadImagens =   useCallback  (async(event)  =>  {//fund inde vai fazer upload imagens e retornar o nome e caminho de cada imagem no node
+    function Opcionais(dados){//Essa func é chamada pelo componente externo Opcionais
+        const {name} = dados.target //retira o campo name do obj que será o nome do campo no obj formulario
+        SetFormulario(prevState => {
+            return {...prevState, [name]: dados.target.checked }
+        })
+    }
+
+    const UploadImagens =   useCallback  (async(event)  =>  {//faz upload imagens e retornar o nome e caminho de cada imagem no node
         event.preventDefault()
         if(formulario.marca == "" || formulario.modelo == "" || formulario.motor == ""
             || formulario.combustivel == "" || formulario.cambio == "" || formulario. carroceria == ""
@@ -560,530 +559,8 @@ export default function Formulario(props) {
                     />
 
                     <hr className="formulario-div-formualario-form-hr" />
-
-                    <h4>OPCIONAIS:</h4>
-                    <div className="formulario-div-formualario-form-div-grid">
-
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.airbag}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, airbag: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="AIRBAG"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.alarme}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, alarme: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="ALARME"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.cdplayer}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, cdplayer: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="CD PLAYER"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.dvdplayer}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, dvdplayer: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="DVD PLAYER"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.gps}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, gps: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="GPS"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.radio}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, radio: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="RÁDIO"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.radioTocaFita}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, radioTocaFita: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="RÁDIO/TOCA FITA"
-                                labelPlacement="start"
-                            />
-                        </div>
-
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.computadorBordo}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, computadorBordo: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="Computador de bordo"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.controleTracao}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, controleTracao: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="Controle de tração"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.controleVelocidade}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, controleVelocidade: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Controle de velocidade"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.desembacadorTraseiro}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, desembacadorTraseiro: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Desembaçador traseiro"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.limpadorTraseiro}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, limpadorTraseiro: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Limpador traseiro"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.farolXenonio}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, farolXenonio: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Farol de xenônio"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.arCondicionado}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, arCondicionado: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Ar condicionado"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.arQuente}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, arQuente: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Ar quente"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.freioAbs}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, freioAbs: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Freios ABS"
-                                labelPlacement="start"
-                            />
-                        </div>
-
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.retrovisoresEletricos}
-                                control={<Switch color="primary" o
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, retrovisoresEletricos: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Retrovisores elétricos"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.retrovisoresFotocromicos}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, retrovisoresFotocromicos: envia.target.checked }
-                                        })
-                                    }}
-                                />}
-                                label="Retrovisores fotocrômicos"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.rodaLigaLeve}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, rodaLigaLeve: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Rodas de liga leve"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.sensorChuva}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, sensorChuva: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Sensor de chuva"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.sensorEstacionamento}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, sensorEstacionamento: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Sensor de estacionamento"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.tetoSolar}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, tetoSolar: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Teto solar"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.travasEletricas}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, travasEletricas: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Travas elétricas"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.vidrosEletricos}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, vidrosEletricos: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Vidros elétricos"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.direcaoHidraulica}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, direcaoHidraulica: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Direção hidráulica"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.volanteAltura}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, volanteAltura: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Volante regulagem altura"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.bancoCouro}
-                                control={<Switch color="primary" o
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, bancoCouro: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Bancos em couro"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.encostoCabecaTraseiro}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, encostoCabecaTraseiro: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Encosto de cabeça traseiro"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.bancosFrenteAquecimento}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, bancosFrenteAquecimento: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Bancos frente aquecimento"
-                                labelPlacement="start"
-                            />
-                        </div>
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.tracaoQuatroRodas}
-                                control={<Switch color="primary"
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, tracaoQuatroRodas: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Tração 4x4"
-                                labelPlacement="start"
-                            />
-                        </div>
-
-                        <div>
-                            <FormControlLabel
-                                checked={formulario.protetorCacamba}
-                                control={<Switch color="primary"
-
-                                    onChange={(envia) => {
-                                        SetFormulario(prevState => {
-                                            return { ...prevState, protetorCacamba: envia.target.checked }
-                                        })
-                                    }}
-
-                                />}
-                                label="Protetor de caçamba"
-                                labelPlacement="start"
-                            />
-                        </div>
-
-
-                    </div>
-
-                    <hr className="formulario-div-formualario-form-hr" />
-
-                    <FormControlLabel style={{ marginRight: "20px" }}
-                        checked={formulario.aceitaTroca}
-                        value="start"
-                        control={<Switch color="primary"
-
-                            onChange={(envia) => {
-                                SetFormulario(prevState => {
-                                    return { ...prevState, aceitaTroca: envia.target.checked }
-                                })
-                            }}
-
-                        />}
-                        label="Aceita troca"
-                        labelPlacement="start"
-                    />
-
-                    <FormControlLabel style={{ marginRight: "20px" }}
-                        checked={formulario.IPVA}
-                        value="start"
-                        control={<Switch color="primary"
-
-                            onChange={(envia) => {
-                                SetFormulario(prevState => {
-                                    return { ...prevState, IPVA: envia.target.checked }
-                                })
-                            }}
-
-                        />}
-                        label="IPVA pago"
-                        labelPlacement="start"
-                    />
-
-                    <FormControlLabel
-                        checked={formulario.licenciado}
-                        value="start"
-                        control={<Switch color="primary"
-
-                            onChange={(envia) => {
-                                SetFormulario(prevState => {
-                                    return { ...prevState, licenciado: envia.target.checked }
-                                })
-                            }}
-
-                        />}
-                        label="Licenciado"
-                        labelPlacement="start"
-                    />
-
+                    <DadosOpcionais formulario = {formulario} Opcionais = {Opcionais}/>
+                   
                     <hr className="formulario-div-formualario-form-hr" />
                     {props.tipoFormulario === "criarAnuncio" &&
                     <>
