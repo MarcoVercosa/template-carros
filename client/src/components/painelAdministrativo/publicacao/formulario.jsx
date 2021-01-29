@@ -176,7 +176,7 @@ export default function Formulario(props) {
         })
         const GuardaDados = await ArmazenaDadosBD(imagensPath) //chama a func armazena dados enviado o nome das imagens recebidas em array
         console.log(GuardaDados)
-        
+        window.location.href = ("#inicio")
         props.mensagemDeRetorno(GuardaDados.data)
         
     }
@@ -281,6 +281,7 @@ export default function Formulario(props) {
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
             props.mensagemDeRetorno(resultado.data)
+            window.location.href = ("#inicio")
         }
     
     },[formulario, formularioOpcionais])
