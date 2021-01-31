@@ -1,8 +1,7 @@
 
 
-.paineladministrativo-div{
-    
-    
+.paineladministrativo-div{    
+    display:flex;
     justify-content: center;
     text-align: center;
     background-color: rgb(70, 70, 208);
@@ -13,8 +12,8 @@
     font-family: 'Lora', serif;
     font-size: 17px;
     margin-top: 10px;
-    margin-bottom: 55px;
-    
+    margin-bottom: 55px; 
+    transition: all 0.5s;   
 }
 
 .paineladministrativo-div-mensagem{
@@ -28,9 +27,19 @@
     font-size: 25px;
     border-radius: 20px;
     padding: 15px;
-    
-
+    animation-duration: 1.1s;
+    animation-name: mensagemin;   
 }
+
+
+@keyframes mensagemin {
+    from {
+      opacity: 0;
+    }  
+    to {
+      opacity: 1;
+    }
+  }
 
 .paineladministrativo-article h4{
     

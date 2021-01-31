@@ -49,10 +49,11 @@ export default function Paineladministrativo() {
     }
 
     function MensagemDeRetorno(recebe) {
-
         setMensagemDeRetorno(recebe)
-        alert(recebe)
-
+        setTimeout(() => {
+            console.log("Timeout ")
+            setMensagemDeRetorno(false)
+        }, 4000)
     }
 
 
@@ -63,7 +64,7 @@ export default function Paineladministrativo() {
                 <h2>Bem vindo ao PAINEL ADMINISTRATIVO DE OFERTAS</h2>
             </div>
             <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: mensagemDeRetorno ? "flex" : "none" }}>{mensagemDeRetorno}</div>
-            {/* <div className="paineladministrativo-div-mensagem">{mensagemDeRetorno}</div> */}
+            {/* Se mensagemDeRetorno houver dados flex, senão none */}
 
             <article className="paineladministrativo-article">
 

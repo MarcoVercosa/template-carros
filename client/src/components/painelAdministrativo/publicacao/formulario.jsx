@@ -5,14 +5,16 @@ import DadosOpcionais from "./opcionais"
 import BuscaBD from "../../fetchBackEnd/api"
 import FormData from 'form-data'
 import "./formulario.css"
+
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    TextField,
+    TextField,IconButton,
     InputLabel, Select, FormControl
 } from '@material-ui/core/';
 
@@ -584,7 +586,7 @@ export default function Formulario(props) {
                     <>
                         <label className="formulario-div-formualario-form-label-imagem">
                             Selecione as imagens:
-                    <input type="file" name="file" multiple="multiple"
+                            <input type="file" name="file" multiple="multiple"
 
                                 onChange={(envia) => {
                                     SetFormulario(prevState => {
@@ -609,80 +611,94 @@ export default function Formulario(props) {
                     {/* ABRE O MODAL*/}
                     {props.tipoFormulario === "alterarAnuncio" &&
                         <>
+
+                        <h3 style={{display: "flex", justifyContent: "center", textAlign: "center", color:"rgb(68, 68, 68)"}}>IMAGENS ANÚNCIO</h3>
+                            {/* REMOÇÃO DE IMAGENS */}
                             <a href="#abrirModal" className="modalbotao"><button type="button"
                                 className="modalbotao-abririmagem"
                                 onClick={() => { setAbreModal(true) }}
-                            ><i class="fas fa-image fa-4x"></i></button></a>
-                            <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label>
+                            ><i class="fas fa-trash-alt fa-4x"></i></button></a>
+                            {/* <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label> */}
                             <div className="modal-mensagem-alteração" style={{display: imagensParaDeletar.display}}>
-                                 {imagensParaDeletar.mensagem}
+                                 {imagensParaDeletar.mensagem} 
+                                 {/* Mensagem quando pressiona o botao salvar dentro do modal */}
                                 </div>
 
                             {abreModal && 
-                            <div id="abrirModal" class="modal">
-                            <div >
-                                <a href="#fechar" title="Fechar" class="fechar">
-                                    <button type="button">X</button>
-            
-                                </a>
-                                <h3>IMAGENS DO ANÚNCIO</h3>
-                                <hr></hr>
-            
-                                {formulario.imagensPath.length > 0 && //se existir imagem
-            
-                                    formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
-                                        return (
-                                            <>
-                                                <div class="formulario-div-formualario-form-imagem-div" >
-                                                    <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                                        <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
-                                                    </a>
+                                <div id="abrirModal" class="modal">
+                                    <div >
+                                        <a href="#fechar" title="Fechar" class="fechar">
+                                            <button type="button">X</button>
+                    
+                                        </a>
+                                        <h3 style={{color: "red"}}>DELETAR IMAGENS ANÚNCIO</h3>
+                                        <hr></hr>
+                    
+                                        {formulario.imagensPath.length > 0 && //se existir imagem
+                    
+                                            formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
+                                                return (
+                                                    <>
+                                                        <div class="formulario-div-formualario-form-imagem-div" >
+                                                            <a href={"http://localhost:9000/static/" + recebe} target="_blank">
+                                                                <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                                            </a>
 
-                                                </div>
-                                                <div className="foromulario-div-formualario-form-imagem-div-div">
-                                                    <i class="fas fa-trash fa-2x icon-trash"
-                                                        onClick={() => {            
+                                                        </div>
+                                                        <div className="foromulario-div-formualario-form-imagem-div-div">
+                                                            <i class="fas fa-trash fa-2x icon-trash"
+                                                                onClick={() => {            
+                                                                    
+                                                                    setImagensParaDeletar((prevState => {                                                                 
+                                                                        return { ...prevState, imagensDeletadas: [...imagensParaDeletar.imagensDeletadas, recebe] }}))  //armazena a imagem deletada                                                                      
+                                                                    var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)//permaceça imagens que sao diferentes da deletada
+                                                                    SetFormulario((prevState => {
+                                                                        return { ...prevState, imagensPath: atualiza }
+                                                                    }))                  
+                                                                }}
+                                                            ></i>
+                                                            {/* <i class="fas fa-plus fa-2x" style={{}}></i> */}
+                                                        </div>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                    
+                                        <div className="modalbotao-salvar" >
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                size="large"
+                                                className={classes.button}
+                                                startIcon={<SaveIcon />}
+                                                onClick={() => { 
+                                                    setImagensParaDeletar((prevState =>                                                 
+                                                        { 
+                                                            setAbreModal(false) 
                                                             
-                                                            setImagensParaDeletar((prevState => {                                                                 
-                                                                return { ...prevState, imagensDeletadas: [...imagensParaDeletar.imagensDeletadas, recebe] }}))  //armazena a imagem deletada
-                                                                
-
-                                                            var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)//permaceça imagens que sao diferentes da deletada
-                                                            SetFormulario((prevState => {
-                                                                return { ...prevState, imagensPath: atualiza }
-                                                            }))                 
-                                                            
-                                                        }}
-                                                    ></i>
-                                                </div>
-                                            </>
-                                        )
-                                    })
-                                }
-                               
-                                <div className="modalbotao-salvar">
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                        className={classes.button}
-                                        startIcon={<SaveIcon />}
-                                        onClick={() => { 
-                                            setImagensParaDeletar((prevState =>                                                 
-                                                { 
-                                                    setAbreModal(false) 
+                                                            return {...prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
+                                                        }))
+                                                }} >
+                                                SALVAR                                                
+                                            </Button>                                            
+                                        </div>                                                                 
+                                        <div className="modalbotao-salvar">
+                                            <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        size="large"
+                                                        className={classes.button}
+                                                        startIcon={<SaveIcon />}
+                                            >
+                                                        Adicionar
                                                     
-                                                    return {...prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
-                                                }))
-
-                                        }} >
-                                        GUARDAR
-                                        
-                                    </Button>
+                                                </Button> 
+                                        </div>
+                                                    
+                                                                      
+                            
+                                    </div>
                                 </div>
-                      
-                            </div>
-                        </div>
                             
                             }
 
@@ -708,6 +724,7 @@ export default function Formulario(props) {
                         }
                         {props.tipoFormulario === "alterarAnuncio" &&
                             <Button
+                            style={{marginTop: "75px"}}
                                 onClick={() => { AtualizarDadosBD() }}
                                 variant="contained"
                                 color="default"
