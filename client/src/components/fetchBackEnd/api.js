@@ -3,7 +3,7 @@ import axios from "axios"
 export default class BuscaBD {
 
     //upload de imagens 
-    async BuscaBDPostImagem(imagens) {
+    async CadastraImagemMulter(imagens) {
         const resultado = await axios.post("http://localhost:9000/cadastraimagem",
             imagens
         )
@@ -11,7 +11,7 @@ export default class BuscaBD {
         return resultado
     }
     //cadastra dados no BD
-    async BuscaBDPostDados(dados) {
+    async CadastraDadosBD(dados) {
         const resultado = await axios.post("http://localhost:9000/cadastraveiculo",
             dados
         )

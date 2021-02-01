@@ -228,10 +228,22 @@ transition: all ease-in-out 0.5s;
   overflow: hidden !important;
 }
 
-.botao-plus{
+.formulario-div-formualario-form-label-plus-imagens {
+  /* margin-bottom: 130px; */
+  font-size: 15px;
+  /* background-color: #3039F9; */
+  /* padding: 5px; */
+  /* border-radius: 5px; */
+  font-family: 'Lora', serif;
+  color: rgb(68, 68, 68);
+  font-weight: bold;
+  border-bottom: rgb(58, 58, 58);
+  height: 150px;
+}
 
-  display: inline-block;
-  margin-left: 65%;
+.formulario-div-formualario-form-label-plus-imagens input{
+
+  margin-top: 20px
 }
 
 

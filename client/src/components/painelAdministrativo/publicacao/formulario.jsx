@@ -1,24 +1,26 @@
 
 import { React, useState, useEffect, useCallback } from 'react';
 
-import DadosOpcionais from "./opcionais"
-import BuscaBD from "../../fetchBackEnd/api"
-import FormData from 'form-data'
+import DadosOpcionais from "./opcionais" //formulario react opcionais
+import BuscaBD from "../../fetchBackEnd/api" //classe axios
+import FormData from 'form-data' //FormData classe que permite o multer identificar as imagens recebidas
+
+import CriaAnuncio from "./functions/funtionCriarAnuncio"
+//funcão para cadastro de anuncio
+
+
 import "./formulario.css"
 
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    TextField,IconButton,
+    TextField,
     InputLabel, Select, FormControl
 } from '@material-ui/core/';
-
-// import Switch from '@material-ui/core/Switch';
 
 
 export default function Formulario(props) {
@@ -46,7 +48,7 @@ export default function Formulario(props) {
         combustivel: "",
         porta: 4,
         cambio: "",
-        carroceria:"",
+        carroceria: "",
         finalPlaca: 0,
         sobre: "",
         imagensPath: false
@@ -87,7 +89,7 @@ export default function Formulario(props) {
         tracaoQuatroRodas: false,
         protetorCacamba: false,
         farolXenonio: false,
-        
+
     })
 
 
@@ -95,8 +97,9 @@ export default function Formulario(props) {
     //RECEBE PALAVRA PARA PESQUISAR NO BANCO DE DADOS
 
     const [abreModal, setAbreModal] = useState(false) //usado para abrir e fechar modal
-    const [imagensParaDeletar, setImagensParaDeletar] = useState({
+    const [editarImagens, setEditarImagens] = useState({
         imagensDeletadas: [],
+        imagensAdicionadas: [],
         mensagem: "",
         display: "none"
     })
@@ -118,11 +121,11 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
-    function PreviewImagem ()  { //Gera preview da simagens ao adicioná-las
+    function PreviewImagem() { //Gera preview da simagens ao adicioná-las
         var armazena = []
-        for(var i = 0; i < formulario.imagensPath.length; i++){            
+        for (var i = 0; i < formulario.imagensPath.length; i++) {
             armazena.push(
-                <>                    
+                <>
                     <div className="formulario-preview-imagens-div">
                         <img className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
                     </div>
@@ -130,70 +133,22 @@ export default function Formulario(props) {
             )
         }
         console.log(formulario.imagensPath)
-        return(            
+        return (
             <>
                 {armazena}
             </>
-        )      
+        )
     }
 
-    const FunctionOpcionais = useCallback((dados)=> {//Essa func é chamada pelo componente externo Opcionais
-        const {name} = dados.target //retira o campo name do obj que será o nome do campo no obj formulario
+    const FunctionOpcionais = useCallback((dados) => {//Essa func é chamada pelo componente externo Opcionais
+        const { name } = dados.target //retira o campo name do obj que será o nome do campo no obj formulario
         setFormularioOpcionais(prevState => {
-            return {...prevState, [name]: dados.target.checked }
+            return { ...prevState, [name]: dados.target.checked }
         })
         console.log(formularioOpcionais)
-    },[formularioOpcionais])
+    }, [formularioOpcionais])
 
 
-    async function UploadImagens (event) {//fazupload imagens e retornar o nome e caminho de cada imagem no node
-        event.preventDefault()
-        if(formulario.marca === "" || formulario.modelo === "" || formulario.motor === ""
-            || formulario.combustivel === "" || formulario.cambio === "" || formulario.carroceria === ""
-            || formulario.sobre === ""){
-                alert("OS CAMPOS EM VERMELHO SÃO OBRIGATÓRIOS")
-                event.preventDefault()
-                return
-        }
-        if (formulario.imagensPath.length > 12) {
-            alert("SELECIONE ATÉ 12 IMAGENS")
-            event.preventDefault()
-            return
-        }
-        const classBuscaBD = new BuscaBD()// classe da Api onde está conf  o Axios
-        const dadosImagens = new FormData()//FormData classe que permite o multer identificar as imagens
-        for (var i = 0; i < formulario.imagensPath.length; i++) {
-            dadosImagens.append("files", formulario.imagensPath[i])
-        }
-        //para enviar imagens tem q ser pelo FormData
-        //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
-
-        const retornaImagenslLocationNodeMulter = await classBuscaBD.BuscaBDPostImagem(dadosImagens)
-        //faz o upload das imagens e o node vai retornar as imagens recebidas
-        console.log(retornaImagenslLocationNodeMulter)
-        let imagensPath = []
-        //faz um map na array nos nomes das imagens retornadas do Node
-        retornaImagenslLocationNodeMulter.data.map((dados) => {
-            imagensPath.push(dados.filename)//armezeneo nome das imagens em array
-        })
-        const GuardaDados = await ArmazenaDadosBD(imagensPath) //chama a func armazena dados enviado o nome das imagens recebidas em array
-        console.log(GuardaDados)
-        window.location.href = ("#inicio")
-        props.mensagemDeRetorno(GuardaDados.data)
-        
-    }
-
-    //com os nomes das imagens no node, reuni todos os dados do carro e junta com o nome das imagens
-    async function ArmazenaDadosBD (recebeLocationImagens){ 
-        const classBuscaBD = new BuscaBD()
-        var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String, para poder ser gravado em um único campo no BD
-        var reuniDados = formulario
-        reuniDados = { ...reuniDados, imagensPath: imagensLocation } //add os nomes da imagem no obj reunidados, que é o formulario
-        var reunidadosFinal = Object.assign(reuniDados, formularioOpcionais) // Object.assign torna dois objs em um só
-        console.log(reuniDados)
-        const EnviaDadosBD = await classBuscaBD.BuscaBDPostDados(reunidadosFinal)
-        return EnviaDadosBD
-    }
 
 
     //########################  FUNÇÕES PARA EDITAR //########################
@@ -202,7 +157,7 @@ export default function Formulario(props) {
 
 
     //buscar as infos e preencher o formulário
-    async function BuscarBDDados () {
+    async function BuscarBDDados() {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
         if (resultado.data.length < 1) {
@@ -210,7 +165,7 @@ export default function Formulario(props) {
                 alert("Anúncio não encontrado")
                 return
             }
-        }       
+        }
 
         SetFormulario({
             valor: resultado.data[0].valor,
@@ -226,7 +181,7 @@ export default function Formulario(props) {
             finalPlaca: resultado.data[0].finalPlaca,
             sobre: resultado.data[0].sobre,
             imagensPath: JSON.parse(resultado.data[0].imagensPath) // volta a origem da transformação do JSON.stringify, voltando a ser uma array
-        }) 
+        })
         setFormularioOpcionais({
             aceitaTroca: resultado.data[0].aceitaTroca,
             IPVA: resultado.data[0].IPVA,
@@ -262,31 +217,62 @@ export default function Formulario(props) {
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
             farolXenonio: resultado.data[0].farolXenonio,
-        })        
+        })
     }
-    
-    const AtualizarDadosBD = useCallback(async()  =>{   //primeiro deleta as imagens do storage
+
+    async function AtualizarDadosBD() {   //primeiro deleta as imagens solicitadas do storage
+
         const classBuscaBD = new BuscaBD()
-        if(imagensParaDeletar.imagensDeletadas.length > 0){
-           
-            const resultado = await classBuscaBD.DeletaImagem(imagensParaDeletar.imagensDeletadas)
+        const dadosImagens = new FormData()//FormData classe que permite o multer identificar as imagens recebidas
+
+        //se houver imagens a serem ADICIONADAS, adicione-as no Multer
+        if (editarImagens.imagensAdicionadas.length > 0) {
+            for (var i = 0; i < editarImagens.imagensAdicionadas.length; i++) {
+                dadosImagens.append("files", editarImagens.imagensAdicionadas[i])
+                //para enviar imagens tem q ser pelo FormData
+                //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
+            }
+            const retornaImagenslLocationNodeMulter = await classBuscaBD.CadastraImagemMulter(dadosImagens)
+
+            let caminhoImagensMulter = []
+            retornaImagenslLocationNodeMulter.data.map((dados) => {
+                caminhoImagensMulter.push(dados.filename)//armezena o nome das imagens em array
+            })
+            AtualizaTabelas(caminhoImagensMulter)
+        }
+
+        //se houver imagens a serem DELETADAS, delete-as no Storage
+        if (editarImagens.imagensDeletadas.length > 0) {
+            const resultado = await classBuscaBD.DeletaImagem(editarImagens.imagensDeletadas)
             console.log(resultado)
             AtualizaTabelas()
         }
-        AtualizaTabelas() //depois update dados  do anúncio no BD
-        async function AtualizaTabelas() {
-            var stringiFy = JSON.stringify(formulario.imagensPath)
+
+        // AtualizaTabelas() //depois update dados  do anúncio no BD incluindo retirar as deletadas do BD
+        async function AtualizaTabelas(caminhoImagensMulter) {
+
             var formularioTemp = formulario
-           formularioTemp = {...formularioTemp, imagensPath: stringiFy}
-           var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
+
+            if (caminhoImagensMulter) {
+                var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
+                //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter e permitindo tornar uma única array. parecido com o Objetc-consign
+                formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
+            }
+            else {
+                var stringiFy = JSON.stringify(formulario.imagensPath)//transforma o json novamente em string
+                formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
+            }
+
+
+            var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
 
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
             props.mensagemDeRetorno(resultado.data)
             window.location.href = ("#inicio")
         }
-    
-    },[formulario, formularioOpcionais])
+
+    }
 
 
 
@@ -320,15 +306,29 @@ export default function Formulario(props) {
 
 
             <div className="formulario-div-formualario"
-                onSubmit={(event) => {
+                onSubmit={async (event) => {
                     // event.preventDefault()
-                    UploadImagens(event)
 
+                    if (formulario.marca === "" || formulario.modelo === "" || formulario.motor === ""
+                        || formulario.combustivel === "" || formulario.cambio === "" || formulario.carroceria === ""
+                        || formulario.sobre === "") {
+                        alert("OS CAMPOS EM VERMELHO SÃO OBRIGATÓRIOS")
+                        event.preventDefault()
+                        return
+                    }
+                    if (formulario.imagensPath.length > 12) {
+                        alert("SELECIONE ATÉ 12 IMAGENS")
+                        event.preventDefault()
+                        return
+                    }
+
+                    var resultado = await CriaAnuncio(event, formulario, formularioOpcionais)
+                    props.mensagemDeRetorno(resultado.data)
                 }}>
 
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
                 <form className="formulario-div-formualario-form" >
-        
+
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -379,7 +379,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
-                        error = {!formulario.marca}
+                        error={!formulario.marca}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -396,7 +396,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
-                        error = {!formulario.modelo}
+                        error={!formulario.modelo}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -413,7 +413,7 @@ export default function Formulario(props) {
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
-                        error = {!formulario.motor}
+                        error={!formulario.motor}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -441,7 +441,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.combustivel}
-                            error = {!formulario.combustivel}
+                            error={!formulario.combustivel}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, combustivel: envia.target.value }
@@ -485,7 +485,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.cambio}
-                            error = {!formulario.cambio}
+                            error={!formulario.cambio}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, cambio: envia.target.value }
@@ -508,7 +508,7 @@ export default function Formulario(props) {
                         <Select
                             native
                             value={formulario.carroceria}
-                            error = {!formulario.carroceria}
+                            error={!formulario.carroceria}
                             onChange={(envia) => {
                                 SetFormulario(prevState => {
                                     return { ...prevState, carroceria: envia.target.value }
@@ -564,7 +564,6 @@ export default function Formulario(props) {
                                 return { ...prevState, sobre: envia.target.value }
                             })
                         }}
-
                         id="sobre"
                         label="SOBRE O VEÍCULO "
                         variant="outlined"
@@ -572,70 +571,68 @@ export default function Formulario(props) {
 
                         className="FormularioCadastro_inputs"
                         margin="dense"
-                        error = {!formulario.sobre}
+                        error={!formulario.sobre}
                         InputLabelProps={{
                             shrink: true,
                         }}
                     />
 
                     <hr className="formulario-div-formualario-form-hr" />
-                    <DadosOpcionais formulario = {formularioOpcionais} Opcionais = {FunctionOpcionais}/>
-                   
+                    <DadosOpcionais formulario={formularioOpcionais} Opcionais={FunctionOpcionais} />
+
                     <hr className="formulario-div-formualario-form-hr" />
                     {props.tipoFormulario === "criarAnuncio" &&
-                    <>
-                        <label className="formulario-div-formualario-form-label-imagem">
-                            Selecione as imagens:
+                        <>
+                            <label className="formulario-div-formualario-form-label-imagem">
+                                Selecione as imagens:
                             <input type="file" name="file" multiple="multiple"
 
-                                onChange={(envia) => {
-                                    SetFormulario(prevState => {
-                                        return { ...prevState, imagensPath: envia.target.files }
-                                    })
-                                }}
-                            ></input>
-                        </label>
-                        
-                        {formulario.imagensPath.length > 0 &&
-                        <>
-                                <h2>Preview Imagens</h2> 
-                                <div className="formulario-preview-div"> 
-                                        
-                                <PreviewImagem/>
-                                </div>   
+                                    onChange={(envia) => {
+                                        SetFormulario(prevState => {
+                                            return { ...prevState, imagensPath: envia.target.files }
+                                        })
+                                    }}
+                                ></input>
+                            </label>
+
+                            {formulario.imagensPath.length > 0 &&
+                                <>
+                                    <h2>Preview Imagens</h2>
+                                    <div className="formulario-preview-div">
+
+                                        <PreviewImagem />
+                                    </div>
+                                </>
+                            }
                         </>
-                        }
-                    </>
                     }
 
                     {/* ABRE O MODAL*/}
                     {props.tipoFormulario === "alterarAnuncio" &&
                         <>
-
-                        <h3 style={{display: "flex", justifyContent: "center", textAlign: "center", color:"rgb(68, 68, 68)"}}>IMAGENS ANÚNCIO</h3>
+                            <h3 style={{ display: "flex", justifyContent: "center", textAlign: "center", color: "rgb(68, 68, 68)" }}>IMAGENS ANÚNCIO</h3>
                             {/* REMOÇÃO DE IMAGENS */}
                             <a href="#abrirModal" className="modalbotao"><button type="button"
                                 className="modalbotao-abririmagem"
                                 onClick={() => { setAbreModal(true) }}
                             ><i class="fas fa-trash-alt fa-4x"></i></button></a>
                             {/* <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label> */}
-                            <div className="modal-mensagem-alteração" style={{display: imagensParaDeletar.display}}>
-                                 {imagensParaDeletar.mensagem} 
-                                 {/* Mensagem quando pressiona o botao salvar dentro do modal */}
-                                </div>
+                            <div className="modal-mensagem-alteração" style={{ display: editarImagens.display }}>
+                                {editarImagens.mensagem}
+                                {/* Mensagem quando pressiona o botao salvar dentro do modal */}
+                            </div>
 
-                            {abreModal && 
+                            {abreModal &&
                                 <div id="abrirModal" class="modal">
                                     <div >
                                         <a href="#fechar" title="Fechar" class="fechar">
                                             <button type="button">X</button>
-                    
                                         </a>
-                                        <h3 style={{color: "red"}}>DELETAR IMAGENS ANÚNCIO</h3>
+                                        <h3 style={{ color: "red" }}>GERENCIAR IMAGENS ANÚNCIO</h3>
                                         <hr></hr>
-                    
+
                                         {formulario.imagensPath.length > 0 && //se existir imagem
-                    
+
                                             formulario.imagensPath.map((recebe) => { //JSON.parse pega a array que está em string e transforma em string
                                                 return (
                                                     <>
@@ -647,14 +644,17 @@ export default function Formulario(props) {
                                                         </div>
                                                         <div className="foromulario-div-formualario-form-imagem-div-div">
                                                             <i class="fas fa-trash fa-2x icon-trash"
-                                                                onClick={() => {            
-                                                                    
-                                                                    setImagensParaDeletar((prevState => {                                                                 
-                                                                        return { ...prevState, imagensDeletadas: [...imagensParaDeletar.imagensDeletadas, recebe] }}))  //armazena a imagem deletada                                                                      
-                                                                    var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)//permaceça imagens que sao diferentes da deletada
+                                                                onClick={() => {
+
+                                                                    setEditarImagens((prevState => {
+                                                                        return { ...prevState, imagensDeletadas: [...editarImagens.imagensDeletadas, recebe] }
+                                                                    }))  //armazena a imagem deletada   
+
+                                                                    //Já Atualiza o formulario com as imagens NÃO DELETADAS
+                                                                    var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
                                                                     SetFormulario((prevState => {
                                                                         return { ...prevState, imagensPath: atualiza }
-                                                                    }))                  
+                                                                    }))
                                                                 }}
                                                             ></i>
                                                             {/* <i class="fas fa-plus fa-2x" style={{}}></i> */}
@@ -663,7 +663,7 @@ export default function Formulario(props) {
                                                 )
                                             })
                                         }
-                                    
+
                                         <div className="modalbotao-salvar" >
                                             <Button
                                                 variant="contained"
@@ -671,35 +671,49 @@ export default function Formulario(props) {
                                                 size="large"
                                                 className={classes.button}
                                                 startIcon={<SaveIcon />}
-                                                onClick={() => { 
-                                                    setImagensParaDeletar((prevState =>                                                 
-                                                        { 
-                                                            setAbreModal(false) 
-                                                            
-                                                            return {...prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display:"flex"}
-                                                        }))
+                                                onClick={() => {
+                                                    setEditarImagens((prevState => {
+                                                        setAbreModal(false)
+
+                                                        return { ...prevState, mensagem: "Cliquem em ALTERAR ANÚNCIO para salvar as alterações", display: "flex" }
+                                                    }))
                                                 }} >
-                                                SALVAR                                                
-                                            </Button>                                            
-                                        </div>                                                                 
-                                        <div className="modalbotao-salvar">
-                                            <Button
-                                                        variant="contained"
-                                                        color="primary"
-                                                        size="large"
-                                                        className={classes.button}
-                                                        startIcon={<SaveIcon />}
-                                            >
-                                                        Adicionar
-                                                    
-                                                </Button> 
+                                                SALVAR
+                                            </Button>
                                         </div>
-                                                    
-                                                                      
-                            
+                                        <div className="modalbotao-salvar">
+
+                                            <label className="formulario-div-formualario-form-label-plus-imagens">
+                                                ADICIONAR IMAGENS:
+                                            </label>
+                                            <hr></hr>
+                                            <input type="file" name="file" multiple="multiple"
+                                                onChange={(envia) => {
+                                                    setEditarImagens(prevState => {
+                                                        return { ...prevState, imagensAdicionadas: envia.target.files }
+                                                    })
+                                                }}
+
+
+
+                                            // onChange={(imagensUpload) => {
+                                            //     setEditarImagens((prevState => {
+                                            //         // console.log(imagensUpload)
+                                            //         return { ...prevState, imagensAdicionadas: imagensUpload.target.files }
+
+                                            //     }))
+                                            // }}
+
+                                            ></input>
+
+
+                                        </div>
+
+
+
                                     </div>
                                 </div>
-                            
+
                             }
 
                         </>
@@ -708,9 +722,9 @@ export default function Formulario(props) {
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >
                         {props.tipoFormulario === "criarAnuncio" &&
-                           
-                          
-                           < Button
+
+
+                            < Button
                                 type="submit"
                                 variant="contained"
                                 color="primary"
@@ -720,11 +734,11 @@ export default function Formulario(props) {
                             >
                                 PUBLICAR
                         </Button>
-                        
+
                         }
                         {props.tipoFormulario === "alterarAnuncio" &&
                             <Button
-                            style={{marginTop: "75px"}}
+                                style={{ marginTop: "75px" }}
                                 onClick={() => { AtualizarDadosBD() }}
                                 variant="contained"
                                 color="default"

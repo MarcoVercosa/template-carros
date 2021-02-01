@@ -36,10 +36,9 @@ module.exports = (app) => {
     })
 
     app.post("/deletaimagens", (req, res) => {
-
+        //deleta imagens do storage
         console.log("Solicitado remocao de imagem" + req.body)
         console.log(req.body)
-
         for (var i = 0; i < req.body.dados.length; i++) {
             var erro = false
             var sucesso = false
