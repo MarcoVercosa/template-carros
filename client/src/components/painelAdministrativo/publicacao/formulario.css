@@ -111,7 +111,7 @@ grid-gap: 10px;
   /* padding: 10px; */
   border-radius: 10px;
   margin-left: 105px;
-  color: rgb(214, 40, 40);
+  color: rgb(68, 68, 68);
   /* width: 6%; */
   padding: 0;
   cursor:pointer;
@@ -136,6 +136,7 @@ grid-gap: 10px;
   transition: opacity 400ms ease-in;
   pointer-events: none;
 }
+
 .modal img{
 display: block;
   width: 100%;
@@ -149,7 +150,7 @@ display: block;
   width: 50%;
   height: 70%;
   margin: 10% 25% 25% 15%;
-  left: 0;
+  left: 10%;
   justify-content: center;
   text-align: center;
   background-color:rgb(207, 211, 219);
@@ -167,7 +168,7 @@ display: block;
 .fechar {
   position: fixed;
   width: 30px;
-  right: 37%;
+  right: 30%;
   top: 22%;
 }
 
@@ -187,13 +188,22 @@ color: white
 
 .formulario-div-formualario-form-imagem-div{
   display: inline-block;
-  justify-content: left !important;
-  background-color: red !important;
+  justify-content: left !important;  
   position: static !important;;
   margin: 0  0 0 0px  !important;
   width: 75% !important;
-  height: 55% !important;;
- 
+  height: 55% !important;  
+  animation-duration: 500ms !important;;
+  animation-name: preview !important;;
+}  
+
+@keyframes preview {
+  from {
+    opacity: 0;
+  }  
+  to {
+    opacity: 1;
+  }
 }
 
 .icon-trash{

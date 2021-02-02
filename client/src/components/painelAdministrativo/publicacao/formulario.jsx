@@ -127,7 +127,7 @@ export default function Formulario(props) {
             armazena.push(
                 <>
                     <div className="formulario-preview-imagens-div">
-                        <img className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
+                        <img alt={i} key={i} className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
                     </div>
                 </>
             )
@@ -156,15 +156,59 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA EDITAR //########################
 
 
+
+    //previw das imagens adicionadas no modal
+    function PreviewImagemEdicao() { //Gera preview da simagens ao adicioná-las
+        var armazena = []
+        var push = []
+        if (editarImagens.imagensAdicionadas.length > 0) {
+            for (var i = 0; i < editarImagens.imagensAdicionadas.length; i++) {
+                armazena.push(editarImagens.imagensAdicionadas[i])
+            }
+            //por algum motivo o map não roda no editarImagens.imagensAdicionadas. Tive que criar uma array com loop
+            //e assim permitiu o map. Sempre que exclui alguma imagem ele atualiza o editarImagens.imagensAdicionadas
+            //onde a var "armazena" busca as infos
+            armazena.map((dados, index) => {
+                push.push(
+                    <>
+                        <div className="formulario-div-formualario-form-imagem-div" style={{ rigth: "40%" }}>
+                            <img alt={index} key={index} className="formulario-preview-imagens-edicao" src={URL.createObjectURL(dados)} />
+                        </div>
+                        <div className="foromulario-div-formualario-form-imagem-div-div">
+                            <i class="fas fa-trash fa-2x icon-trash"
+                                onClick={() => {
+                                    var temp = []
+                                    setEditarImagens((prevState => {
+                                        temp = armazena.filter((recebe => recebe !== dados))
+                                        return { ...prevState, imagensAdicionadas: temp }
+                                    }))  //armazena a imagem deletada   
+
+                                }}
+                            ></i>
+
+                        </div>
+                    </>
+                )
+            })
+        }
+        console.log(formulario.imagensPath)
+        return (
+            <>
+                {push}
+            </>
+        )
+    }
+
     //buscar as infos e preencher o formulário
     async function BuscarBDDados() {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
         if (resultado.data.length < 1) {
-            {
-                alert("Anúncio não encontrado")
-                return
-            }
+            setBuscaParaAlterar("")
+            alert("Anúncio não encontrado")
+
+            return
+
         }
 
         SetFormulario({
@@ -224,6 +268,7 @@ export default function Formulario(props) {
 
         const classBuscaBD = new BuscaBD()
         const dadosImagens = new FormData()//FormData classe que permite o multer identificar as imagens recebidas
+        let caminhoImagensMulter = [] //armazena nomes das imagens no storage
 
         //se houver imagens a serem ADICIONADAS, adicione-as no Multer
         if (editarImagens.imagensAdicionadas.length > 0) {
@@ -234,28 +279,28 @@ export default function Formulario(props) {
             }
             const retornaImagenslLocationNodeMulter = await classBuscaBD.CadastraImagemMulter(dadosImagens)
 
-            let caminhoImagensMulter = []
             retornaImagenslLocationNodeMulter.data.map((dados) => {
                 caminhoImagensMulter.push(dados.filename)//armezena o nome das imagens em array
             })
-            AtualizaTabelas(caminhoImagensMulter)
+            // AtualizaTabelas(caminhoImagensMulter)
         }
-
         //se houver imagens a serem DELETADAS, delete-as no Storage
         if (editarImagens.imagensDeletadas.length > 0) {
             const resultado = await classBuscaBD.DeletaImagem(editarImagens.imagensDeletadas)
             console.log(resultado)
-            AtualizaTabelas()
+            AtualizaTabelas(caminhoImagensMulter)
+        } else {
+            AtualizaTabelas(caminhoImagensMulter)
         }
 
-        // AtualizaTabelas() //depois update dados  do anúncio no BD incluindo retirar as deletadas do BD
+        //depois update dados  do anúncio no BD incluindo retirar as deletadas do BD
         async function AtualizaTabelas(caminhoImagensMulter) {
 
             var formularioTemp = formulario
 
             if (caminhoImagensMulter) {
                 var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
-                //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter e permitindo tornar uma única array. parecido com o Objetc-consign
+                //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter permitindo tornar uma única array. parecido com o Objetc-consign
                 formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
             }
             else {
@@ -263,18 +308,21 @@ export default function Formulario(props) {
                 formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
             }
 
-
             var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
 
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
             props.mensagemDeRetorno(resultado.data)
             window.location.href = ("#inicio")
+
+            setEditarImagens({
+                imagensDeletadas: [],
+                imagensAdicionadas: [],
+                mensagem: "",
+                display: "none"
+            })
         }
-
     }
-
-
 
     return (
         <>
@@ -305,7 +353,7 @@ export default function Formulario(props) {
 
 
 
-            <div className="formulario-div-formualario"
+            <div style={{ display: buscaParaAlterar || props.tipoFormulario === "criarAnuncio" ? "block" : "none" }} className="formulario-div-formualario"
                 onSubmit={async (event) => {
                     // event.preventDefault()
 
@@ -612,10 +660,12 @@ export default function Formulario(props) {
                         <>
                             <h3 style={{ display: "flex", justifyContent: "center", textAlign: "center", color: "rgb(68, 68, 68)" }}>IMAGENS ANÚNCIO</h3>
                             {/* REMOÇÃO DE IMAGENS */}
-                            <a href="#abrirModal" className="modalbotao"><button type="button"
-                                className="modalbotao-abririmagem"
-                                onClick={() => { setAbreModal(true) }}
-                            ><i class="fas fa-trash-alt fa-4x"></i></button></a>
+                            <div style={{ display: "flex", justifyContent: "center", textAlign: "center", marginRight: "9%" }}>
+                                <a href="#abrirModal" className="modalbotao"><button type="button"
+                                    className="modalbotao-abririmagem"
+                                    onClick={() => { setAbreModal(true) }}
+                                ><i class="far fa-images fa-4x"></i></button></a>
+                            </div>
                             {/* <label className="label-imagens-altera-anuncio">{formulario.imagensPath.length} Imagens do anúncio</label> */}
                             <div className="modal-mensagem-alteração" style={{ display: editarImagens.display }}>
                                 {editarImagens.mensagem}
@@ -628,7 +678,7 @@ export default function Formulario(props) {
                                         <a href="#fechar" title="Fechar" class="fechar">
                                             <button type="button">X</button>
                                         </a>
-                                        <h3 style={{ color: "red" }}>GERENCIAR IMAGENS ANÚNCIO</h3>
+                                        <h3 style={{ color: "grey" }}>GERENCIAR IMAGENS ANÚNCIO</h3>
                                         <hr></hr>
 
                                         {formulario.imagensPath.length > 0 && //se existir imagem
@@ -638,7 +688,7 @@ export default function Formulario(props) {
                                                     <>
                                                         <div class="formulario-div-formualario-form-imagem-div" >
                                                             <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                                                <img key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                                                <img alt={recebe} key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
                                                             </a>
 
                                                         </div>
@@ -657,12 +707,16 @@ export default function Formulario(props) {
                                                                     }))
                                                                 }}
                                                             ></i>
-                                                            {/* <i class="fas fa-plus fa-2x" style={{}}></i> */}
+
                                                         </div>
                                                     </>
                                                 )
                                             })
+
                                         }
+
+                                        <PreviewImagemEdicao />
+
 
                                         <div className="modalbotao-salvar" >
                                             <Button
@@ -693,29 +747,11 @@ export default function Formulario(props) {
                                                         return { ...prevState, imagensAdicionadas: envia.target.files }
                                                     })
                                                 }}
-
-
-
-                                            // onChange={(imagensUpload) => {
-                                            //     setEditarImagens((prevState => {
-                                            //         // console.log(imagensUpload)
-                                            //         return { ...prevState, imagensAdicionadas: imagensUpload.target.files }
-
-                                            //     }))
-                                            // }}
-
                                             ></input>
-
-
                                         </div>
-
-
-
                                     </div>
                                 </div>
-
                             }
-
                         </>
                     }
                     <div className="formulario-div-formualario-form-botao-publicar"
