@@ -206,9 +206,7 @@ export default function Formulario(props) {
         if (resultado.data.length < 1) {
             setBuscaParaAlterar("")
             alert("Anúncio não encontrado")
-
             return
-
         }
 
         SetFormulario({
@@ -741,7 +739,7 @@ export default function Formulario(props) {
                                                 ADICIONAR IMAGENS:
                                             </label>
                                             <hr></hr>
-                                            <input type="file" name="file" multiple="multiple"
+                                            <input className="input-imagens-edicao" type="file" name="file" multiple="multiple"
                                                 onChange={(envia) => {
                                                     setEditarImagens(prevState => {
                                                         return { ...prevState, imagensAdicionadas: envia.target.files }
