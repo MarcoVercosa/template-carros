@@ -59,83 +59,82 @@ export default function Paineladministrativo() {
 
     return (
         <>
-
-            <div className="paineladministrativo-div">
-                <h2>Bem vindo ao PAINEL ADMINISTRATIVO DE OFERTAS</h2>
-            </div>
-            <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: mensagemDeRetorno ? "flex" : "none" }}>{mensagemDeRetorno}</div>
-            {/* Se mensagemDeRetorno houver dados flex, senão none */}
-
             <article className="paineladministrativo-article">
 
-                <h4>SELECIONE A OPÇÃO DESEJADA:</h4>
-
-
-                <div className="paineladministrativo-article-div-button">
-                    <Button
-                        onClick={(dadosBotao, envia = "criarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        startIcon={<SendIcon />}
-                    >
-                        CRIAR ANÚNCIO
-                    </Button>
-
-                    <Button
-                        onClick={(dadosBotao, envia = "alterarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<CloudUploadIcon />}
-                    >
-                        ALTERAR ANÚNCIO
-                    </Button>
-
-                    <Button
-                        onClick={(dadosBotao, envia = "deletarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button}
-                        startIcon={<DeleteIcon />}
-                    >
-                        DELETAR ANÚNCIO
-                    </Button>
+                <div className="paineladministrativo-div">
+                    <h2>Bem vindo ao PAINEL ADMINISTRATIVO DE OFERTAS</h2>
                 </div>
+                <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: mensagemDeRetorno ? "flex" : "none" }}>{mensagemDeRetorno}</div>
+                {/* Se mensagemDeRetorno houver dados flex, senão none */}
+
+                <article className="paineladministrativo-article">
+
+                    <h4>SELECIONE A OPÇÃO DESEJADA:</h4>
+
+
+                    <div className="paineladministrativo-article-div-button">
+                        <Button
+                            onClick={(dadosBotao, envia = "criarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<SendIcon />}
+                        >
+                            CRIAR ANÚNCIO
+                    </Button>
+
+                        <Button
+                            onClick={(dadosBotao, envia = "alterarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
+                            variant="contained"
+                            color="default"
+                            className={classes.button}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            ALTERAR ANÚNCIO
+                    </Button>
+
+                        <Button
+                            onClick={(dadosBotao, envia = "deletarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                        >
+                            DELETAR ANÚNCIO
+                    </Button>
+                    </div>
+                </article>
+
+                <div className="seletorformulario">
+
+                    {criarAnuncio &&
+                        <>
+                            <h2>PUBLICADOR DE ANÚNCIOS</h2>
+                            <Formulario tipoFormulario="criarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
+                        </>
+                    }
+                </div>
+                <div className="seletorformulario">
+
+                    {alterarAnuncio &&
+                        <>
+                            <h2>EDIÇÃO DE ANÚNCIOS</h2>
+
+                            <Formulario tipoFormulario="alterarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
+                        </>
+                    }
+                </div>
+                <div className="seletorformulario">
+
+                    {deletarAnuncio &&
+                        <>
+                            <h2>REMOVER ANÚNCIOS</h2>
+                            <Formulario tipoFormulario="deletarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
+                        </>
+                    }
+                </div>
+
             </article>
-
-            <div className="seletorformulario">
-
-                {criarAnuncio &&
-                    <>
-                        <h2>PUBLICADOR DE ANÚNCIOS</h2>
-                        <Formulario tipoFormulario="criarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
-                    </>
-                }
-            </div>
-            <div className="seletorformulario">
-
-                {alterarAnuncio &&
-                    <>
-                        <h2>EDIÇÃO DE ANÚNCIOS</h2>
-
-                        <Formulario tipoFormulario="alterarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
-                    </>
-                }
-            </div>
-            <div className="seletorformulario">
-
-                {deletarAnuncio &&
-                    <>
-                        <h2>REMOVER ANÚNCIOS</h2>
-                        <Formulario tipoFormulario="deletarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
-                    </>
-                }
-            </div>
-
-            {/* <div className="animacao">
-                {alterarAnuncio && <AlteracaoPublicacao />}
-            </div> */}
 
         </>
     )

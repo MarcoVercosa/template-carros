@@ -39,7 +39,7 @@ export default function Formulario(props) {
 
     const [render, setRender] = useState(1930)//recebe loop para gerar os anos para seleção do ano do carro
     const [formulario, SetFormulario] = useState({
-        valor: 0,
+        valor: "",
         marca: "",
         ano: 2010,
         modelo: "",
@@ -299,10 +299,12 @@ export default function Formulario(props) {
             if (caminhoImagensMulter) {
                 var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
                 //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter permitindo tornar uma única array. parecido com o Objetc-consign
+                formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) }
                 formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
             }
             else {
                 var stringiFy = JSON.stringify(formulario.imagensPath)//transforma o json novamente em string
+                formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) }
                 formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
             }
 
@@ -324,7 +326,7 @@ export default function Formulario(props) {
 
     return (
         <>
-            {props.tipoFormulario === "alterarAnuncio" &&
+            {(props.tipoFormulario === "alterarAnuncio" || props.tipoFormulario === "deletarAnuncio") &&
                 <div className="publicacao-div-search">
                     <TextField
                         onBlur={(recebe) => { setBuscaParaAlterar(recebe.target.value) }}
@@ -355,7 +357,7 @@ export default function Formulario(props) {
                 onSubmit={async (event) => {
                     // event.preventDefault()
 
-                    if (formulario.marca === "" || formulario.modelo === "" || formulario.motor === ""
+                    if (formulario.valor === "" || formulario.marca === "" || formulario.modelo === "" || formulario.motor === ""
                         || formulario.combustivel === "" || formulario.cambio === "" || formulario.carroceria === ""
                         || formulario.sobre === "") {
                         alert("OS CAMPOS EM VERMELHO SÃO OBRIGATÓRIOS")
@@ -376,17 +378,35 @@ export default function Formulario(props) {
                 <form className="formulario-div-formualario-form" >
 
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
+
+                        onClick={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, valor: "" }
+                            })
+                        }}
+
                         onChange={(envia) => {
+
                             SetFormulario(prevState => {
                                 return { ...prevState, valor: envia.target.value }
                             })
                         }}
+                        onBlur={(envia) => {//formata para deixar decimais
+                            if (envia.target.value.length < 1) { envia.target.value = 0 }
+                            SetFormulario(prevState => {
+                                const formater = new Intl.NumberFormat("pt-BR")
+                                // alert(typeof (formater.format(parseFloat(envia.target.value))))
+                                return { ...prevState, valor: "R$ " + formater.format(parseFloat(envia.target.value)) + ",00" }
+                            })
+                        }}
+
                         value={formulario.valor}
                         id="Valor"
                         label="Valor automóvel"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
+                        error={!formulario.valor}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -472,6 +492,17 @@ export default function Formulario(props) {
                                 return { ...prevState, kilometro: envia.target.value }
                             })
                         }}
+
+                        onBlur={(envia) => {//formata para deixar decimais
+                            if (envia.target.value.length < 1) { envia.target.value = 0 }
+                            SetFormulario(prevState => {
+                                const formater = new Intl.NumberFormat("pt-BR")
+
+                                return { ...prevState, kilometro: formater.format(parseFloat(envia.target.value)) }
+                            })
+                        }}
+
+
                         id="filled-number"
                         label="KM"
                         type="number"

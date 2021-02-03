@@ -33,6 +33,7 @@ async function ArmazenaDadosBD(recebeLocationImagens, formulario, formularioOpci
     const classBuscaBD = new BuscaBD()
     var imagensLocation = JSON.stringify(recebeLocationImagens);//transforma a array de localização das imagens em uma array String, para poder ser gravado em um único campo no BD
     var reuniDados = formulario
+    reuniDados = { ...reuniDados, valor: reuniDados.valor.slice(3, -3) } //3 RETIRA R$  do incio e o -3 retira ,00 do final da string
     reuniDados = { ...reuniDados, imagensPath: imagensLocation } //add os nomes da imagem no obj reunidados, que é o formulario
     var reunidadosFinal = Object.assign(reuniDados, formularioOpcionais) // Object.assign torna dois objs em um só
     console.log(reuniDados)
