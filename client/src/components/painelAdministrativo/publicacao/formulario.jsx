@@ -8,8 +8,6 @@ import FormData from 'form-data' //FormData classe que permite o multer identifi
 import CriaAnuncio from "./functions/funtionCriarAnuncio"
 //funcão para cadastro de anuncio
 
-import RemoverAnuncio from "./functions/functionRemoverAnuncio"
-
 
 import "./formulario.css"
 import ModalExcluirAnuncio from "./modals/modalExluirAnuncio"
@@ -150,7 +148,11 @@ export default function Formulario(props) {
         console.log(formularioOpcionais)
     }, [formularioOpcionais])
 
+    function MostrarTopoPaginaComMensagem() {
 
+        window.location.href = ("#inicio")
+
+    }
 
 
     //########################  FUNÇÕES PARA EDITAR //########################
@@ -160,7 +162,7 @@ export default function Formulario(props) {
 
 
     //previw das imagens adicionadas no modal
-    function PreviewImagemEdicao() { //Gera preview da simagens ao adicioná-las
+    function PreviewImagemEdicao() { //Gera preview das imagens ao adicioná-las
         var armazena = []
         var push = []
         if (editarImagens.imagensAdicionadas.length > 0) {
@@ -201,6 +203,12 @@ export default function Formulario(props) {
         )
     }
 
+
+    //########################  FUNÇÕES PARA EDITAR //########################
+    //########################  FUNÇÕES PARA EDITAR //########################
+    //########################  FUNÇÕES PARA EDITAR //########################
+
+
     //buscar as infos e preencher o formulário
     async function BuscarBDDados() {
         const classBuscaBD = new BuscaBD()
@@ -212,7 +220,7 @@ export default function Formulario(props) {
         }
 
         SetFormulario({
-            valor: resultado.data[0].valor,
+            valor: "R$ " + resultado.data[0].valor + ",00",
             marca: resultado.data[0].marca,
             ano: resultado.data[0].ano,
             modelo: resultado.data[0].modelo,
@@ -301,7 +309,7 @@ export default function Formulario(props) {
             if (caminhoImagensMulter) {//se houve imaggens guardadas no storage
                 var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
                 //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter permitindo tornar uma única array. parecido com o Objetc-consign
-                formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) }
+                formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) } //rerira o R$ e o ,00 do valor
                 formularioTemp = { ...formularioTemp, imagensPath: stringiFy }
             }
             else {
@@ -311,11 +319,11 @@ export default function Formulario(props) {
             }
 
             var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
-
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
             props.mensagemDeRetorno(resultado.data)
-            window.location.href = ("#inicio")
+
+            MostrarTopoPaginaComMensagem()
 
             setEditarImagens({
                 imagensDeletadas: [],
@@ -404,7 +412,7 @@ export default function Formulario(props) {
 
                         value={formulario.valor}
                         id="Valor"
-                        label="VALOR - Só número"
+                        label="VALOR - Só números"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
@@ -511,7 +519,7 @@ export default function Formulario(props) {
 
 
                         id="filled-number"
-                        label="KM - Só número"
+                        label="KM - Só números"
                         type="number"
                         value={formulario.kilometro}
                         InputLabelProps={{
@@ -822,27 +830,10 @@ export default function Formulario(props) {
                         }
                         {props.tipoFormulario === "deletarAnuncio" &&
                             <>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.button}
-                                    startIcon={<DeleteIcon />}
-                                    onClick={async () => {
-                                        <ModalExcluirAnuncio />
-                                        const resultado = await RemoverAnuncio(buscaParaAlterar, formulario.imagensPath)
-                                        if (resultado.data.affectedRows > 0) {
-                                            props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
-                                        } else {
-                                            props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
-                                        }
 
-                                        window.location.href = ("#inicio")
-                                    }}
-
-                                >
-                                    REMOVER ANÚNCIO
-                            </Button>
-                                {/* <ModalExcluirAnuncio /> */}
+                                <ModalExcluirAnuncio
+                                    buscaParaAlterar={buscaParaAlterar} formulario={formulario} mensagemDeRetorno={props.mensagemDeRetorno} MostrarTopoPaginaComMensagem={MostrarTopoPaginaComMensagem}
+                                />
                             </>
                         }
                     </div>

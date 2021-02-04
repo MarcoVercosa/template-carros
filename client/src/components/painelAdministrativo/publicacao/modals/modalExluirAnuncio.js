@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
+import RemoverAnuncio from "../functions/functionRemoverAnuncio"
+
 
 function getModalStyle() {
     // const top = 50 + rand();
@@ -49,7 +49,7 @@ export default function SimpleModal(props) {
         <div style={modalStyle} className={classes.paper}>
 
             <h2 style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
-            >POR FAVOR. CONFIRME A REMOÇÃO DO ANÚNCIO: {props.id} </h2>
+            >POR FAVOR. CONFIRME A REMOÇÃO DO ANÚNCIO: {props.buscaParaAlterar} </h2>
             <Button
                 style={{ left: "10%" }}
                 variant="contained"
@@ -69,7 +69,21 @@ export default function SimpleModal(props) {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-            // startIcon={<DeleteIcon />}
+                startIcon={<DeleteIcon />}
+
+                onClick={async () => {
+
+                    const resultado = await RemoverAnuncio(props.buscaParaAlterar, props.formulario.imagensPath)
+                    if (resultado.data.affectedRows > 0) {
+                        props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
+                    } else {
+                        props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
+                    }
+                    handleClose()
+                    props.MostrarTopoPaginaComMensagem()
+
+                }}
+
             >
                 DELETAR
       </Button>
@@ -78,10 +92,19 @@ export default function SimpleModal(props) {
     );
 
     return (
-        <div>
+        <div >
             <button type="button" onClick={handleOpen}>
-                Open Modal
-      </button>
+                <Button
+                    // style={{ left: "30%" }}
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+
+                >
+                    REMOVER ANÚNCIO
+      </Button>
+            </button>
             <Modal
                 disableBackdropClick={true}
                 open={open}
