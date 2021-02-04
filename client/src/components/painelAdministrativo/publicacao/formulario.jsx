@@ -12,7 +12,7 @@ import RemoverAnuncio from "./functions/functionRemoverAnuncio"
 
 
 import "./formulario.css"
-
+import ModalExcluirAnuncio from "./modals/modalExluirAnuncio"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -821,26 +821,29 @@ export default function Formulario(props) {
                         </Button>
                         }
                         {props.tipoFormulario === "deletarAnuncio" &&
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                startIcon={<DeleteIcon />}
-                                onClick={async () => {
+                            <>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.button}
+                                    startIcon={<DeleteIcon />}
+                                    onClick={async () => {
+                                        <ModalExcluirAnuncio />
+                                        const resultado = await RemoverAnuncio(buscaParaAlterar, formulario.imagensPath)
+                                        if (resultado.data.affectedRows > 0) {
+                                            props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
+                                        } else {
+                                            props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
+                                        }
 
-                                    const resultado = await RemoverAnuncio(buscaParaAlterar, formulario.imagensPath)
-                                    if (resultado.data.affectedRows > 0) {
-                                        props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
-                                    } else {
-                                        props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
-                                    }
+                                        window.location.href = ("#inicio")
+                                    }}
 
-
-                                    window.location.href = ("#inicio")
-                                }}
-                            >
-                                REMOVER ANÚNCIO
+                                >
+                                    REMOVER ANÚNCIO
                             </Button>
+                                {/* <ModalExcluirAnuncio /> */}
+                            </>
                         }
                     </div>
 
