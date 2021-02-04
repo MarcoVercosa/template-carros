@@ -138,6 +138,4 @@ export default function Paineladministrativo() {
 
         </>
     )
-
-
 }

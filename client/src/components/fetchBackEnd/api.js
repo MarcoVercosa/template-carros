@@ -47,5 +47,12 @@ export default class BuscaBD {
         return resultado
     }
 
+    async DeletaAnuncioBD(idPesquisa) {
+
+        console.log("API solicitada para remoção de anuncio no BD")
+        const resultado = await axios.get(`http://localhost:9000/deletaanunciobd/${idPesquisa}`)
+        return resultado
+    }
+
 }
 

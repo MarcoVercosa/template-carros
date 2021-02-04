@@ -88,6 +88,13 @@ module.exports = (app) => {
         // console.log(req.body.dados)
     })
 
+    app.get("/deletaanunciobd/:id", (req, res) => {
+
+        console.log("Solicitado apagar anuncio BD")
+        const resultado = (AlteraDadosBD.DeletaAnuncioBD(req.params.id, res))
+
+    })
+
 
     //deixa a pasta upload das imagens online
     app.use("/static", express.static("./uploads/images"))

@@ -8,6 +8,8 @@ import FormData from 'form-data' //FormData classe que permite o multer identifi
 import CriaAnuncio from "./functions/funtionCriarAnuncio"
 //funcão para cadastro de anuncio
 
+import RemoverAnuncio from "./functions/functionRemoverAnuncio"
+
 
 import "./formulario.css"
 
@@ -296,7 +298,7 @@ export default function Formulario(props) {
 
             var formularioTemp = formulario
 
-            if (caminhoImagensMulter) {
+            if (caminhoImagensMulter) {//se houve imaggens guardadas no storage
                 var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
                 //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter permitindo tornar uma única array. parecido com o Objetc-consign
                 formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) }
@@ -402,7 +404,7 @@ export default function Formulario(props) {
 
                         value={formulario.valor}
                         id="Valor"
-                        label="Valor automóvel"
+                        label="VALOR - Só número"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
@@ -492,6 +494,11 @@ export default function Formulario(props) {
                                 return { ...prevState, kilometro: envia.target.value }
                             })
                         }}
+                        onClick={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, kilometro: 0 }
+                            })
+                        }}
 
                         onBlur={(envia) => {//formata para deixar decimais
                             if (envia.target.value.length < 1) { envia.target.value = 0 }
@@ -504,7 +511,7 @@ export default function Formulario(props) {
 
 
                         id="filled-number"
-                        label="KM"
+                        label="KM - Só número"
                         type="number"
                         value={formulario.kilometro}
                         InputLabelProps={{
@@ -819,6 +826,13 @@ export default function Formulario(props) {
                                 color="secondary"
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
+                                onClick={async () => {
+
+                                    const resultado = await RemoverAnuncio(buscaParaAlterar, formulario.imagensPath)
+
+                                    props.mensagemDeRetorno(resultado.data)
+                                    window.location.href = ("#inicio")
+                                }}
                             >
                                 REMOVER ANÚNCIO
                             </Button>

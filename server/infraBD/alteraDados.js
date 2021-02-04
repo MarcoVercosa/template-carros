@@ -41,9 +41,20 @@ class AlteraDadosBD {
             } else {
                 res.json("DADOS ALTERADOS COM SUCESSO.")
             }
-
         })
+    }
 
+    DeletaAnuncioBD(idPesquisa, res) {
+
+        const sql = `DELETE FROM vendaCarro.carros WHERE id=${idPesquisa}`
+        conectaBD.query(sql, (erro, resultado) => {
+
+            if (erro) {
+                res.json("OCORREU UM ERRO AO DELETAR ANÚNCIO: " + erro)
+            } else {
+                res.json("DADOS REMOVIDOS COM SUCESSO.")
+            }
+        })
     }
 
 }
