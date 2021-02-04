@@ -1,3 +1,5 @@
-FALHA - formulário criar anuncio se digitar qualquer coisa e der enter ele manda para o BD
+
 MELHORIA - add campos como anuncio_ativo?, esta_vendido?, destaque (módulo a parte na página com somente destaques da loja)
+MELHORIA: Adicionar pergunta se cliente quer realmente remover o anúncio
+MELHORIA: Ao criar Anúncio retornar em um campo separado do formulario o ID criado para ele
 

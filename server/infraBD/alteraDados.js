@@ -52,7 +52,9 @@ class AlteraDadosBD {
             if (erro) {
                 res.json("OCORREU UM ERRO AO DELETAR ANÚNCIO: " + erro)
             } else {
-                res.json("DADOS REMOVIDOS COM SUCESSO.")
+                console.log(resultado)
+                res.json(resultado)
+                // res.json("DADOS REMOVIDOS COM SUCESSO." + resultado)
             }
         })
     }
