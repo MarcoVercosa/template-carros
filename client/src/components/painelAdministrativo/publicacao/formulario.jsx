@@ -829,8 +829,13 @@ export default function Formulario(props) {
                                 onClick={async () => {
 
                                     const resultado = await RemoverAnuncio(buscaParaAlterar, formulario.imagensPath)
+                                    if (resultado.data.affectedRows > 0) {
+                                        props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
+                                    } else {
+                                        props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
+                                    }
 
-                                    props.mensagemDeRetorno(resultado.data)
+
                                     window.location.href = ("#inicio")
                                 }}
                             >
