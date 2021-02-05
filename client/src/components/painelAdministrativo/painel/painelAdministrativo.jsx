@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import "./painelAdministrativo.css"
-import Formulario from "./publicacao/formulario"
+import Formulario from "../formulario/formulario"
 
 
 import { makeStyles } from '@material-ui/core/styles';

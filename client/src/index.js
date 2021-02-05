@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import './index.css';
 import App from './App';
-import Paineladministrativo from "./components/painelAdministrativo/painelAdministrativo"
+import Paineladministrativo from "./components/painelAdministrativo/painel/painelAdministrativo.jsx"
 
 
 ReactDOM.render(
