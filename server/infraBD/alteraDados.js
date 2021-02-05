@@ -32,6 +32,7 @@ class AlteraDadosBD {
         })
     }
 
+    //Atualizada o anúncio no BD
     AtualizaBDDados(atendimento, idDaBusca, res) {
 
         const sql = `UPDATE carros SET ? WHERE id=${idDaBusca}`
@@ -45,6 +46,7 @@ class AlteraDadosBD {
         })
     }
 
+    //deleta anuncio no BD
     DeletaAnuncioBD(idPesquisa, res) {
 
         const sql = `DELETE FROM vendaCarro.carros WHERE id=${idPesquisa}`
@@ -58,6 +60,20 @@ class AlteraDadosBD {
                 // res.json("DADOS REMOVIDOS COM SUCESSO." + resultado)
             }
         })
+    }
+
+    ListarAnuncios(res) {
+
+        const sql = `SELECT * FROM vendaCarro.carros`
+        conectaBD.query(sql, (erro, resultado) => {
+
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao listar as tabelas: " + erro)
+            } else {
+                res.json(resultado)
+            }
+        })
+
     }
 
 }

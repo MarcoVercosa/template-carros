@@ -65,6 +65,7 @@ module.exports = (app) => {
     //cadastra anuncio no BD
 
     app.post("/cadastraveiculo", (req, res) => {
+
         console.log("Solicitado post de DADOS")
         // console.log(req.body)
         const atendimento = req.body
@@ -75,12 +76,13 @@ module.exports = (app) => {
 
     //Busca anuncio com o número do ID do BD
     app.get("/buscacarro/:id", (req, res) => {
+
         console.log("Busca dados para editar")
         // console.log(req.params)
         const resultado = AlteraDadosBD.BuscaParaAlterar(req.params.id, res)
     })
 
-    //atualiza as infod do carro
+    //atualiza as info do carro
     app.post("/atualizacarro", (req, res) => {
 
         console.log("UPDATE de dados no BD solicitado.")
@@ -88,11 +90,16 @@ module.exports = (app) => {
         // console.log(req.body.dados)
     })
 
+    //deleta anuncio
     app.get("/deletaanunciobd/:id", (req, res) => {
-
         console.log("Solicitado apagar anuncio BD")
         const resultado = (AlteraDadosBD.DeletaAnuncioBD(req.params.id, res))
+    })
 
+    app.get("./listaranuncios", (req, res) => {
+
+        console.log("Solicitar listar todos anuncios")
+        const resultado = (AlteraDadosBD.ListarAnuncios(res))
     })
 
 

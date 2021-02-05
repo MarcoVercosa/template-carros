@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SendIcon from '@material-ui/icons/Send';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 
 
 
@@ -53,7 +54,7 @@ export default function Paineladministrativo() {
         setTimeout(() => {
             console.log("Timeout ")
             setMensagemDeRetorno(false)
-        }, 20000)
+        }, 15000)
     }
 
 
@@ -101,6 +102,16 @@ export default function Paineladministrativo() {
                             startIcon={<DeleteIcon />}
                         >
                             DELETAR ANÚNCIO
+                    </Button>
+                        <Button
+                            style={{ backgroundColor: "rgb(241, 243, 103)" }}
+                            onClick={(dadosBotao, envia = "listarTodosAnuncios") => { SelecionaFormulario(dadosBotao, envia) }}
+                            variant="contained"
+                            // color="primary"
+                            className={classes.button}
+                            startIcon={<FormatListNumberedIcon style={{ color: "black" }} />}
+                        >
+                            TODOS ANÚNCIOS
                     </Button>
                     </div>
                 </article>

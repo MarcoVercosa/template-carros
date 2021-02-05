@@ -361,7 +361,7 @@ export default function Formulario(props) {
                 </div>
             }
             {formulario.id &&
-                <h2>ID ANÚNCIO: {formulario.id}</h2>
+                <h4>ID ANÚNCIO: {formulario.id}</h4>
             }
             <div style={{ display: buscaParaAlterar || props.tipoFormulario === "criarAnuncio" ? "block" : "none" }} className="formulario-div-formualario"
                 onSubmit={async (event) => {
