@@ -127,6 +127,7 @@ export default function Formulario(props) {
                 <>
                     <div className="formulario-preview-imagens-div">
                         <img alt={i} key={i} className="formulario-preview-imagens" src={URL.createObjectURL(formulario.imagensPath[i])} />
+                        {/* URL.createObjectURL pega o campo do obj onde contem oss binários da imagem e renderiza */}
                     </div>
                 </>
             )
