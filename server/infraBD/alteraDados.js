@@ -12,7 +12,8 @@ class AlteraDadosBD {
                 // console.log("Ocorreu o seguinte erro ao cadastrar o anúncio" + erro)
                 res.json("Ocorreu o seguinte erro ao cadastrar o anúncio" + erro)
             } else {
-                res.json("Cadastro executado com sucesso")
+                let mensagem = "Cadastro executado com sucesso."
+                res.json({ mensagem, resultado })
             }
         })
     }
@@ -39,7 +40,7 @@ class AlteraDadosBD {
             if (erro) {
                 res.json("OCORREU UM ERRO AO ATUALIZAR ANÚNCIO: " + erro)
             } else {
-                res.json("DADOS ALTERADOS COM SUCESSO.")
+                res.json("DADOS ALTERADOS COM SUCESSO. ")
             }
         })
     }

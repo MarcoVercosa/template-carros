@@ -75,7 +75,8 @@ export default function SimpleModal(props) {
 
                     const resultado = await RemoverAnuncio(props.buscaParaAlterar, props.formulario.imagensPath)
                     if (resultado.data.affectedRows > 0) {
-                        props.mensagemDeRetorno("ANÚNCIO REMOVIDO COM SUCESSO !!!")
+                        let mensagem = `ANÚNCIO ID: ${props.buscaParaAlterar} REMOVIDO COM SUCESSO !!!`
+                        props.mensagemDeRetorno(mensagem)
                     } else {
                         props.mensagemDeRetorno("ANÚNCIO NÃO ENCONTRADO")
                     }

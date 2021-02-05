@@ -16,7 +16,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import DeleteIcon from '@material-ui/icons/Delete';
 import {
     TextField,
     InputLabel, Select, FormControl
@@ -220,6 +219,7 @@ export default function Formulario(props) {
         }
 
         SetFormulario({
+            id: resultado.data[0].id,
             valor: "R$ " + resultado.data[0].valor + ",00",
             marca: resultado.data[0].marca,
             ano: resultado.data[0].ano,
@@ -321,7 +321,7 @@ export default function Formulario(props) {
             var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
             console.log(resultado)
-            props.mensagemDeRetorno(resultado.data)
+            props.mensagemDeRetorno(`${resultado.data} ID do anúncio: ${buscaParaAlterar}`)
 
             MostrarTopoPaginaComMensagem()
 
@@ -360,9 +360,9 @@ export default function Formulario(props) {
                         </Button>
                 </div>
             }
-
-
-
+            {formulario.id &&
+                <h2>ID ANÚNCIO: {formulario.id}</h2>
+            }
             <div style={{ display: buscaParaAlterar || props.tipoFormulario === "criarAnuncio" ? "block" : "none" }} className="formulario-div-formualario"
                 onSubmit={async (event) => {
                     // event.preventDefault()
@@ -381,7 +381,8 @@ export default function Formulario(props) {
                     }
 
                     var resultado = await CriaAnuncio(event, formulario, formularioOpcionais)
-                    props.mensagemDeRetorno(resultado.data)
+                    // let mensagem = `${resultado.data.mensagem} ID: {resultado.data.resultado.insertId}`
+                    props.mensagemDeRetorno(`${resultado.data.mensagem} ID do anúncio: ${resultado.data.resultado.insertId}`)
                 }}>
 
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}

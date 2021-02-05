@@ -48,12 +48,12 @@ export default function Paineladministrativo() {
         }
     }
 
-    function MensagemDeRetorno(recebe) {
-        setMensagemDeRetorno(recebe)
+    function MensagemDeRetorno(mensagem) {
+        setMensagemDeRetorno(mensagem)
         setTimeout(() => {
             console.log("Timeout ")
             setMensagemDeRetorno(false)
-        }, 4000)
+        }, 20000)
     }
 
 
