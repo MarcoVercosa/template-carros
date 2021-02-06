@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import "./painelAdministrativo.css"
-import Formulario from "../formulario/formulario"
+import Formulario from "../formulario/formulario" //FORMULARIO
+import ListarAnuncios from "../listaAnuncios/listaAnuncios"
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +25,10 @@ export default function Paineladministrativo() {
     const [criarAnuncio, setCriarAnuncio] = useState(false)
     const [alterarAnuncio, setAlterarAnuncio] = useState(false)
     const [deletarAnuncio, setDeletarAnuncio] = useState(false)
+    const [listaAnuncios, setListaAnuncios] = useState(false)
+
     const [mensagemDeRetorno, setMensagemDeRetorno] = useState(false)
+    //recebe mensagem de sucesso ou não dos componentes
 
     const classes = useStyles();
 
@@ -34,17 +38,32 @@ export default function Paineladministrativo() {
             setAlterarAnuncio(false)
             setDeletarAnuncio(false)
             setMensagemDeRetorno(false)
+            setListaAnuncios(false)
+            return
         }
         if (recebe === "alterarAnuncio") {
             setCriarAnuncio(false)
             setAlterarAnuncio(true)
             setDeletarAnuncio(false)
+            setListaAnuncios(false)
             setMensagemDeRetorno(false)
+            return
+
+
         }
         if (recebe === "deletarAnuncio") {
             setCriarAnuncio(false)
             setAlterarAnuncio(false)
             setDeletarAnuncio(true)
+            setListaAnuncios(false)
+            setMensagemDeRetorno(false)
+            return
+        }
+        if (recebe === "listarAnuncios") {
+            setCriarAnuncio(false)
+            setAlterarAnuncio(false)
+            setDeletarAnuncio(false)
+            setListaAnuncios(true)
             setMensagemDeRetorno(false)
         }
     }
@@ -105,7 +124,7 @@ export default function Paineladministrativo() {
                     </Button>
                         <Button
                             style={{ backgroundColor: "rgb(241, 243, 103)" }}
-                            onClick={(dadosBotao, envia = "listarTodosAnuncios") => { SelecionaFormulario(dadosBotao, envia) }}
+                            onClick={(dadosBotao, envia = "listarAnuncios") => { SelecionaFormulario(dadosBotao, envia) }}
                             variant="contained"
                             // color="primary"
                             className={classes.button}
@@ -141,6 +160,15 @@ export default function Paineladministrativo() {
                         <>
                             <h2>REMOVER ANÚNCIOS</h2>
                             <Formulario tipoFormulario="deletarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
+                        </>
+                    }
+                </div>
+                <div className="seletorformulario">
+
+                    {listaAnuncios &&
+                        <>
+                            <h2>TODOS ANÚNCIOS</h2>
+                            <ListarAnuncios />
                         </>
                     }
                 </div>

@@ -104,6 +104,7 @@ export default function Formulario(props) {
     })
 
     useEffect(() => {
+        //GERA NUMEROS DE 1930 ATÉ O ANO CORRENTE, USANDO NO CAMPO "ANO"
         var anoAtual = new Date().getFullYear()
         var anoInicio = 1930
         var render = []
@@ -112,6 +113,20 @@ export default function Formulario(props) {
             anoInicio++
         }
         setRender(render)
+    }, [])
+
+    useEffect(() => {
+        //se o componente listar anuncio chamar o funcionario (no caso é o modal q chama a pedido do componente listar anuncio)
+        //vai ter a props "listaranuncio" então ele vai ter tambem o id na qual vai buscar no bd e chamar a func para preeencger o formumlario
+        async function ListaAnuncioBiscaBD() {
+            if (props.tipoFormulario === "listaranuncio") {
+                const classBuscaBD = new BuscaBD()
+                let resultado = await classBuscaBD.BuscaBDGetDados(props.dados)
+                PreencheFormulario(resultado)
+            }
+        }
+        ListaAnuncioBiscaBD()
+
     }, [])
 
 
@@ -218,7 +233,10 @@ export default function Formulario(props) {
             alert("Anúncio não encontrado")
             return
         }
+        PreencheFormulario(resultado)
+    }
 
+    function PreencheFormulario(resultado) {
         SetFormulario({
             id: resultado.data[0].id,
             valor: "R$ " + resultado.data[0].valor + ",00",
@@ -364,7 +382,7 @@ export default function Formulario(props) {
             {formulario.id &&
                 <h4>ID ANÚNCIO: {formulario.id}</h4>
             }
-            <div style={{ display: buscaParaAlterar || props.tipoFormulario === "criarAnuncio" ? "block" : "none" }} className="formulario-div-formualario"
+            <div style={{ display: buscaParaAlterar || props.tipoFormulario === "criarAnuncio" || props.tipoFormulario === "listaranuncio" ? "block" : "none" }} className="formulario-div-formualario"
                 onSubmit={async (event) => {
                     // event.preventDefault()
 

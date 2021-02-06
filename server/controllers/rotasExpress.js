@@ -96,7 +96,7 @@ module.exports = (app) => {
         const resultado = (AlteraDadosBD.DeletaAnuncioBD(req.params.id, res))
     })
 
-    app.get("./listaranuncios", (req, res) => {
+    app.get("/listaranuncios", (req, res) => {
 
         console.log("Solicitar listar todos anuncios")
         const resultado = (AlteraDadosBD.ListarAnuncios(res))

@@ -4,7 +4,7 @@ export default class BuscaBD {
 
     //upload de imagens 
     async CadastraImagemMulter(imagens) {
-        const resultado = await axios.post("http://localhost:9000/cadastraimagem",
+        const resultado = await axios.post("http://192.168.0.150:9000/cadastraimagem",
             imagens
         )
         console.log(resultado)
@@ -12,7 +12,7 @@ export default class BuscaBD {
     }
     //cadastra dados no BD
     async CadastraDadosBD(dados) {
-        const resultado = await axios.post("http://localhost:9000/cadastraveiculo",
+        const resultado = await axios.post("http://192.168.0.150:9000/cadastraveiculo",
             dados
         )
         console.log(resultado)
@@ -20,7 +20,7 @@ export default class BuscaBD {
     }
     //busca infos para alteração do anuncio
     async BuscaBDGetDados(dados) {
-        const resultado = await axios.get(`http://localhost:9000/buscacarro/${dados}`,
+        const resultado = await axios.get(`http://192.168.0.150:9000/buscacarro/${dados}`,
         )
         console.log(resultado)
         return resultado
@@ -29,7 +29,7 @@ export default class BuscaBD {
     //envia os dados para atualização de anuncio ja criado
     async AtualizaBDDados(dados, idDaBusca) {
 
-        const resultado = await axios.post("http://localhost:9000/atualizacarro", {
+        const resultado = await axios.post("http://192.168.0.150:9000/atualizacarro", {
             dados, //array dos dados
             idDaBusca //id no bd da linha que será alterada
         })
@@ -39,7 +39,7 @@ export default class BuscaBD {
 
     async DeletaImagem(dados) {
         console.log("API solicitada para remoção de imagem")
-        const resultado = await axios.post("http://localhost:9000/deletaimagens",
+        const resultado = await axios.post("http://192.168.0.150:9000/deletaimagens",
             {
                 dados
             })
@@ -50,13 +50,13 @@ export default class BuscaBD {
     async DeletaAnuncioBD(idPesquisa) {
 
         console.log("API solicitada para remoção de anuncio no BD")
-        const resultado = await axios.get(`http://localhost:9000/deletaanunciobd/${idPesquisa}`)
+        const resultado = await axios.get(`http://192.168.0.150:9000/deletaanunciobd/${idPesquisa}`)
         return resultado
     }
     async ListarAnuncios(idPesquisa) {
 
         console.log("API solicitada para remoção de anuncio no BD")
-        const resultado = await axios.get("http://localhost:9000/listaranuncios")
+        const resultado = await axios.get("http://192.168.0.150:9000/listaranuncios")
         return resultado
     }
 

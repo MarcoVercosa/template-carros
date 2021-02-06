@@ -88,7 +88,7 @@ export default function SimpleModal(props) {
             >
                 DELETAR
       </Button>
-            {/* <SimpleModal /> */}
+
         </div>
     );
 
@@ -96,7 +96,6 @@ export default function SimpleModal(props) {
         <div >
             <button type="button" onClick={handleOpen}>
                 <Button
-                    // style={{ left: "30%" }}
                     variant="contained"
                     color="secondary"
                     className={classes.button}
@@ -104,10 +103,10 @@ export default function SimpleModal(props) {
 
                 >
                     REMOVER ANÚNCIO
-      </Button>
+                </Button>
             </button>
             <Modal
-                disableBackdropClick={true}
+                disableBackdropClick={true}//não permite fechar a janela ao clicar fora dela
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="simple-modal-title"
