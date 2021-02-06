@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-
 import Formulario from "../formulario/formulario"
 
 function getModalStyle() {
@@ -60,7 +58,7 @@ export default function SimpleModal(props) {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                startIcon={<DeleteIcon />}
+
             >FECHAR
             </Button>
         </div>

@@ -751,8 +751,8 @@ export default function Formulario(props) {
                                                 return (
                                                     <>
                                                         <div class="formulario-div-formualario-form-imagem-div" >
-                                                            <a href={"http://localhost:9000/static/" + recebe} target="_blank">
-                                                                <img alt={recebe} key={recebe} src={"http://localhost:9000/static/" + recebe}></img>
+                                                            <a href={"http://192.168.0.150:9000/static/" + recebe} target="_blank">
+                                                                <img alt={recebe} key={recebe} src={"http://192.168.0.150:9000/static/" + recebe}></img>
                                                             </a>
 
                                                         </div>
