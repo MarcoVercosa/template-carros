@@ -23,7 +23,8 @@ export default function ListarAnuncios() {
         let resultado = await classBuscaBD.ListarAnuncios()
         setDadosListaAnuncio(prevState => {
             let calculaTotalPaginas = 0
-            if (resultado.data.length % 25 === 0) { calculaTotalPaginas = Math.floor(resultado.data.length / 25) } else { calculaTotalPaginas = Math.floor(resultado.data.length / 25 + 1) }
+            if (resultado.data.length % 25 === 0) { calculaTotalPaginas = resultado.data.length / 25 } else { calculaTotalPaginas = Math.floor(resultado.data.length / 25 + 1) }
+            //se total de resultados / 25 sobrar zero, então apenas divide, senão use o math, que não considera numero quebrado, e add mais 1 para bater com a sobra da página
             return {
                 ...prevState, todasPaginas: resultado, paginacao: resultado.data.slice(
                     dadosListaAnuncio.paginaRetorna, dadosListaAnuncio.paginaAvanca),
