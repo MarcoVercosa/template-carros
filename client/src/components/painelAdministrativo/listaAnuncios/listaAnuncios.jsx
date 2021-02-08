@@ -54,6 +54,9 @@ export default function ListarAnuncios() {
                         Final Placa
                 </th>
                     <th>
+                        Ativado
+                </th>
+                    <th>
                         MAIS
                 </th>
                 </tr>
@@ -72,26 +75,29 @@ export default function ListarAnuncios() {
                                 <td style={{ width: "9%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.modelo}
                                 </td>
-                                <td style={{ width: "10%" }} className="listaranuncio-table-td" key={index} >
+                                <td style={{ width: "7%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.valor}
                                 </td>
                                 <td style={{ width: "5%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.ano}
                                 </td>
-                                <td style={{ width: "15%" }} className="listaranuncio-table-td" key={index} >
+                                <td style={{ width: "12%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.motor}
                                 </td>
-                                <td style={{ width: "8%" }} className="listaranuncio-table-td" key={index} >
+                                <td style={{ width: "5.5%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.kilometro}
                                 </td>
-                                <td style={{ width: "8%" }} className="listaranuncio-table-td" key={index} >
+                                <td style={{ width: "5%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.cambio}
                                 </td>
                                 <td style={{ width: "8%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.carroceria}
                                 </td>
-                                <td style={{ width: "8%" }} className="listaranuncio-table-td" key={index} >
+                                <td style={{ width: "4%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.finalPlaca}
+                                </td>
+                                <td style={{ width: "4%" }} className="listaranuncio-table-td" key={index} >
+                                    {dados.ativado}
                                 </td>
                                 <td style={{ width: "8%" }} className="listaranuncio-table-td" key={index} >
                                     {<SimpleModal dados={dados.id} />}
@@ -103,12 +109,12 @@ export default function ListarAnuncios() {
             </table>
 
             <div className="listaranuncio-paginacao">
-                <div>
-                    <i class="fas fa-arrow-circle-left fa-3x"></i>
+                <div className="listaranuncio-paginacao-left">
+                    <i class="fas fa-arrow-circle-left fa-2x"></i>
                 </div>
 
-                <div classBuscaBD="">
-                    <i class="fas fa-arrow-circle-right fa-3x"></i>
+                <div className="listaranuncio-paginacao-rigth">
+                    <i class="fas fa-arrow-circle-right fa-2x"></i>
                 </div>
             </div>
         </>

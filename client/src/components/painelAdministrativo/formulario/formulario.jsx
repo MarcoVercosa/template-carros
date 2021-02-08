@@ -18,7 +18,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {
     TextField,
-    InputLabel, Select, FormControl
+    InputLabel, Select, FormControl, Switch, FormControlLabel
 } from '@material-ui/core/';
 
 
@@ -50,7 +50,8 @@ export default function Formulario(props) {
         carroceria: "",
         finalPlaca: 0,
         sobre: "",
-        imagensPath: false
+        imagensPath: false,
+        ativado: false
     })
 
     const [formularioOpcionais, setFormularioOpcionais] = useState({
@@ -251,7 +252,8 @@ export default function Formulario(props) {
             carroceria: resultado.data[0].carroceria,
             finalPlaca: resultado.data[0].finalPlaca,
             sobre: resultado.data[0].sobre,
-            imagensPath: JSON.parse(resultado.data[0].imagensPath) // volta a origem da transformação do JSON.stringify, voltando a ser uma array
+            imagensPath: JSON.parse(resultado.data[0].imagensPath), // volta a origem da transformação do JSON.stringify, voltando a ser uma array
+            ativado: resultado.data[0].ativado
         })
         setFormularioOpcionais({
             aceitaTroca: resultado.data[0].aceitaTroca,
@@ -818,6 +820,24 @@ export default function Formulario(props) {
                             }
                         </>
                     }
+                    <div className="formulario-select-ativado"
+                        style={{ backgroundColor: !formulario.ativado ? "rgb(232, 45, 45)" : "rgb(68, 214, 117)" }}
+                    >
+                        <FormControlLabel
+                            checked={formulario.ativado}
+                            name="ativado"
+                            value="start"
+                            control={<Switch color="primary"
+
+                                onChange={(envia) => (SetFormulario(prevState => {
+                                    return { ...prevState, ativado: envia.target.checked }
+                                }))}
+
+                            />}
+                            label="ATIVAR ANÚNCIO"
+                            labelPlacement="start"
+                        />
+                    </div>
                     <div className="formulario-div-formualario-form-botao-publicar"
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >
