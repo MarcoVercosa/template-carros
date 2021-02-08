@@ -29,12 +29,20 @@
     font-family: 'Lora', serif;
     font-size: 17px;  
 }
+.listaranuncio-paginacao-numeros{
+    color: rgb(72, 70, 70);
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-size: 25px;  
+}
 .listaranuncio-paginacao{
     padding: 20px;
-    width: 15%;
+    width: 25%;
     display: flex;
     justify-content: space-between;
-    margin: 0 auto
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .listaranuncio-paginacao div i{
     color: rgb(107, 107, 107);
