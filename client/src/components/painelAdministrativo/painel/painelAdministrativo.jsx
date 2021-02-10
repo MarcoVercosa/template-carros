@@ -24,12 +24,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Paineladministrativo() {
 
-    const [criarAnuncio, setCriarAnuncio] = useState(false)
-    const [alterarAnuncio, setAlterarAnuncio] = useState(false)
-    const [deletarAnuncio, setDeletarAnuncio] = useState(false)
-    const [listaAnuncios, setListaAnuncios] = useState(false)
-    const [dadosSite, setDadosSite] = useState(false)
+    const [componentesAdministrativos, setComponentesAdministrativos] = useState({
 
+        criarAnuncio: false,
+        alterarAnuncio: false,
+        deletarAnuncio: false,
+        listaAnuncios: false,
+        dadosSite: false,
+        mensagemRetorno: false
+    })
 
     const [mensagemDeRetorno, setMensagemDeRetorno] = useState(false)
     //recebe mensagem de sucesso ou não dos componentes
@@ -38,54 +41,63 @@ export default function Paineladministrativo() {
 
     function SelecionaFormulario(dadosBotao, recebe) {
         if (recebe === "criarAnuncio") {
-            setCriarAnuncio(true)
-            setAlterarAnuncio(false)
-            setDeletarAnuncio(false)
-            setMensagemDeRetorno(false)
-            setListaAnuncios(false)
-            setDadosSite(false)
-            return
+
+            setComponentesAdministrativos(prevState => {
+                return {
+                    ...prevState, criarAnuncio: true, alterarAnuncio: false,
+                    deletarAnuncio: false, mensagemRetorno: false, listaAnuncios: false,
+                    dadosSite: false
+                }
+            })
         }
         if (recebe === "alterarAnuncio") {
-            setCriarAnuncio(false)
-            setAlterarAnuncio(true)
-            setDeletarAnuncio(false)
-            setListaAnuncios(false)
-            setMensagemDeRetorno(false)
-            setDadosSite(false)
-            return
+            setComponentesAdministrativos(prevState => {
+                return {
+                    ...prevState, criarAnuncio: false, alterarAnuncio: true,
+                    deletarAnuncio: false, mensagemRetorno: false, listaAnuncios: false,
+                    dadosSite: false
+                }
+            })
 
 
         }
         if (recebe === "deletarAnuncio") {
-            setCriarAnuncio(false)
-            setAlterarAnuncio(false)
-            setDeletarAnuncio(true)
-            setListaAnuncios(false)
-            setMensagemDeRetorno(false)
-            setDadosSite(false)
-            return
+            setComponentesAdministrativos(prevState => {
+                return {
+                    ...prevState, criarAnuncio: false, alterarAnuncio: false,
+                    deletarAnuncio: true, mensagemRetorno: false, listaAnuncios: false,
+                    dadosSite: false
+                }
+            })
         }
         if (recebe === "listarAnuncios") {
-            setCriarAnuncio(false)
-            setAlterarAnuncio(false)
-            setDeletarAnuncio(false)
-            setListaAnuncios(true)
-            setMensagemDeRetorno(false)
-            setDadosSite(false)
+            setComponentesAdministrativos(prevState => {
+                return {
+                    ...prevState, criarAnuncio: false, alterarAnuncio: false,
+                    deletarAnuncio: false, mensagemRetorno: false, listaAnuncios: true,
+                    dadosSite: false
+                }
+            })
         }
         if (recebe === "dadosSite") {
-            setCriarAnuncio(false)
-            setAlterarAnuncio(false)
-            setDeletarAnuncio(false)
-            setListaAnuncios(false)
-            setMensagemDeRetorno(false)
-            setDadosSite(true)
+            setComponentesAdministrativos(prevState => {
+                return {
+                    ...prevState, criarAnuncio: false, alterarAnuncio: false,
+                    deletarAnuncio: false, mensagemRetorno: false, listaAnuncios: false,
+                    dadosSite: true
+                }
+            })
         }
     }
 
     function MensagemDeRetorno(mensagem) {
-        setMensagemDeRetorno(mensagem)
+
+        //atribui a mensagem de retorno no state
+        setComponentesAdministrativos(prevState => {
+            return { ...prevState, mensagemRetorno: mensagem }
+        })
+
+        //após 15 segundos retira a mensagem da tela
         setTimeout(() => {
             console.log("Timeout ")
             setMensagemDeRetorno(false)
@@ -161,7 +173,7 @@ export default function Paineladministrativo() {
 
                 <div className="seletorformulario">
 
-                    {criarAnuncio &&
+                    {componentesAdministrativos.criarAnuncio &&
                         <>
                             <h2>PUBLICADOR DE ANÚNCIOS</h2>
                             <Formulario tipoFormulario="criarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
@@ -170,7 +182,7 @@ export default function Paineladministrativo() {
                 </div>
                 <div className="seletorformulario">
 
-                    {alterarAnuncio &&
+                    {componentesAdministrativos.alterarAnuncio &&
                         <>
                             <h2>EDIÇÃO DE ANÚNCIOS</h2>
 
@@ -180,7 +192,7 @@ export default function Paineladministrativo() {
                 </div>
                 <div className="seletorformulario">
 
-                    {deletarAnuncio &&
+                    {componentesAdministrativos.deletarAnuncio &&
                         <>
                             <h2>REMOVER ANÚNCIOS</h2>
                             <Formulario tipoFormulario="deletarAnuncio" mensagemDeRetorno={MensagemDeRetorno} />
@@ -189,7 +201,7 @@ export default function Paineladministrativo() {
                 </div>
                 <div className="seletorformulario">
 
-                    {listaAnuncios &&
+                    {componentesAdministrativos.listaAnuncios &&
                         <>
                             <h2>TODOS ANÚNCIOS</h2>
                             <ListarAnuncios />
@@ -198,7 +210,7 @@ export default function Paineladministrativo() {
                 </div>
                 <div className="seletorformulario">
 
-                    {dadosSite &&
+                    {componentesAdministrativos.dadosSite &&
                         <>
                             <h2>DADOS SITE</h2>
                             <DadosSite />
