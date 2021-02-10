@@ -108,6 +108,9 @@ export default function ListarAnuncios() {
                         Final Placa
                 </th>
                     <th>
+                        Destaque
+                </th>
+                    <th>
                         Ativado
                 </th>
                     <th>
@@ -149,6 +152,9 @@ export default function ListarAnuncios() {
                                 </td>
                                 <td style={{ width: "4%" }} className="listaranuncio-table-td" key={index} >
                                     {dados.finalPlaca}
+                                </td>
+                                <td style={{ width: "4%" }} className="listaranuncio-table-td" key={index} >
+                                    {dados.destaque ? "SIM" : "NÃO"}
                                 </td>
                                 <td style={{ width: "4%", backgroundColor: dados.ativado ? " rgb(157, 213, 131)" : "rgb(216, 114, 103)" }} className="listaranuncio-table-td" key={index} >
                                     {dados.ativado ? "ATIVADO" : "DESATIVADO"}

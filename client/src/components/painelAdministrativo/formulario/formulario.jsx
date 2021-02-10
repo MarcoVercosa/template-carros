@@ -51,7 +51,8 @@ export default function Formulario(props) {
         finalPlaca: 0,
         sobre: "",
         imagensPath: false,
-        ativado: false
+        ativado: false,
+        destaque: false
     })
 
     const [formularioOpcionais, setFormularioOpcionais] = useState({
@@ -88,8 +89,8 @@ export default function Formulario(props) {
         bancosFrenteAquecimento: false,
         tracaoQuatroRodas: false,
         protetorCacamba: false,
+        blindado: false,
         farolXenonio: false,
-
     })
 
 
@@ -117,16 +118,16 @@ export default function Formulario(props) {
     }, [])
 
     useEffect(() => {
-        //se o componente listar anuncio chamar o funcionario (no caso é o modal q chama a pedido do componente listar anuncio)
-        //vai ter a props "listaranuncio" então ele vai ter tambem o id na qual vai buscar no bd e chamar a func para preeencger o formumlario
-        async function ListaAnuncioBiscaBD() {
+        //se o componente listar anuncio chamar o formulario (no caso é o modal q chama a pedido do componente listar anuncio)
+        //vai ter a props "listaranuncio" então ele vai ter tambem o id (props.dados) na qual vai buscar no bd e chamar a func para preeencger o formumlario
+        async function ListaAnuncioBuscaBD() {
             if (props.tipoFormulario === "listaranuncio") {
                 const classBuscaBD = new BuscaBD()
                 let resultado = await classBuscaBD.BuscaBDGetDados(props.dados)
                 PreencheFormulario(resultado)
             }
         }
-        ListaAnuncioBiscaBD()
+        ListaAnuncioBuscaBD()
 
     }, [])
 
@@ -253,7 +254,8 @@ export default function Formulario(props) {
             finalPlaca: resultado.data[0].finalPlaca,
             sobre: resultado.data[0].sobre,
             imagensPath: JSON.parse(resultado.data[0].imagensPath), // volta a origem da transformação do JSON.stringify, voltando a ser uma array
-            ativado: resultado.data[0].ativado
+            ativado: resultado.data[0].ativado,
+            destaque: resultado.data[0].destaque
         })
         setFormularioOpcionais({
             aceitaTroca: resultado.data[0].aceitaTroca,
@@ -289,6 +291,7 @@ export default function Formulario(props) {
             bancosFrenteAquecimento: resultado.data[0].bancosFrenteAquecimento,
             tracaoQuatroRodas: resultado.data[0].tracaoQuatroRodas,
             protetorCacamba: resultado.data[0].protetorCacamba,
+            blindado: resultado.data[0].blindado,
             farolXenonio: resultado.data[0].farolXenonio,
         })
     }
@@ -838,6 +841,26 @@ export default function Formulario(props) {
                             labelPlacement="start"
                         />
                     </div>
+
+                    <div className="formulario-select-ativado"
+                        style={{ backgroundColor: "rgb(150, 150, 170)" }}
+                    >
+                        <FormControlLabel
+                            checked={formulario.destaque}
+                            name="destaque"
+                            value="start"
+                            control={<Switch color="primary"
+
+                                onChange={(envia) => (SetFormulario(prevState => {
+                                    return { ...prevState, destaque: envia.target.checked }
+                                }))}
+
+                            />}
+                            label="DESTAQUE PÁGINA"
+                            labelPlacement="start"
+                        />
+                    </div>
+
                     <div className="formulario-div-formualario-form-botao-publicar"
                         style={{ display: "flex", justifyContent: "center", textAlign: "center" }}
                     >

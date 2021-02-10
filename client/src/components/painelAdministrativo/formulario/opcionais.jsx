@@ -389,6 +389,19 @@ function Opcionais(props) {
                         labelPlacement="start"
                     />
                 </div>
+                <div>
+                    <FormControlLabel
+                        checked={props.formulario.blindado}
+                        name="blindado"
+                        control={<Switch color="primary"
+
+                            onChange={(envia) => { props.Opcionais(envia) }}
+
+                        />}
+                        label="Blindado"
+                        labelPlacement="start"
+                    />
+                </div>
 
 
             </div>

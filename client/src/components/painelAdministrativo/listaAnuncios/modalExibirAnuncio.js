@@ -44,11 +44,7 @@ export default function SimpleModal(props) {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            {/* <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-            <SimpleModal /> */}
+
             <Formulario tipoFormulario="listaranuncio" dados={props.dados} />
 
             <Button
