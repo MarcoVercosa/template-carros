@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import "./painelAdministrativo.css"
 import Formulario from "../formulario/formulario" //FORMULARIO
 import ListarAnuncios from "../listaAnuncios/listaAnuncios"
+import DadosSite from "../dadosSite/dadosSite"
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SendIcon from '@material-ui/icons/Send';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 
 
 
@@ -26,6 +28,8 @@ export default function Paineladministrativo() {
     const [alterarAnuncio, setAlterarAnuncio] = useState(false)
     const [deletarAnuncio, setDeletarAnuncio] = useState(false)
     const [listaAnuncios, setListaAnuncios] = useState(false)
+    const [dadosSite, setDadosSite] = useState(false)
+
 
     const [mensagemDeRetorno, setMensagemDeRetorno] = useState(false)
     //recebe mensagem de sucesso ou não dos componentes
@@ -39,6 +43,7 @@ export default function Paineladministrativo() {
             setDeletarAnuncio(false)
             setMensagemDeRetorno(false)
             setListaAnuncios(false)
+            setDadosSite(false)
             return
         }
         if (recebe === "alterarAnuncio") {
@@ -47,6 +52,7 @@ export default function Paineladministrativo() {
             setDeletarAnuncio(false)
             setListaAnuncios(false)
             setMensagemDeRetorno(false)
+            setDadosSite(false)
             return
 
 
@@ -57,6 +63,7 @@ export default function Paineladministrativo() {
             setDeletarAnuncio(true)
             setListaAnuncios(false)
             setMensagemDeRetorno(false)
+            setDadosSite(false)
             return
         }
         if (recebe === "listarAnuncios") {
@@ -65,6 +72,15 @@ export default function Paineladministrativo() {
             setDeletarAnuncio(false)
             setListaAnuncios(true)
             setMensagemDeRetorno(false)
+            setDadosSite(false)
+        }
+        if (recebe === "dadosSite") {
+            setCriarAnuncio(false)
+            setAlterarAnuncio(false)
+            setDeletarAnuncio(false)
+            setListaAnuncios(false)
+            setMensagemDeRetorno(false)
+            setDadosSite(true)
         }
     }
 
@@ -126,11 +142,19 @@ export default function Paineladministrativo() {
                             style={{ backgroundColor: "rgb(241, 243, 103)" }}
                             onClick={(dadosBotao, envia = "listarAnuncios") => { SelecionaFormulario(dadosBotao, envia) }}
                             variant="contained"
-                            // color="primary"
                             className={classes.button}
                             startIcon={<FormatListNumberedIcon style={{ color: "black" }} />}
                         >
                             TODOS ANÚNCIOS
+                    </Button>
+                        <Button
+                            style={{ backgroundColor: "ORANGE" }}
+                            onClick={(dadosBotao, envia = "dadosSite") => { SelecionaFormulario(dadosBotao, envia) }}
+                            variant="contained"
+                            className={classes.button}
+                            startIcon={<SettingsApplicationsIcon style={{ color: "black" }} />}
+                        >
+                            DADOS SITE
                     </Button>
                     </div>
                 </article>
@@ -169,6 +193,15 @@ export default function Paineladministrativo() {
                         <>
                             <h2>TODOS ANÚNCIOS</h2>
                             <ListarAnuncios />
+                        </>
+                    }
+                </div>
+                <div className="seletorformulario">
+
+                    {dadosSite &&
+                        <>
+                            <h2>DADOS SITE</h2>
+                            <DadosSite />
                         </>
                     }
                 </div>
