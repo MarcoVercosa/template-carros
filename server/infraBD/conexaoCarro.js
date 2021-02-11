@@ -1,6 +1,6 @@
 const mysql = require("mysql")
 
-const conectaBD = mysql.createConnection({
+const conectaBDCarro = mysql.createConnection({
 
     host: "127.0.0.1",
     port: 3306,
@@ -10,4 +10,5 @@ const conectaBD = mysql.createConnection({
 
 })
 
-module.exports = conectaBD
+
+module.exports = conectaBDCarro

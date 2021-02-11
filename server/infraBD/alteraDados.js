@@ -1,4 +1,5 @@
-const conectaBD = require("./conexao")
+const conectaBDCarro = require("./conexaoCarro")
+const conectaBDInformacoes = require("./conexaoinformacoes")
 
 class AlteraDadosBD {
 
@@ -6,7 +7,7 @@ class AlteraDadosBD {
     Cadastra(atendimento, res) {
         console.log(atendimento)
         const sql = `INSERT INTO carros SET ?`
-        conectaBD.query(sql, atendimento, (erro, resultado) => {
+        conectaBDCarro.query(sql, atendimento, (erro, resultado) => {
 
             if (erro) {
                 // console.log("Ocorreu o seguinte erro ao cadastrar o anúncio" + erro)
@@ -22,7 +23,7 @@ class AlteraDadosBD {
     //Busca dados para alterar anúncio
     BuscaParaAlterar(atendimento, res) {
         const sql = `SELECT * FROM vendaCarro.carros WHERE id=${atendimento}`
-        conectaBD.query(sql, (erro, resultado) => {
+        conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
                 res.json("OCORREU UM ERRO AO BUSCAR DADOS PARA EDITAR ANÚNCIO: " + erro)
             } else {
@@ -36,7 +37,7 @@ class AlteraDadosBD {
     AtualizaBDDados(atendimento, idDaBusca, res) {
 
         const sql = `UPDATE carros SET ? WHERE id=${idDaBusca}`
-        conectaBD.query(sql, atendimento, (erro, resultado) => {
+        conectaBDCarro.query(sql, atendimento, (erro, resultado) => {
 
             if (erro) {
                 res.json("OCORREU UM ERRO AO ATUALIZAR ANÚNCIO: " + erro)
@@ -50,7 +51,7 @@ class AlteraDadosBD {
     DeletaAnuncioBD(idPesquisa, res) {
 
         const sql = `DELETE FROM vendaCarro.carros WHERE id=${idPesquisa}`
-        conectaBD.query(sql, (erro, resultado) => {
+        conectaBDCarro.query(sql, (erro, resultado) => {
 
             if (erro) {
                 res.json("OCORREU UM ERRO AO DELETAR ANÚNCIO: " + erro)
@@ -65,7 +66,7 @@ class AlteraDadosBD {
     ListarAnuncios(res) {
 
         const sql = `SELECT * FROM vendaCarro.carros`
-        conectaBD.query(sql, (erro, resultado) => {
+        conectaBDCarro.query(sql, (erro, resultado) => {
 
             if (erro) {
                 res.json("Ocorreu o seguinte erro ao listar as tabelas: " + erro)
