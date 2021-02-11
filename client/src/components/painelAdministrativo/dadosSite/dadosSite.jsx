@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./dadosSite.css"
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,8 +51,8 @@ export default function DadosSite(props) {
 
                 <form className="dadossite-article-div-form">
 
-
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <h4 className="dadossite-article-div-form-h4"> REDES SOCIAIS / EMAIL</h4>
+                    <TextField style={{ marginLeft: '20px', width: '18%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, whatsapp: envia.target.value }
@@ -68,7 +69,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '18%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, facebook: envia.target.value }
@@ -85,7 +86,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '18%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, youtube: envia.target.value }
@@ -102,7 +103,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '18%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, instagram: envia.target.value }
@@ -119,7 +120,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '18%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, email: envia.target.value }
@@ -138,6 +139,7 @@ export default function DadosSite(props) {
                     />
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
+                    <h4 className="dadossite-article-div-form-h4"> CONTATO LOJA 1 </h4>
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -155,7 +157,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '27%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, horarioFuncionamentoUm: envia.target.value }
@@ -225,7 +227,7 @@ export default function DadosSite(props) {
                     />
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
-
+                    <h4 className="dadossite-article-div-form-h4"> CONTATO LOJA 2 </h4>
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -243,7 +245,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '27%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, horarioFuncionamentoDois: envia.target.value }
@@ -314,7 +316,7 @@ export default function DadosSite(props) {
 
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
-
+                    <h4 className="dadossite-article-div-form-h4"> CONTATO LOJA 3 </h4>
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -332,7 +334,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '27%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, horarioFuncionamentoTres: envia.target.value }
@@ -403,7 +405,7 @@ export default function DadosSite(props) {
 
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
-
+                    <h4 className="dadossite-article-div-form-h4"> CONTATO LOJA 4 </h4>
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
@@ -421,7 +423,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ marginLeft: '20px', width: '27%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, horarioFuncionamentoQuatro: envia.target.value }
@@ -493,7 +495,7 @@ export default function DadosSite(props) {
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
 
-
+                    <h4 className="dadossite-article-div-form-h4"> SOBRE</h4>
                     <TextField style={{ marginLeft: '20px', width: '55%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
