@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 
 function getModalStyle() {
@@ -92,8 +95,9 @@ export default function SimpleModal(props) {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-
-            {imagens.imagensBD &&
+            <h2 style={{ display: "flex", justifyContent: "center", textAlign: "center", color: "rgb(121, 121, 121)" }}>As imagens abaixo serão apresentadas no SlideShow principal da HOME.</h2>
+            {
+                imagens.imagensBD &&
                 imagens.imagensBD.map((recebe) => {
                     <div class="modalImagensSlide]-div" >
                         <a href={"http://192.168.0.150:9000/static/" + recebe} target="_blank">
@@ -104,7 +108,6 @@ export default function SimpleModal(props) {
             }
             <div className="modalImagensSlide-previewUpload-div">
                 {imagens.imagensAdicionadas &&
-
                     <PreviewImagem />
                 }
             </div>
@@ -123,14 +126,28 @@ export default function SimpleModal(props) {
                     }}
                 />
                 <label htmlFor="contained-button-file">
-                    <Button variant="contained" color="primary" component="span"
-                        style={{ left: "45%", top: "5%" }}
+                    <Button variant="contained" color="primary" component="span" startIcon={<AddAPhotoIcon />}
+                        style={{ left: "23%", top: "5%" }}
                     >
                         Upload
                     </Button>
                 </label>
+                <label htmlFor="contained-button-file">
+                    <Button variant="contained" component="span" startIcon={<SaveIcon />}
+                        style={{ left: "23%", top: "5%", backgroundColor: "#52af52", color: "white" }}
+                    >
+                        SALVAR ALTERAÇÕES
+                    </Button>
+                </label>
+                <label htmlFor="contained-button-file">
+                    <Button variant="contained" color="secondary" component="span" startIcon={<CancelIcon />}
+                        style={{ left: "23%", top: "5%" }}
+                    >
+                        CANCELAR ALTERAÇÕES
+                    </Button>
+                </label>
             </div>
-        </div>
+        </div >
     );
 
     return (
@@ -138,7 +155,7 @@ export default function SimpleModal(props) {
 
             <i class="fas fa-camera-retro fa-2x" style={{}}
                 onClick={handleOpen}
-            >SLIDE SHOW</i>
+            >  SLIDE SHOW</i>
             <Modal
                 open={open}
                 onClose={handleClose}

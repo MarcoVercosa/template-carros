@@ -8,6 +8,7 @@
     background-color: rgb(208, 207, 203);
     border-radius: 15px;
     padding: 15px;
+    color: #52af52
 }
 
 .dadossite-article-div-form{
@@ -29,13 +30,12 @@
 }
 .fa-camera-retro:hover {
     -webkit-transform: scale(1.5);
-    transform: scale(1.3);
+    transform: scale(1.1);
  }
 
 .modalImagensSlide-previewUpload-div img{
     display: flex;    
-    justify-content: center;
-    text-align: center;
+
     margin: 20px auto;   
     width: 65%;
     border-radius: 15px;
