@@ -137,7 +137,7 @@ export default function Formulario(props) {
     //########################  FUNÇÕES PARA CADASTRO //########################
     //########################  FUNÇÕES PARA CADASTRO //########################
 
-    function PreviewImagem() { //Gera preview da simagens ao adicioná-las
+    function PreviewImagem() { //Gera preview das imagens ao adicioná-las
         var armazena = []
         for (var i = 0; i < formulario.imagensPath.length; i++) {
             armazena.push(

@@ -98,7 +98,7 @@ module.exports = (app) => {
 
     app.get("/listaranuncios", (req, res) => {
 
-        console.log("Solicitar listar todos anuncios")
+        console.log("Solicitado listar todos anuncios")
         const resultado = (AlteraDadosBD.ListarAnuncios(res))
     })
 
@@ -106,6 +106,19 @@ module.exports = (app) => {
     //deixa a pasta upload das imagens online
     app.use("/static", express.static("./uploads/images"))
 
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                                                          //
+    //                 PAINEL CONFIGURACAO SITE                 //
+    //                                                          //
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
 
+    app.get("/buscainfosite", (req, res) => {
+
+        console.log("Solicitado informaçoes do site")
+        const resultado = (AlteraDadosBD.GetInfoSite(req.params.id, res))
+
+    })
 
 }

@@ -60,6 +60,15 @@ export default class BuscaBD {
         return resultado
     }
 
+    //////////////////////////////////////////////////////////////
+    //                  PAINEL CONFIGURACAO SITE                //
+    //////////////////////////////////////////////////////////////
+
+    async GetInfoSite(idPesquisa) {
+        console.log("API solicitada para requisição de informações do site")
+        const resultado = await axios.get(`http://192.168.0.150:9000/buscainfosite`)
+        return resultado
+    }
 
 }
 

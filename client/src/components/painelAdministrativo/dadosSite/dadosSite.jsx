@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./dadosSite.css"
+import SimpleModal from "./modalImagensSlide"
 
+
+import BuscaBD from "../../fetchBackEnd/api"
 
 import { makeStyles } from '@material-ui/core/styles';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {
     TextField,
-    InputLabel, Select, FormControl, Switch, FormControlLabel
+    Button
 } from '@material-ui/core/';
 
 
 export default function DadosSite(props) {
+
+    const useStyles = makeStyles((theme) => ({
+        button: {
+            margin: theme.spacing(1),
+        },
+    }));
+    const classes = useStyles();
 
     const [formulario, SetFormulario] = useState({
 
@@ -38,10 +49,49 @@ export default function DadosSite(props) {
         localQuatro: "",
         cepQuatro: "",
         telefoneQuatro: "",
-        sobreNos: ""
-
-
+        sobreNos: "",
+        imagensSlide: ""
     })
+
+    useEffect(async () => {
+
+        const classBuscaBD = new BuscaBD
+        const resultado = await classBuscaBD.GetInfoSite()
+        PolulaFormulario(resultado)
+
+    }, [])
+
+    function PolulaFormulario(resultado) {
+        SetFormulario({
+            whatsapp: resultado.data[0].whatsapp,
+            facebook: resultado.data[0].facebook,
+            youtube: resultado.data[0].youtube,
+            instagram: resultado.data[0].instagram,
+            email: resultado.data[0].email,
+            lojaUm: resultado.data[0].lojaUm,
+            horarioFuncionamentoUm: resultado.data[0].horarioFuncionamentoUm,
+            localUm: resultado.data[0].localUm,
+            cepUm: resultado.data[0].cepUm,
+            telefoneUm: resultado.data[0].telefoneUm,
+            lojaDois: resultado.data[0].lojaDois,
+            horarioFuncionamentoDois: resultado.data[0].horarioFuncionamentoDois,
+            localDois: resultado.data[0].localDois,
+            cepDois: resultado.data[0].cepDois,
+            telefoneDois: resultado.data[0].telefoneDois,
+            lojaTres: resultado.data[0].lojaTres,
+            horarioFuncionamentoTres: resultado.data[0].horarioFuncionamentoTres,
+            localTres: resultado.data[0].localTres,
+            cepTres: resultado.data[0].cepTres,
+            telefoneTres: resultado.data[0].telefoneTres,
+            lojaQuatro: resultado.data[0].lojaQuatro,
+            horarioFuncionamentoQuatro: resultado.data[0].horarioFuncionamentoQuatro,
+            localQuatro: resultado.data[0].localQuatro,
+            cepQuatro: resultado.data[0].cepQuatro,
+            telefoneQuatro: resultado.data[0].telefoneQuatro,
+            sobreNos: resultado.data[0].sobreNos,
+            imagensSlide: resultado.data[0].imagensSlide
+        })
+    }
 
     return (
 
@@ -516,10 +566,28 @@ export default function DadosSite(props) {
                         }}
                     />
 
+                    <hr style={{ marginTop: "20px" }}></hr>
+                    <hr style={{ marginBottom: "20px" }}></hr>
 
+                    <h4 className="dadossite-article-div-form-h4"> SLIDE PÁGINA INICIAL </h4>
+
+                    <div>
+                        <SimpleModal imagens={formulario.imagensSlide} />
+                    </div>
 
                 </form>
+            </div>
 
+            <div style={{ display: "block", justifyContent: "center", textAlign: "center", margin: "30px auto" }}>
+                <Button
+
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<CloudUploadIcon />}
+                >
+                    ALTERAR INFORMAÇÕES
+            </Button>
             </div>
 
         </article>
