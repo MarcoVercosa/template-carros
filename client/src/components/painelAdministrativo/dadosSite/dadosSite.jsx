@@ -55,6 +55,12 @@ export default function DadosSite(props) {
         imagensSlide: false
     })
 
+    const [imagensModal, setImagensModal] = useState({
+        imagensBD: false,
+        imagensAdicionadas: false,
+        imagensDeletadasBD: []
+    })
+
     useEffect(async () => {
 
         const classBuscaBD = new BuscaBD
@@ -91,19 +97,38 @@ export default function DadosSite(props) {
             cepQuatro: resultado.data[0].cepQuatro,
             telefoneQuatro: resultado.data[0].telefoneQuatro,
             sobreNos: resultado.data[0].sobreNos,
-            imagensSlide: resultado.data[0].imagensSlide
+            imagensSlide: resultado.data[0].imagensSlide ? JSON.parse(resultado.data[0].imagensSlide) : ""
         })
     }
 
     async function DadosModal(dados) {
+
+        setImagensModal(prevState => {
+            return {
+                ...prevState, imagensBD: dados.imagensBD,
+                imagensAdicionadas: dados.imagensAdicionadas, imagensDeletadasBD: dados.imagensDeletadasBD
+            }
+        })
+
+        SetFormulario(prevState => {
+            return { ...prevState, imagensSlide: dados.imagensBD }
+        })
+
+    }
+
+
+
+
+    async function AtualizaDadosBD() {
+
         const dadosImagens = new FormData()
         const classBuscaBD = new BuscaBD
         let caminhoImagensMulter = [] //armazena nomes das imagens no storage
 
-        if (dados.imagensAdicionadas.length > 0) {
+        if (imagensModal.imagensAdicionadas.length > 0) {
             //se houver imagens a serem ADICIONADAS, adicione-as no Multer
-            for (var i = 0; i < dados.imagensAdicionadas.length; i++) {
-                dadosImagens.append("files", dados.imagensAdicionadas[i])
+            for (var i = 0; i < imagensModal.imagensAdicionadas.length; i++) {
+                dadosImagens.append("files", imagensModal.imagensAdicionadas[i])
                 //para enviar imagens tem q ser pelo FormData
                 //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
             }
@@ -112,43 +137,44 @@ export default function DadosSite(props) {
                 caminhoImagensMulter.push(recebe.filename)
             })
         }
-        if (dados.imagensDeletadas.length > 0) {
+        if (imagensModal.imagensDeletadasBD.length > 0) {
             //se houverem imagens a serem DELETADAS do MULTER
             //obs. magens deletadas que devem ser atualizadas no BD ja foi feita no Onclick no Modal no dados.imagensBD
-            const resultado = await classBuscaBD.DeletaImagem(dados.imagensDeletadas)
+            const resultado = await classBuscaBD.DeletaImagem(imagensModal.imagensDeletadasBD)
             //no node executa um loop executando uma por uma da array
             AtualizaImagensBD(caminhoImagensMulter)
         } else {
             AtualizaImagensBD(caminhoImagensMulter)
         }
     }
-
-
     async function AtualizaImagensBD(caminhoImagensMulter) {
+        const classBuscaBD = new BuscaBD
+        var tempFormulario = formulario
 
-        if (caminhoImagensMulter) {//se houver imagens guardadas no storage
-            if (formulario.imagensSlide) { //se houver imagens no BD
-                var stringFy = JSON.stringify(formulario.imagensSlide.concat(caminhoImagensMulter))
+        if (caminhoImagensMulter) {//se houver imagens que foram add no storage
+            if (tempFormulario.imagensSlide) { //se houver imagens no BD
+                var stringFy = JSON.stringify(tempFormulario.imagensSlide.concat(caminhoImagensMulter))
+                //transforma o json novamente em string. o Concat  add os valores da array 
+                //caminhoImagensMulter tambem o transformando e string permitindo tornar uma única array. parecido com o Objetc-consign
             }
             else {
                 var stringFy = JSON.stringify(caminhoImagensMulter)
+                //se não houver dados no bd de imagens, então add as imagens do upload
             }
 
-            //transforma o json novamente em string. o Concat  add os valores da array 
-            //caminhoImagensMulter tambem o transformando e string permitindo tornar uma única array. parecido com o Objetc-consign
+
         } else {
-            stringFy = JSON.stringify(formulario.imagensSlide) //Só transforma o json novamente em string
+            stringFy = JSON.stringify(tempFormulario.imagensSlide) //se o cliente não solicitou add imagens
+            //Só transforma o json novamente em string
         }
-        SetFormulario(prevState => {
-            return { ...prevState, imagensSlide: stringFy }
-        })
+        // SetFormulario(prevState => {
+        //     return { ...prevState, imagensSlide: stringFy }
+        // })
 
-    }
+        tempFormulario = { ...tempFormulario, imagensSlide: stringFy }
 
-    async function AtualizaDadosBD() {
 
-        const classBuscaBD = new BuscaBD
-        const resultado = await classBuscaBD.GravaInfoSite(formulario)
+        const resultado = await classBuscaBD.GravaInfoSite(tempFormulario)
         console.log(resultado)
 
     }

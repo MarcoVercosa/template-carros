@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function SimpleModal(props) {
+export default function SimpleModal(props) {
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
@@ -59,7 +59,10 @@ function SimpleModal(props) {
 
         if (props.imagensSlideBD) {
             setImagens(prevState => {
-                return { ...prevState, imagensBD: JSON.parse(props.imagensSlideBD) }
+                // return { ...prevState, imagensBD: JSON.parse(props.imagensSlideBD) }
+                return {
+                    ...prevState, imagensBD: props.imagensSlideBD
+                }
             })
         }
 
@@ -69,7 +72,7 @@ function SimpleModal(props) {
 
         imagensBD: false,
         imagensAdicionadas: false,
-        imagensDeletadas: false
+        imagensDeletadasBD: []
 
     })
 
@@ -124,7 +127,18 @@ function SimpleModal(props) {
 
                             <img alt={recebe} key={index} src={"http://192.168.0.150:9000/static/" + recebe}></img>
 
-                            <i class="fas fa-trash fa-2x trash-imagembd"></i>
+                            <i class="fas fa-trash fa-2x trash-imagembd"
+                                onClick={() => {//retira as imagens que são deletadas ao click
+                                    setImagens(prevState => {
+                                        return { ...prevState, imagensBD: imagens.imagensBD.filter(dados => dados !== recebe) }
+                                    })
+
+                                    setImagens(prevState => {//atualiza a var que possui as imagens do BD
+                                        return { ...prevState, imagensDeletadasBD: [...imagens.imagensDeletadasBD, recebe] }
+                                    })
+                                }}
+
+                            ></i>
 
                         </div>
                     )
@@ -212,4 +226,4 @@ function SimpleModal(props) {
     );
 }
 
-export default memo(SimpleModal)
+// export default memo(SimpleModal)

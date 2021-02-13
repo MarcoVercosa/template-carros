@@ -38,7 +38,7 @@ module.exports = (app) => {
     app.post("/deletaimagens", (req, res) => {
         //deleta imagens do storage
         console.log("Solicitado remocao de imagem" + req.body)
-        console.log(req.body)
+        console.log(req.body.dados)
         for (var i = 0; i < req.body.dados.length; i++) {
             var erro = false
             var sucesso = false
@@ -122,6 +122,7 @@ module.exports = (app) => {
     app.post("/gravainfosite", (req, res) => {
 
         console.log("Solicitado GRAVAÇÃO de informaçoes do site")
+        // console.log(req.body.dados)
         const resultado = AlteraDadosBD.GravaInfoSite(req.body.dados, res)
 
     })
