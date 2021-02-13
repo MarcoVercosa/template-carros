@@ -29,7 +29,7 @@ module.exports = (app) => {
     app.post("/cadastraimagem", upload, (req, res) => {
         console.log("Solicitado post de IMAGENS")
         // console.log(req.files)
-        //PRECISSA TRATAR ERROS
+        //PRECISA TRATAR ERROS
         console.log("IMAGENS RECEBIDAS")
         console.log(req.files)
         res.json(req.files)
@@ -44,7 +44,6 @@ module.exports = (app) => {
             var sucesso = false
 
             fs.unlink(`./uploads/images/${req.body.dados[i]}`, function (err) {
-
                 if (err) {
                     erro = err
                 } else {
@@ -59,7 +58,6 @@ module.exports = (app) => {
             res.json(sucesso)
         }
     })
-
 
 
     //cadastra anuncio no BD
@@ -118,6 +116,13 @@ module.exports = (app) => {
 
         console.log("Solicitado informaçoes do site")
         const resultado = (AlteraDadosBD.GetInfoSite(req.params.id, res))
+
+    })
+
+    app.post("/gravainfosite", (req, res) => {
+
+        console.log("Solicitado GRAVAÇÃO de informaçoes do site")
+        const resultado = AlteraDadosBD.GravaInfoSite(req.body.dados, res)
 
     })
 

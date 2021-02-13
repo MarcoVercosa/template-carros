@@ -102,7 +102,19 @@ class AlteraDadosBD {
                 res.json(resultado)
             }
         })
+    }
 
+    GravaInfoSite(dados, res) {
+
+        const sql = `UPDATE informacoes SET ? WHERE id=1`
+        conectaBDCarro.query(sql, dados, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações do site: " + erro)
+            } else {
+                // console.log(resultado)
+                res.json(resultado)
+            }
+        })
     }
 
 }

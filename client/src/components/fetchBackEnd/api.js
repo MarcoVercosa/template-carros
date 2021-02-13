@@ -67,6 +67,15 @@ export default class BuscaBD {
     async GetInfoSite(idPesquisa) {
         console.log("API solicitada para requisição de informações do site")
         const resultado = await axios.get(`http://192.168.0.150:9000/buscainfosite`)
+        console.log(resultado)
+        return resultado
+    }
+    async GravaInfoSite(dados) {
+        console.log("API solicitada para gravação de informações do site no BD")
+        const resultado = await axios.post(`http://192.168.0.150:9000/gravainfosite`, {
+            dados
+        })
+        console.log(resultado)
         return resultado
     }
 

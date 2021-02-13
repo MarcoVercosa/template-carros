@@ -33,14 +33,58 @@
     transform: scale(1.1);
  }
 
-.modalImagensSlide-previewUpload-div img{
-    display: flex;    
 
-    margin: 20px auto;   
+.formulario-div-formualario-form-imagem-div{
+    display: flex;
+    width: 100% !important;
+    height: 75% !important; 
+}
+.formulario-div-formualario-form-imagem-div img{
+    margin-left: 17% ;   
+    margin-bottom: 10px;
+    width: 65%;
+    border-radius: 15px;
+    transition: all 0.5s;
+
+    
+}
+
+
+.modalImagensSlide-previewUpload-div img{
+    display: inline-block; 
+    margin-left: 17% ;   
     width: 65%;
     border-radius: 15px;
     transition: all 0.5s;
 }
+
+
 .modalImagensSlide-previewUpload-div img:hover{
     opacity: 0.8;
+}
+.trash-preview-modal{
+vertical-align: top;
+margin-left: 3%;
+margin-top: 2%;
+cursor: pointer !important;
+transition: all 0.5s;
+}
+
+.trash-imagembd{
+    vertical-align: top;
+    margin-left: 3%;
+    margin-top: 2%;
+    height: 10%;;
+    cursor: pointer !important;
+    transition: all 0.5s;
+}
+
+.trash-preview-modal:hover{
+    color: red;
+    transform: scale(1.2);
+}
+
+.trash-imagembd:hover{
+    color: red;
+    transform: scale(1.2);
 }

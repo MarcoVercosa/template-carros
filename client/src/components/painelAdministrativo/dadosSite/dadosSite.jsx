@@ -4,6 +4,8 @@ import SimpleModal from "./modalImagensSlide"
 
 
 import BuscaBD from "../../fetchBackEnd/api"
+import FormData from 'form-data' //FormData classe que permite o multer identificar as imagens recebidas
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -50,7 +52,7 @@ export default function DadosSite(props) {
         cepQuatro: "",
         telefoneQuatro: "",
         sobreNos: "",
-        imagensSlide: ""
+        imagensSlide: false
     })
 
     useEffect(async () => {
@@ -91,6 +93,64 @@ export default function DadosSite(props) {
             sobreNos: resultado.data[0].sobreNos,
             imagensSlide: resultado.data[0].imagensSlide
         })
+    }
+
+    async function DadosModal(dados) {
+        const dadosImagens = new FormData()
+        const classBuscaBD = new BuscaBD
+        let caminhoImagensMulter = [] //armazena nomes das imagens no storage
+
+        if (dados.imagensAdicionadas.length > 0) {
+            //se houver imagens a serem ADICIONADAS, adicione-as no Multer
+            for (var i = 0; i < dados.imagensAdicionadas.length; i++) {
+                dadosImagens.append("files", dados.imagensAdicionadas[i])
+                //para enviar imagens tem q ser pelo FormData
+                //primeiro coloca eles numa array com o loop for. Necessário quando é mais de uma imagem
+            }
+            const retornaImagenslLocationNodeMulter = await classBuscaBD.CadastraImagemMulter(dadosImagens)
+            retornaImagenslLocationNodeMulter.data.map((recebe) => {
+                caminhoImagensMulter.push(recebe.filename)
+            })
+        }
+        if (dados.imagensDeletadas.length > 0) {
+            //se houverem imagens a serem DELETADAS do MULTER
+            //obs. magens deletadas que devem ser atualizadas no BD ja foi feita no Onclick no Modal no dados.imagensBD
+            const resultado = await classBuscaBD.DeletaImagem(dados.imagensDeletadas)
+            //no node executa um loop executando uma por uma da array
+            AtualizaImagensBD(caminhoImagensMulter)
+        } else {
+            AtualizaImagensBD(caminhoImagensMulter)
+        }
+    }
+
+
+    async function AtualizaImagensBD(caminhoImagensMulter) {
+
+        if (caminhoImagensMulter) {//se houver imagens guardadas no storage
+            if (formulario.imagensSlide) { //se houver imagens no BD
+                var stringFy = JSON.stringify(formulario.imagensSlide.concat(caminhoImagensMulter))
+            }
+            else {
+                var stringFy = JSON.stringify(caminhoImagensMulter)
+            }
+
+            //transforma o json novamente em string. o Concat  add os valores da array 
+            //caminhoImagensMulter tambem o transformando e string permitindo tornar uma única array. parecido com o Objetc-consign
+        } else {
+            stringFy = JSON.stringify(formulario.imagensSlide) //Só transforma o json novamente em string
+        }
+        SetFormulario(prevState => {
+            return { ...prevState, imagensSlide: stringFy }
+        })
+
+    }
+
+    async function AtualizaDadosBD() {
+
+        const classBuscaBD = new BuscaBD
+        const resultado = await classBuscaBD.GravaInfoSite(formulario)
+        console.log(resultado)
+
     }
 
     return (
@@ -572,7 +632,7 @@ export default function DadosSite(props) {
                     <h4 className="dadossite-article-div-form-h4"> SLIDE PÁGINA INICIAL </h4>
 
                     <div>
-                        <SimpleModal imagens={formulario.imagensSlide} />
+                        <SimpleModal imagensSlideBD={formulario.imagensSlide} DadosModal={DadosModal} />
                     </div>
 
                 </form>
@@ -585,6 +645,7 @@ export default function DadosSite(props) {
                     color="primary"
                     className={classes.button}
                     startIcon={<CloudUploadIcon />}
+                    onClick={AtualizaDadosBD}
                 >
                     ALTERAR INFORMAÇÕES
             </Button>

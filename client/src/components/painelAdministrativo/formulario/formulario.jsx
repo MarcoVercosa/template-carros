@@ -202,7 +202,7 @@ export default function Formulario(props) {
                                     setEditarImagens((prevState => {
                                         temp = armazena.filter((recebe => recebe !== dados))
                                         return { ...prevState, imagensAdicionadas: temp }
-                                    }))  //armazena a imagem deletada   
+                                    }))  //armazena a imagem diferente da deletada   
 
                                 }}
                             ></i>
@@ -317,16 +317,17 @@ export default function Formulario(props) {
             // AtualizaTabelas(caminhoImagensMulter)
         }
         //se houver imagens a serem DELETADAS, delete-as no Storage
+        //Obs, a atualização das imagens no BD ja é feita no onClick do botão
         if (editarImagens.imagensDeletadas.length > 0) {
             const resultado = await classBuscaBD.DeletaImagem(editarImagens.imagensDeletadas)
             console.log(resultado)
-            AtualizaTabelas(caminhoImagensMulter)
+            AtualizaTabelasBD(caminhoImagensMulter)
         } else {
-            AtualizaTabelas(caminhoImagensMulter)
+            AtualizaTabelasBD(caminhoImagensMulter)
         }
 
         //depois update dados  do anúncio no BD incluindo retirar as deletadas do BD
-        async function AtualizaTabelas(caminhoImagensMulter) {
+        async function AtualizaTabelasBD(caminhoImagensMulter) {
 
             var formularioTemp = formulario
 
@@ -767,9 +768,9 @@ export default function Formulario(props) {
 
                                                                     setEditarImagens((prevState => {
                                                                         return { ...prevState, imagensDeletadas: [...editarImagens.imagensDeletadas, recebe] }
-                                                                    }))  //armazena a imagem deletada   
+                                                                    }))  //armazena a imagem deletada para deletar no Multer
 
-                                                                    //Já Atualiza o formulario com as imagens NÃO DELETADAS
+                                                                    //Já Atualiza o formulario com as imagens NÃO DELETADAS que vai para o BD
                                                                     var atualiza = formulario.imagensPath.filter(temp => temp !== recebe)
                                                                     SetFormulario((prevState => {
                                                                         return { ...prevState, imagensPath: atualiza }
