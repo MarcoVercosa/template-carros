@@ -59,7 +59,7 @@ export default function SimpleModal(props) {
 
         if (props.imagensSlideBD) {
             setImagens(prevState => {
-                // return { ...prevState, imagensBD: JSON.parse(props.imagensSlideBD) }
+
                 return {
                     ...prevState, imagensBD: props.imagensSlideBD
                 }
@@ -70,9 +70,9 @@ export default function SimpleModal(props) {
 
     const [imagens, setImagens] = useState({
 
-        imagensBD: false,
-        imagensAdicionadas: false,
-        imagensDeletadasBD: []
+        imagensBD: false,//imagens vindas do BD
+        imagensAdicionadas: false, //imagens adicionadas pelo upload
+        imagensDeletadasBD: [] // imagens deletadas do BD
 
     })
 
@@ -128,12 +128,12 @@ export default function SimpleModal(props) {
                             <img alt={recebe} key={index} src={"http://192.168.0.150:9000/static/" + recebe}></img>
 
                             <i class="fas fa-trash fa-2x trash-imagembd"
-                                onClick={() => {//retira as imagens que são deletadas ao click
+                                onClick={() => {//retira as imagens vindas do BD que são deletadas ao click
                                     setImagens(prevState => {
                                         return { ...prevState, imagensBD: imagens.imagensBD.filter(dados => dados !== recebe) }
                                     })
 
-                                    setImagens(prevState => {//atualiza a var que possui as imagens do BD
+                                    setImagens(prevState => {//armazena a var com imagens deletadas do BD para excluir do storage
                                         return { ...prevState, imagensDeletadasBD: [...imagens.imagensDeletadasBD, recebe] }
                                     })
                                 }}
@@ -157,9 +157,14 @@ export default function SimpleModal(props) {
                     id="contained-button-file"
                     multiple
                     type="file"
-                    onChange={(imagens) => {
+                    onChange={(imagensUpload) => {
+                        if (imagens.imagensBD.length + imagensUpload.target.files.length > 7) {
+                            alert("Adicione no máximo 7 imagens")
+                            return
+                        }
                         setImagens(prevState => {
-                            return { ...prevState, imagensAdicionadas: imagens.target.files }
+                            //adiciona as imagens do upload
+                            return { ...prevState, imagensAdicionadas: imagensUpload.target.files }
                         })
                     }}
                 />

@@ -56,8 +56,8 @@ export default function DadosSite(props) {
     })
 
     const [imagensModal, setImagensModal] = useState({
-        imagensBD: false,
-        imagensAdicionadas: false,
+        imagensBD: [],
+        imagensAdicionadas: [],
         imagensDeletadasBD: []
     })
 
@@ -109,14 +109,12 @@ export default function DadosSite(props) {
                 imagensAdicionadas: dados.imagensAdicionadas, imagensDeletadasBD: dados.imagensDeletadasBD
             }
         })
-
+        //ja atualiza a string de imagens que vem do BD com as alteraçõe do modal
         SetFormulario(prevState => {
             return { ...prevState, imagensSlide: dados.imagensBD }
         })
 
     }
-
-
 
 
     async function AtualizaDadosBD() {
@@ -139,7 +137,7 @@ export default function DadosSite(props) {
         }
         if (imagensModal.imagensDeletadasBD.length > 0) {
             //se houverem imagens a serem DELETADAS do MULTER
-            //obs. magens deletadas que devem ser atualizadas no BD ja foi feita no Onclick no Modal no dados.imagensBD
+            //obs. imagens deletadas que devem ser atualizadas no BD ja foi feita no Onclick no Modal no dados.imagensBD
             const resultado = await classBuscaBD.DeletaImagem(imagensModal.imagensDeletadasBD)
             //no node executa um loop executando uma por uma da array
             AtualizaImagensBD(caminhoImagensMulter)
@@ -167,9 +165,6 @@ export default function DadosSite(props) {
             stringFy = JSON.stringify(tempFormulario.imagensSlide) //se o cliente não solicitou add imagens
             //Só transforma o json novamente em string
         }
-        // SetFormulario(prevState => {
-        //     return { ...prevState, imagensSlide: stringFy }
-        // })
 
         tempFormulario = { ...tempFormulario, imagensSlide: stringFy }
 
@@ -656,6 +651,9 @@ export default function DadosSite(props) {
                     <hr style={{ marginBottom: "20px" }}></hr>
 
                     <h4 className="dadossite-article-div-form-h4"> SLIDE PÁGINA INICIAL </h4>
+                    <p
+                        style={{ color: "grey" }}
+                    >{formulario.imagensSlide.length + imagensModal.imagensAdicionadas.length < 1 ? 0 : formulario.imagensSlide.length + imagensModal.imagensAdicionadas.length} IMAGENS</p>
 
                     <div>
                         <SimpleModal imagensSlideBD={formulario.imagensSlide} DadosModal={DadosModal} />

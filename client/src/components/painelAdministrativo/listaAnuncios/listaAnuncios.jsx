@@ -71,7 +71,7 @@ export default function ListarAnuncios() {
     }
 
     return (
-        <>
+        <article className="listaranuncio-article">
             {dadosListaAnuncio.todasPaginas &&
                 <h3 className="listaranuncio-h3">{dadosListaAnuncio.todasPaginas.data.length} ANÚNCIOS</h3>
             }
@@ -186,7 +186,7 @@ export default function ListarAnuncios() {
                         class="fas fa-arrow-circle-right fa-2x"></i>
                 </div>
             </div>
-        </>
+        </article>
     )
 
 }
