@@ -156,17 +156,24 @@ display: block;
 
 .modal div{
   position: fixed;
-  width: 50%;
-  height: 70%;
-  margin: 10% 25% 25% 15%;
-  left: 10%;
+  width: 80%;
+  height: 87%;
+  margin: 3% 25% 25% 7%;
+  left: 5%;
   justify-content: center;
   text-align: center;
-  background-color:rgb(207, 211, 219);
+  background-color:rgb(255, 255, 255);
   border-radius: 15px;
   overflow: auto;
   opacity: 1;
   
+  
+}
+
+.abrirModal-div{
+  border-color: rgb(63, 63, 63) ;
+  border-style: groove;
+  border-width: 5px;
 }
 
 .modal:target {
@@ -177,8 +184,8 @@ display: block;
 .fechar {
   position: fixed;
   width: 30px;
-  right: 30%;
-  top: 22%;
+  right: 12%;
+  top: 17%;
 }
 
 .fechar button{
@@ -196,15 +203,21 @@ color: white
 }
 
 .formulario-div-formualario-form-imagem-div{
-  display: inline-block;
-  justify-content: left !important;  
+  display: inline !important;
   position: static !important;;
   margin: 0  0 0 0px  !important;
-  width: 75% !important;
-  height: 55% !important;  
+  /* width: 40% !important;
+  height: 55% !important;   */
   animation-duration: 500ms !important;;
-  animation-name: preview !important;;
+  animation-name: preview !important;
+  overflow: hidden !important;
 }  
+
+.formulario-div-formualario-form-imagem-div img{
+  display: inline-block !important;
+  width: 75% !important;
+  margin: 0  !important;
+}
 
 @keyframes preview {
   from {
@@ -216,10 +229,10 @@ color: white
 }
 
 .icon-trash{
-color:white;
-margin-top: 100% !important;
-cursor: pointer;
-transition: all ease-in-out 0.5s;
+
+color:rgb(106, 106, 106) ;
+cursor: pointer ;
+transition: all ease-in-out 0.5s ;
 }
 
 .icon-trash:hover{
@@ -242,12 +255,12 @@ transition: all ease-in-out 0.5s;
 .modalbotao-salvar{
   position: static !important;
   display: inline-block !important;;
-  margin: 10px 0 25px 0  !important;
+  margin: 50px 0 -90px -70px  !important;
   height: 24% !important;
   overflow: hidden !important;
 }
 
-.input-imagens-edicao::before{
+/* .input-imagens-edicao::before{
   content: 'Selecione Imagens'!important;
   display: inline-block !important;
   background: linear-gradient(top, #f9f9f9, #e3e3e3)!important;
@@ -261,6 +274,11 @@ transition: all ease-in-out 0.5s;
   text-shadow: 1px 1px #fff !important;
   font-weight: 700 !important;
   font-size: 10pt !important;
+} */
+
+.input-imagens-edicao{
+  width: 95px;
+
 }
 
 .formulario-div-formualario-form-label-plus-imagens {

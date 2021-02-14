@@ -749,7 +749,7 @@ export default function Formulario(props) {
 
                             {abreModal &&
                                 <div id="abrirModal" class="modal">
-                                    <div >
+                                    <div className="abrirModal-div" >
                                         <a href="#fechar" title="Fechar" class="fechar">
                                             <button type="button">X</button>
                                         </a>

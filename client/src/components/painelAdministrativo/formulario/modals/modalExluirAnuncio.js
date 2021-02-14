@@ -74,6 +74,7 @@ export default function SimpleModal(props) {
                 onClick={async () => {
 
                     const resultado = await RemoverAnuncio(props.buscaParaAlterar, props.formulario.imagensPath)
+                    //envia id do anuncio e imagens do BD
                     if (resultado.data.affectedRows > 0) {
                         let mensagem = `ANÚNCIO ID: ${props.buscaParaAlterar} REMOVIDO COM SUCESSO !!!`
                         props.mensagemDeRetorno(mensagem)
