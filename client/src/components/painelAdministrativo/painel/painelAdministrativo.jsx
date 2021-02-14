@@ -100,7 +100,9 @@ export default function Paineladministrativo() {
         //após 15 segundos retira a mensagem da tela
         setTimeout(() => {
             console.log("Timeout ")
-            setMensagemDeRetorno(false)
+            setComponentesAdministrativos(prevState => {
+                return { ...prevState, mensagemRetorno: false }
+            })
         }, 15000)
     }
 
@@ -112,7 +114,7 @@ export default function Paineladministrativo() {
                 <div className="paineladministrativo-div">
                     <h2>Bem vindo ao PAINEL ADMINISTRATIVO DE OFERTAS</h2>
                 </div>
-                <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: mensagemDeRetorno ? "flex" : "none" }}>{mensagemDeRetorno}</div>
+                <div className="paineladministrativo-div-mensagem" id="inicio" style={{ display: componentesAdministrativos.mensagemRetorno ? "flex" : "none" }}>{componentesAdministrativos.mensagemRetorno}</div>
                 {/* Se mensagemDeRetorno houver dados flex, senão none */}
 
                 <article className="paineladministrativo-article">
@@ -213,7 +215,7 @@ export default function Paineladministrativo() {
                     {componentesAdministrativos.dadosSite &&
                         <>
                             <h2>DADOS SITE</h2>
-                            <DadosSite />
+                            <DadosSite mensagemDeRetorno={MensagemDeRetorno} />
                         </>
                     }
                 </div>

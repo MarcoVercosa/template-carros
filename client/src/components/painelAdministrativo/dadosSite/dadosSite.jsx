@@ -170,14 +170,14 @@ export default function DadosSite(props) {
 
 
         const resultado = await classBuscaBD.GravaInfoSite(tempFormulario)
-        console.log(resultado)
-
+        window.location.href = ("#inicio")
+        props.mensagemDeRetorno(resultado.data)
     }
 
     return (
 
         <article className="dadossite-article">
-
+            <h3>{imagensModal.mensagemGravacao}</h3>
             <div className="dadossite-article-div">
 
                 <form className="dadossite-article-div-form">

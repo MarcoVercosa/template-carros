@@ -407,7 +407,12 @@ export default function Formulario(props) {
 
                     var resultado = await CriaAnuncio(event, formulario, formularioOpcionais)
                     // let mensagem = `${resultado.data.mensagem} ID: {resultado.data.resultado.insertId}`
-                    props.mensagemDeRetorno(`${resultado.data.mensagem} ID do anúncio: ${resultado.data.resultado.insertId}`)
+                    if (resultado.data.resultado) {
+                        props.mensagemDeRetorno(`${resultado.data.mensagem} ID do anúncio: ${resultado.data.resultado.insertId}`)
+                    } else {
+                        props.mensagemDeRetorno(`${resultado.data}`)
+                    }
+
                 }}>
 
                 {/* <form className="paineladministrativo-div-formualario-form" method="post" enctype="multipart/form-data"> */}
@@ -896,7 +901,7 @@ export default function Formulario(props) {
                             <>
 
                                 <ModalExcluirAnuncio
-                                    buscaParaAlterar={buscaParaAlterar} formulario={formulario} mensagemDeRetorno={props.mensagemDeRetorno} MostrarTopoPaginaComMensagem={MostrarTopoPaginaComMensagem}
+                                    buscaParaAlterar={buscaParaAlterar} formulario={formulario} MostrarTopoPaginaComMensagem={MostrarTopoPaginaComMensagem}
                                 />
                             </>
                         }

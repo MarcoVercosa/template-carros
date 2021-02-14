@@ -112,7 +112,7 @@ class AlteraDadosBD {
                 res.json("Ocorreu o seguinte erro ao buscar informações do site: " + erro)
             } else {
                 // console.log(resultado)
-                res.json(resultado)
+                res.json("Dados gravados no Banco de dados com sucesso !")
             }
         })
     }
