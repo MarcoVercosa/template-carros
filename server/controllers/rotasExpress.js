@@ -3,6 +3,7 @@ const AlteraDadosBD = require("../infraBD/alteraDados") //importa class para alt
 const path = require('path') //lib que gerencia extenções de arquivos. Usado no Multer
 const multer = require("multer") // upload de imagens
 const fs = require("fs") //gerenciamento de arquivos no disco
+const alteraDados = require("../infraBD/alteraDados")
 
 //conf MULTER
 const storage = multer.diskStorage({
@@ -124,6 +125,22 @@ module.exports = (app) => {
         console.log("Solicitado GRAVAÇÃO de informaçoes do site")
         // console.log(req.body.dados)
         const resultado = AlteraDadosBD.GravaInfoSite(req.body.dados, res)
+
+    })
+
+
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                                                          //
+    //                 FORNECE INFORMAÇÕES AO SITE              //
+    //                                                          //
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+
+    app.get("/imagensslideprincipal", (req, res) => {
+
+        console.log("SOLICITADO IMAGENS SLIDE PRINCIPAL")
+        const resultado = AlteraDadosBD.ImagensSlidePrincipal(res)
 
     })
 

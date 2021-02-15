@@ -79,5 +79,17 @@ export default class BuscaBD {
         return resultado
     }
 
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                 FORNECE INFORMAÇÕES AO SITE              //
+    //////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+
+    async ImagensSlidePrincipal() {
+        console.log("API solicitada busca imagens slide principal")
+        const resultado = await axios.get("http://192.168.0.150:9000/imagensslideprincipal")
+        return resultado
+    }
+
 }
 

@@ -117,5 +117,28 @@ class AlteraDadosBD {
         })
     }
 
+
+
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                 FORNECE INFORMAÇÕES AO SITE              //
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+
+
+    ImagensSlidePrincipal(res) {
+        console.log("BAteu BD")
+        const sql = "SELECT imagensSlide FROM vendaCarro.informacoes WHERE id=1"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações do site: " + erro)
+            } else {
+                console.log(resultado)
+                res.json(resultado)
+            }
+        })
+
+    }
+
 }
 module.exports = new AlteraDadosBD

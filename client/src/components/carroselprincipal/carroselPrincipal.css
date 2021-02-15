@@ -9,21 +9,70 @@
     justify-content: center;
     text-align: center;
     position: relative;
-    height: 400px;
+    height: 490px;
     width: 80%;
     margin:0 auto
 }
 
 .CarroselPrincipal-article-div img{
+    display: inline-block;
     border-radius: 25px;
     position: absolute;
     height: 100%;
     width: 100%;  
     opacity: 0;  
-    object-fit: cover;
+    /* object-fit: cover;  */
+    /* imagem cobre melhor a div */
     transition: opacity 1s;
+    box-shadow: 5px -9px 3px rgb(51, 51, 51);
+    
 }
 
 .CarroselPrincipal-article-div img.selected{
     opacity: 1;
+}
+
+.divdirecaoSlideRigth{
+    position: absolute;
+    left: 88%;
+    height: 90%;
+    width: 10%;
+    display: table;
+  
+    transition: 500ms all;
+    
+    opacity: 0.5;
+ 
+}
+.divdirecaoSlideLeft{
+    position: absolute;
+    right: 88.0%;
+    height: 90%;
+    width: 10%;
+    display: table;
+
+    transition: 500ms ease-in-out;
+    opacity: 0.5;
+}
+.divdirecaoSlide:hover{
+   
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.setaavanca{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;   
+    color:rgb(255, 255, 255);
+    transform: scale(1.1);
+    cursor: pointer
+}
+.setaretorna{
+
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color:rgb(253, 253, 253);
+    cursor: pointer
 }
