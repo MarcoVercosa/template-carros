@@ -9,8 +9,8 @@
     justify-content: center;
     text-align: center;
     position: relative;
-    height: 490px;
-    width: 80%;
+    height: 440px;
+    width: 90%;
     margin:0 auto
 }
 
@@ -24,7 +24,7 @@
     /* object-fit: cover;  */
     /* imagem cobre melhor a div */
     transition: opacity 1s;
-    box-shadow: 5px -9px 3px rgb(51, 51, 51);
+    /* box-shadow: 5px -9px 3px rgb(51, 51, 51); */
     
 }
 
@@ -73,6 +73,6 @@
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    color:rgb(253, 253, 253);
+    color:rgb(255, 255, 255);
     cursor: pointer
 }
