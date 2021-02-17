@@ -4,7 +4,8 @@
     height: 100%;
     margin: 0 auto;
    margin-top: 50px;
-   /* background-color: red; */
+  
+
 }
 .destaques-article-div-inicio{
     display: flex;
@@ -12,12 +13,13 @@
     margin-left: 15px;
     
 }
-.destaques-h2{
+.destaques-h3{
     display: flex; 
     margin-left: 70px;
     color: rgb(63, 60, 60);
     font-family: 'Lora', serif;
     font-size: 25px;   
+    font-weight: 500;
     margin: 0 
 }
 .destaques-article-div-grid{
@@ -30,14 +32,20 @@
     
 }
 .destaques-article-div-grid-div{
+    margin: 0 auto;
     height: 100%;
     margin-bottom: 0px;
-    transition: all 0.5s;
-    
+    padding: 4px;
+    background-color: rgb(255, 255, 255);   
+    transition: all 0.5s;   
+    border-radius: 10px; 
+  
 }
 .destaques-article-div-grid-div:hover{
-    transform: scale(1.02);
+    background-color: rgb(240, 240, 240);
+    
 }
+
 
 .destaques-article-div-grid-imagem {
     width: 100%;
@@ -45,24 +53,32 @@
     
 }
 .destaques-article-div-grid-imagem a img{
-    border-radius: 15px;
+    
     width: 100% ;
-    height: 100%;    
-
+    height: 100%;
+    transition: all 0.5s;
+    border-radius: 15px;
 }
 
+
 .destaques-article-div-grid-imagem-info{
-    background-color: rgb(211, 211, 211);
-    /* background-color: rgb(226, 226, 226); */
+    /* background-color: rgb(223, 223, 223); */
     margin-top: 5px;
-    border-radius: 15px;
-    
+    border-radius: 15px; 
+    border:  1px ;
+    border-style: dashed;
+    color: rgb(221, 221, 221)
+}
+.destaques-article-div-grid-imagem-info hr{
+    border-bottom: 1px;
+    border-style: dashed;
+    color: rgb(202, 202, 202)
 }
 
 .destaques-article-div-grid-div-p{
     display: block;
     padding-top: 10px;
-    color: #333333;
+    color: rgb(100, 100, 100);;
     font-family: 'Lora', serif;
     font-size: 18px;   
     font-weight: 700;
@@ -80,9 +96,13 @@
     margin: 5px 0;
     color: rgb(100, 100, 100);
     font-family: 'Lora', serif;
-    font-size: 18px;   
+    font-size: 15px;  
+     
 }
 .destaques-article-div-navegacao{
-    display: inline-block;
-    margin-top: 55%;
+    
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 5%
 }

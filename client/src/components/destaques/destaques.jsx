@@ -66,7 +66,7 @@ export default function Destaques(dados) {
     return (
         <article className="destaques-article">
 
-            <h2 className="destaques-h2">VEÍCULOS EM DESTAQUE</h2>
+            <h3 className="destaques-h3">VEÍCULOS EM DESTAQUE</h3>
             <div className="destaques-article-div-inicio">
                 <TextField
                     style={{ width: "30%" }}
@@ -101,7 +101,7 @@ export default function Destaques(dados) {
                                 </div>
                                 <div className="destaques-article-div-grid-imagem-info">
                                     <span className="destaques-article-div-grid-div-p">{dados.modelo}</span>
-                                    <hr></hr>
+                                    <hr />
                                     <span className="destaques-article-div-grid-div-p-p">R$ {dados.valor},00</span>
                                     <hr />
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.motor}</span>
@@ -117,7 +117,7 @@ export default function Destaques(dados) {
 
                 }
             </div>
-            <div classBuscaBD="destaques-article-div-navegacao">
+            <div className="destaques-article-div-navegacao">
                 <Button
                     onClick={(click, direcao = "voltar") => {
                         Paginacao(direcao)
