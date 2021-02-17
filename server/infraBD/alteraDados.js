@@ -136,7 +136,19 @@ class AlteraDadosBD {
                 res.json(resultado)
             }
         })
+    }
 
+    DestaquesHome(res) {
+        const sql = "SELECT * FROM vendaCarro.carros WHERE destaque=1"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações do site: " + erro)
+            } else {
+                res.json(resultado)
+            }
+
+        })
     }
 
 }

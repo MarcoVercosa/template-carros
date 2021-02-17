@@ -1,6 +1,6 @@
 .destaques-article{
     /* display: flex; */
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
    margin-top: 50px;
    /* background-color: red; */
@@ -18,4 +18,61 @@
     font-family: 'Lora', serif;
     font-size: 25px;   
     margin: 0 
+}
+.destaques-article-div-grid{
+    margin-top: 50px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 22% 22% 22% 22%;
+    grid-gap: 4%;     
+}
+.destaques-article-div-grid-div{
+    height: 110%;
+    margin-bottom: 40px;
+    transition: all 0.5s;
+}
+.destaques-article-div-grid-div:hover{
+    transform: scale(1.1);
+}
+
+.destaques-article-div-grid-imagem {
+    width: 100%;
+    height: 50%;
+}
+.destaques-article-div-grid-imagem a img{
+    border-radius: 15px;
+    width: 100% ;
+    height: 100%;    
+
+}
+
+.destaques-article-div-grid-imagem-info{
+    background-color: rgb(211, 211, 211);
+    /* background-color: rgb(226, 226, 226); */
+    margin-top: 5px;
+    border-radius: 15px;
+}
+
+.destaques-article-div-grid-div-p{
+    display: block;
+    padding-top: 10px;
+    color: #333333;
+    font-family: 'Lora', serif;
+    font-size: 18px;   
+    font-weight: 700;
+}
+.destaques-article-div-grid-div-p-p{
+    display: block;
+    margin: 5px 0;
+    color:rgb(20, 81, 214);
+    font-family: 'Lora', serif;
+    font-size: 18px;   
+    font-weight: 700;
+}
+.destaques-article-div-grid-div-p-p-p , spam{
+    display: block;
+    margin: 5px 0;
+    color: rgb(100, 100, 100);
+    font-family: 'Lora', serif;
+    font-size: 18px;   
 }

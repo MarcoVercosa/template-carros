@@ -85,9 +85,15 @@ export default class BuscaBD {
     //////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
 
-    async ImagensSlidePrincipal() {
+    async ImagensSlidePrincipal() {//get imagens slide principal HOME
         console.log("API solicitada busca imagens slide principal")
         const resultado = await axios.get("http://192.168.0.150:9000/imagensslideprincipal")
+        return resultado
+    }
+
+    async BuscaDestaque() {//get destaques home
+        console.log("API solicitada busca DESTAQUES HOME")
+        const resultado = await axios.get("http://192.168.0.150:9000/destaqueshome")
         return resultado
     }
 

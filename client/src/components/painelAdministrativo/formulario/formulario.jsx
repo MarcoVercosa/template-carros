@@ -792,7 +792,20 @@ export default function Formulario(props) {
 
                                         <PreviewImagemEdicao />
 
+                                        <div className="modalbotao-salvar">
 
+                                            <label className="formulario-div-formualario-form-label-plus-imagens">
+                                                ADICIONAR IMAGENS:
+                                            </label>
+                                            <hr></hr>
+                                            <input className="input-imagens-edicao" type="file" name="file" multiple="multiple"
+                                                onChange={(envia) => {
+                                                    setEditarImagens(prevState => {
+                                                        return { ...prevState, imagensAdicionadas: envia.target.files }
+                                                    })
+                                                }}
+                                            ></input>
+                                        </div>
                                         <div className="modalbotao-salvar" >
                                             <Button
                                                 variant="contained"
@@ -809,20 +822,6 @@ export default function Formulario(props) {
                                                 }} >
                                                 SALVAR
                                             </Button>
-                                        </div>
-                                        <div className="modalbotao-salvar">
-
-                                            <label className="formulario-div-formualario-form-label-plus-imagens">
-                                                ADICIONAR IMAGENS:
-                                            </label>
-                                            <hr></hr>
-                                            <input className="input-imagens-edicao" type="file" name="file" multiple="multiple"
-                                                onChange={(envia) => {
-                                                    setEditarImagens(prevState => {
-                                                        return { ...prevState, imagensAdicionadas: envia.target.files }
-                                                    })
-                                                }}
-                                            ></input>
                                         </div>
                                     </div>
                                 </div>

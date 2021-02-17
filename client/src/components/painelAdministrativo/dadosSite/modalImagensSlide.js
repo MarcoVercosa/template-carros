@@ -91,22 +91,24 @@ export default function SimpleModal(props) {
         armazena.map((dados, index) => {
             push.push(
                 <>
-                    <img alt={index} key={index} className="" src={URL.createObjectURL(dados)} />
-                    <i alt={index} key={index} class="fas fa-trash fa-2x trash-preview-modal"
-                        onClick={(recebe) => {
 
-                            //armazena somente as imagens diferentes da excluída
-                            setImagens(prevState => {
-                                return {
-                                    ...prevState, imagensAdicionadas: armazena.filter((temp => temp !== dados)),
-                                }
-                            })
-                        }}
-                    ></i>
+                    <div className="formulario-div-formualario-form-imagem-div">
+                        <img alt={index} key={index} className="" src={URL.createObjectURL(dados)} />
+                        <i alt={index} key={index} class="fas fa-trash fa-2x trash-imagembd"
+                            onClick={(recebe) => {
+
+                                //armazena somente as imagens diferentes da excluída
+                                setImagens(prevState => {
+                                    return {
+                                        ...prevState, imagensAdicionadas: armazena.filter((temp => temp !== dados)),
+                                    }
+                                })
+                            }}
+                        ></i>
+                    </div>
                 </>
             )
         })
-
 
         return (
             <>
@@ -124,6 +126,7 @@ export default function SimpleModal(props) {
             {imagens.imagensBD &&
                 imagens.imagensBD.map((recebe, index) => {
                     return (
+
                         <div class="formulario-div-formualario-form-imagem-div" >
 
                             <img alt={recebe} key={index} src={"http://192.168.0.150:9000/static/" + recebe}></img>
@@ -142,14 +145,16 @@ export default function SimpleModal(props) {
                             ></i>
 
                         </div>
+
+
                     )
                 })
             }
-            <div className="modalImagensSlide-previewUpload-div">
-                {imagens.imagensAdicionadas &&
-                    <PreviewImagem />
-                }
-            </div>
+            {/* <div className="modalImagensSlide-previewUpload-div"> */}
+            {imagens.imagensAdicionadas &&
+                <PreviewImagem />
+            }
+            {/* </div> */}
 
             <div className={classes.root}>
                 <input
@@ -171,30 +176,25 @@ export default function SimpleModal(props) {
                 />
                 <label htmlFor="contained-button-file">
                     <Button variant="contained" color="primary" component="span" startIcon={<AddAPhotoIcon />}
-                        style={{ left: "23%", top: "5%" }}
+                        style={{ left: "8%", top: "5%" }}
                     >
-                        Upload
+                        UPLOAD ARQUIVOS
                     </Button>
                 </label>
 
                 <Button
-                    style={{ left: "23%", top: "5%", backgroundColor: "#52af52", color: "black" }}
+                    style={{ left: "13%", top: "5%", backgroundColor: "#52af52", color: "black" }}
                     startIcon={<SaveIcon />}
                     variant="contained"
                     className={classes.button}
                     onClick={() => {
                         props.DadosModal(imagens)
                         handleClose()
-                    }
-
-                    }
-
-
-
+                    }}
                 >SALVAR ALTERAÇÕES
             </Button>
                 <Button
-                    style={{ left: "23%", top: "5%" }}
+                    style={{ left: "17%", top: "5%" }}
                     startIcon={<SaveIcon />}
                     color="secondary"
                     variant="contained"
@@ -231,5 +231,3 @@ export default function SimpleModal(props) {
         </div>
     );
 }
-
-// export default memo(SimpleModal)
