@@ -1,0 +1,50 @@
+footer{
+display: flex;
+margin-top: 50px;
+height: 250px;
+background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
+align-items: center;
+}
+
+.footer-div{
+display: flex;
+width: 85%;
+height: 70%;
+margin: 0 auto;
+align-items: center;
+}
+.footer-div ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-div-empresa ul li{
+    margin: 16% 0%;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: 300ms ease-in-out;
+}
+.footer-div-empresa ul li:hover{
+    color:rgb(160, 160, 160)
+}
+.footer-div-empresa hr{   
+    border-bottom: 0.1em;
+    border-style:groove;
+}
+.footer-div-empresa{
+    margin-left: 6%;
+    width: 50%;
+}
+
+.footer-div-sobre{
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    margin-left: 3%;
+}
+
+
+
+
+

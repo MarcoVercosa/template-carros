@@ -149,4 +149,9 @@ module.exports = (app) => {
         const resultado = AlteraDadosBD.DestaquesHome(res)
     })
 
+    app.get("/menuslidefooter", (req, res) => {
+        console.log("SOLICITADO MENU, SLIDE e FOOTER para HOME")
+        const resultado = AlteraDadosBD.MenuSlideFooter(res)
+    })
+
 }

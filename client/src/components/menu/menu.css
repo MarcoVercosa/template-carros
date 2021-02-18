@@ -23,7 +23,7 @@
     vertical-align: middle;
     position: absolute; 
     right: 5%; 
-    top: -5px;  
+    top: 7px;  
 }
 
 .menu-header-div-contato-redes-sociais .fa-facebook{
@@ -81,13 +81,8 @@
 }
 
 .menu-head-div ul li:hover{
-    /* border-width: 0 0 2px 0;
-    border-style: solid;
-  border-color: rgb(157, 157, 160); */
-  /* background-color: rgb(182, 182, 182); */
-  /* padding: 5px; */
-  
-  transform: scale(1.1);
+ 
+  transform: scale(1.01);
   filter: drop-shadow(15px 10px 5px rgba(0,0,0,.5));
   
 

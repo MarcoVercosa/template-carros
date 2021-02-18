@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import SloganLeft from "./sloganLeft.png"
 import TextField from '@material-ui/core/TextField';
 import "./menu.css"
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function Menu() {
+export default function Menu(props) {
 
 
     return (
@@ -48,22 +48,25 @@ export default function Menu() {
                     <ul>
                         <li>
                             INÍCIO
-                </li>
+                        </li>
                         <li>
                             VEÍCULOS
-                </li>
+                        </li>
+                        <li>
+                            BLINDADOS
+                        </li>
                         <li>
                             VENDER
-                </li>
+                        </li>
                         <li>
                             FINANCIAR
-                </li>
+                        </li>
                         <li>
                             LOCALIZAÇÃO
-                </li>
+                        </li>
                         <li>
                             SOBRE NÓS
-                </li>
+                        </li>
                         <li><Link to="/paineladministrativo">
                             CONTATO
                             </Link>

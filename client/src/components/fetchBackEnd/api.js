@@ -97,5 +97,11 @@ export default class BuscaBD {
         return resultado
     }
 
+    async MenuSlideFooter() {//get destaques home
+        console.log("API solicitada busca MENU, SLIDE e FOOTER para HOME")
+        const resultado = await axios.get("http://192.168.0.150:9000/menuslidefooter")
+        return resultado
+    }
+
 }
 
