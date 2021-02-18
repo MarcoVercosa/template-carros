@@ -21,8 +21,8 @@ function App() {
 
   return (
     <div className="App">
-      <Menu />
-      <CarroselPrincipal dados={dadosHome} />
+      <Menu dados={dadosHome} />
+      <CarroselPrincipal />
       <Destaques />
       <Footer dados={dadosHome} />
     </div>

@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import "./footer.css"
 
 export default function Footer(props) {//recebe do app dados so BD  coluna sobreNos
-    console.log(props)
+
 
     const [sobreNos, setSobreNos] = useState(false)
 

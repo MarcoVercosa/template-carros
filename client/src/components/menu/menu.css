@@ -1,31 +1,37 @@
 
-.menu-header-div-contato{
-    display: flex;
- 
-    background-color: rgb(174, 171, 171);    
-}
-.menu-header-div-contato-tel{
 
+.menu-header-div-contato{
+    display: flex; 
+    background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
+}
+.menu-header-div-contato div{
+    /* margin-right: 10%; */
 }
 
 .menu-header-div-contato ul{
     list-style: none;
     display: flex;
-    gap: 40px;
+    gap: 8px;
     flex-direction: row;
-    font-size: 13px;
+    font-size: 11px;
+    color: white;
+}
+.menu-header-div-contato i{
+    color: white
 }
 
 .menu-header-div-contato-redes-sociais{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
     position: absolute; 
-    right: 5%; 
+    right: 2%; 
     top: 7px;  
 }
-
+.menu-header-div-contato-redes-sociais ul{
+    display: flex;
+    gap: 15px
+}
+.menu-header-div-contato-redes-sociais .fa-whatsapp{
+    color: green;
+}
 .menu-header-div-contato-redes-sociais .fa-facebook{
     color: rgb(62, 62, 223)
 }
@@ -37,14 +43,23 @@
     color: rgb(220, 68, 68)
 }
 
+.menu-header-div{
+    margin-top: -20px;
+
+    opacity: 0.8;
+    position: fixed;
+    z-index: 5000;
+    width: 100%;
+    transition: 1.4s ease-in-out;      
+}
 
 .menu-header{
-     display: flex;
-    /* justify-content: space-between; */ 
+    display: flex;    
     background-color: rgb(211, 210, 210);
-    background-image: linear-gradient(to bottom, rgb(235, 234, 234), rgb(201, 201, 201));
+    background-image: linear-gradient(to bottom, rgb(157, 157, 157), rgb(109, 109, 109));
     width: 100%; 
-    height: 82px;       
+    height: 82px; 
+    
 }
 
 
@@ -61,7 +76,6 @@
     
 }
 
-
 .menu-head-div ul{
     display: flex;
     flex-direction: row;
@@ -69,28 +83,24 @@
     justify-content: center ;
     text-align: center;
     position: relative;
-    padding: 0;
-    
+    padding: 0;    
 }
 .menu-head-div ul li{
     margin: 10px;
     transition: all 0.3s;
     font-family: 'Lora', serif;
     font-size: 17px;
-    
+    color: white    
 }
 
-.menu-head-div ul li:hover{
- 
+.menu-head-div ul li:hover{ 
   transform: scale(1.01);
-  filter: drop-shadow(15px 10px 5px rgba(0,0,0,.5));
-  
-
+  filter: drop-shadow(15px 10px 5px rgba(0,0,0,.5)); 
 }
 
 .menu-spam-search{
     position: relative;
-    top: 16px;
-    left:11%;
-    color: rgb(162, 159, 159)
+    top: 14px;
+    left:14%;
+    color: rgb(237, 237, 237)
 }

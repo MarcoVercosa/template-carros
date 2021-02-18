@@ -2,7 +2,7 @@ footer{
 display: flex;
 margin-top: 50px;
 height: 250px;
-background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
+background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(118, 118, 118));
 align-items: center;
 }
 
