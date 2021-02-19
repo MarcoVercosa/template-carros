@@ -1,27 +1,26 @@
 
 
 .menu-header-div-contato{
-    display: flex; 
+    /* display: flex;  */
+    display: grid;
+    grid-auto-columns:  auto;
+    grid-auto-flow: column;
     background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
     /* justify-content: space-between; */
 }
 .menu-header-div-contato div{
-    /* display: flex;  */
-    margin:0 auto;
-    border-left: 1px solid rgb(121, 121, 121);
-    width: 25%;
-       
+    width: 100%;
+    border-left: 1px solid rgb(121, 121, 121);       
 }
 
 .menu-header-div-contato ul{
-    width: 100%;
-    padding: 0px;
-    margin-left: 2%;
-    margin-right: 3%;
+
+    display: flex; 
+    width: auto;
+    padding-left: 0px;
     list-style: none;
-    display: flex;
-    justify-content: space-between;    
-    gap: 8px;
+    justify-content: center; 
+    gap: 12px; 
     font-size: 11px;
     color: white;
 }
@@ -33,15 +32,15 @@
 }
 
 .menu-header-div-contato-redes-sociais{
-    display: flex;
+    /* display: flex; */
 
 }
 .menu-header-div-contato-redes-sociais ul{
-    display: flex;
+    /* display: flex;
     vertical-align: middle;
     margin-left: 5%;
     gap: 15px;
-    padding: 0
+    padding: 0 */
 }
 .menu-header-div-contato-redes-sociais .fa-whatsapp{
     color: green;
