@@ -49,7 +49,7 @@ export default function Menu(props) {
         } else {
             document.getElementById("menu-header-div").className = ""
         }
-        console.log(document.documentElement.scrollTop)
+        // console.log(document.documentElement.scrollTop)
     })
 
     return (
@@ -103,7 +103,7 @@ export default function Menu(props) {
                             </ul>
                         </div>
                     }
-                    {contatos.dadosLojQuatro &&
+                    {contatos.dadosLojaQuatro &&
                         <div className="menu-header-div-contato-tel-tres">
                             <ul>
                                 <li>
@@ -122,22 +122,22 @@ export default function Menu(props) {
                         <ul>
                             {contatos.dadosLojaWhatsApp &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].whatsapp}><i class="fab fa-whatsapp fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].whatsapp} target="_blank"><i class="fab fa-whatsapp fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaFacebook &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].facebook}> <i class="fab fa-facebook fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].facebook} target="_blank"> <i class="fab fa-facebook fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaInstagram &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].instagram}> <i class="fab fa-instagram fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].instagram} target="_blank" > <i class="fab fa-instagram fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaYouTube &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].youtube}> <i class="fab fa-youtube fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].youtube} target="_blank"> <i class="fab fa-youtube fa-3x"></i></a>
                                 </li>
                             }
                         </ul>
@@ -180,10 +180,10 @@ export default function Menu(props) {
                         </ul>
                     </div>
 
-                    <div style={{ marginLeft: "80px" }} className="head-div-search">
+                    <div style={{ marginLeft: "60px" }} className="head-div-search">
 
                         <TextField
-                            style={{ marginTop: "13px", position: "absolute", width: "17%" }}
+                            style={{ marginTop: "13px", position: "absolute", width: "15%" }}
                             label="BUSCAR"
                             id="outlined-size-small"
                             defaultValue=""

@@ -3,31 +3,45 @@
 .menu-header-div-contato{
     display: flex; 
     background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
+    /* justify-content: space-between; */
 }
 .menu-header-div-contato div{
-    /* margin-right: 10%; */
+    /* display: flex;  */
+    margin:0 auto;
+    border-left: 1px solid rgb(121, 121, 121);
+    width: 25%;
+       
 }
 
 .menu-header-div-contato ul{
+    width: 100%;
+    padding: 0px;
+    margin-left: 2%;
+    margin-right: 3%;
     list-style: none;
     display: flex;
+    justify-content: space-between;    
     gap: 8px;
-    flex-direction: row;
     font-size: 11px;
     color: white;
+}
+.menu-header-div-contato ul li{
+    
 }
 .menu-header-div-contato i{
     color: white
 }
 
 .menu-header-div-contato-redes-sociais{
-    position: absolute; 
-    right: 2%; 
-    top: 7px;  
+    display: flex;
+
 }
 .menu-header-div-contato-redes-sociais ul{
     display: flex;
-    gap: 15px
+    vertical-align: middle;
+    margin-left: 5%;
+    gap: 15px;
+    padding: 0
 }
 .menu-header-div-contato-redes-sociais .fa-whatsapp{
     color: green;
@@ -64,7 +78,7 @@
 
 
 .menu-div-slogan-left{
-    width: 150px;      
+    width: 10%;      
 }
 .menu-div-slogan-left img{
     width: 100%;
@@ -72,12 +86,16 @@
     height: 100%;
 }
 .menu-head-div {
+    display: flex;
+    
     width: 65%;
     
 }
 
 .menu-head-div ul{
+    margin-left: 15px;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     list-style: none;   
     justify-content: center ;
@@ -86,11 +104,13 @@
     padding: 0;    
 }
 .menu-head-div ul li{
-    margin: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
     transition: all 0.3s;
     font-family: 'Lora', serif;
     font-size: 17px;
-    color: white    
+    color: white  ;
+    cursor:pointer
 }
 
 .menu-head-div ul li:hover{ 
@@ -101,6 +121,6 @@
 .menu-spam-search{
     position: relative;
     top: 14px;
-    left:14%;
+    left:12%;
     color: rgb(237, 237, 237)
 }
