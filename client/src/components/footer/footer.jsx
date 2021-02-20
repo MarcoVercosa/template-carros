@@ -1,15 +1,19 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, memo } from 'react';
 import "./footer.css"
+import BuscaBD from "../fetchBackEnd/api"
 
-export default function Footer(props) {//recebe do app dados so BD  coluna sobreNos
+function Footer(props) {//recebe do app dados so BD  coluna sobreNos
 
 
     const [sobreNos, setSobreNos] = useState(false)
 
-    useEffect(() => {
-        if (props.dados.data) {
-            setSobreNos(props.dados)
-        }
+    useEffect(async () => {
+        // if (props.dados.data) {
+        //     setSobreNos(props.dados)
+        // }
+        const classBuscaBD = new BuscaBD()
+        const resultado = await classBuscaBD.Footer()
+        setSobreNos(resultado)
 
     }, [props])
 
@@ -34,7 +38,7 @@ export default function Footer(props) {//recebe do app dados so BD  coluna sobre
                         </li>
                         <hr />
                         <li>
-                            Veículos
+                            Estoque
                         </li>
                         <hr />
                     </ul>
@@ -71,5 +75,5 @@ export default function Footer(props) {//recebe do app dados so BD  coluna sobre
             </div>
         </footer>
     )
-
 }
+export default memo(Footer)

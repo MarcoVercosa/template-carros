@@ -85,6 +85,12 @@ export default class BuscaBD {
     //////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
 
+    async Contato() {//get contatos home
+        console.log("API solicitada CONTATO")
+        const resultado = await axios.get("http://192.168.0.150:9000/contato")
+        return resultado
+    }
+
     async ImagensSlidePrincipal() {//get imagens slide principal HOME
         console.log("API solicitada busca imagens slide principal")
         const resultado = await axios.get("http://192.168.0.150:9000/imagensslideprincipal")
@@ -97,9 +103,9 @@ export default class BuscaBD {
         return resultado
     }
 
-    async MenuSlideFooter() {//get destaques home
-        console.log("API solicitada busca MENU, SLIDE e FOOTER para HOME")
-        const resultado = await axios.get("http://192.168.0.150:9000/menuslidefooter")
+    async Footer() {//get rodapé home
+        console.log("API solicitada FOOTER")
+        const resultado = await axios.get("http://192.168.0.150:9000/footer")
         return resultado
     }
 

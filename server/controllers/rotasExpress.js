@@ -137,6 +137,11 @@ module.exports = (app) => {
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
 
+    app.get("/contato", (req, res) => {
+        console.log("CONTATO para HOME")
+        const resultado = AlteraDadosBD.Contato(res)
+    })
+
     app.get("/imagensslideprincipal", (req, res) => {
 
         console.log("SOLICITADO IMAGENS SLIDE PRINCIPAL")
@@ -149,9 +154,9 @@ module.exports = (app) => {
         const resultado = AlteraDadosBD.DestaquesHome(res)
     })
 
-    app.get("/menuslidefooter", (req, res) => {
-        console.log("SOLICITADO MENU, SLIDE e FOOTER para HOME")
-        const resultado = AlteraDadosBD.MenuSlideFooter(res)
+    app.get("/footer", (req, res) => {
+        console.log("FOOTER para HOME")
+        const resultado = AlteraDadosBD.Footer(res)
     })
 
 }

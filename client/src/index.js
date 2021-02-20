@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import './index.css';
 import App from './App';
 import Paineladministrativo from "./components/painelAdministrativo/painel/painelAdministrativo.jsx"
+import Estoque from "./components/estoque/estoque"
 
 
 ReactDOM.render(
@@ -11,7 +12,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/" exact={true} component={App} />
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
-      {/* <Route path="/biblianvi/painelleitura/:idade/:livro/:capitulo/:versiculo" component={PainelLeitura} />recebe 3 parametros */}
+      <Route path="/estoque" exact={true} component={Estoque} />
       {/* <Route path="/harpacrista" component={HinoHarpa} /> */}
       {/* <Route path="/populaharpa" component={PopularBDHarpa} /> */}
       {/* <Route path="/biblianvi/pesquisa/:palavrapesquisabiblia" component={PesquisaBiblia} /> */}

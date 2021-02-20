@@ -63,6 +63,11 @@ export default function Destaques(dados) {
         }
     }
 
+    function MostrarTopoDestaque() {
+        window.location.href = ("#destaques")
+
+    }
+
     return (
         <article className="destaques-article">
 
@@ -87,7 +92,7 @@ export default function Destaques(dados) {
                 </Button>
             </div>
 
-            <div className="destaques-article-div-grid">
+            <div id="destaques" className="destaques-article-div-grid">
                 {imagensDestaque.paginacao &&
 
                     imagensDestaque.paginacao.map((recebe, index) => {
@@ -120,6 +125,7 @@ export default function Destaques(dados) {
             <div className="destaques-article-div-navegacao">
                 <Button
                     onClick={(click, direcao = "voltar") => {
+                        MostrarTopoDestaque()
                         Paginacao(direcao)
                     }}
                     style={{ marginLeft: "20px" }}
@@ -128,13 +134,13 @@ export default function Destaques(dados) {
                     className={classes.button}
                     startIcon={<ArrowBackIosIcon style={{ fontSize: 28, marginLeft: "20px" }} />}
                     disabled={imagensDestaque.paginaRetorna <= 0}
-
                 >
 
                 </Button>
                 <Button
                     onClick={(click, direcao = "avancar") => {
                         Paginacao(direcao)
+                        MostrarTopoDestaque()
                     }}
                     style={{ marginLeft: "20px" }}
                     variant="contained"

@@ -11,20 +11,20 @@ import BuscaBD from "./components/fetchBackEnd/api"
 
 function App() {
 
-  const [dadosHome, setDadosHome] = useState(false)
+  // const [dadosHome, setDadosHome] = useState(false)
 
-  useEffect(async () => {
-    const classBuscaBD = new BuscaBD
-    const dados = await classBuscaBD.MenuSlideFooter()
-    setDadosHome(dados)
-  }, [])
+  // useEffect(async () => {
+  //   const classBuscaBD = new BuscaBD
+  //   const dados = await classBuscaBD.MenuSlideFooter()
+  //   setDadosHome(dados)
+  // }, [])
 
   return (
     <div className="App">
-      <Menu dados={dadosHome} />
+      <Menu />
       <CarroselPrincipal />
       <Destaques />
-      <Footer dados={dadosHome} />
+      <Footer />
     </div>
   );
 }

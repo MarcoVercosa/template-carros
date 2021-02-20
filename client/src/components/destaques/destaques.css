@@ -18,7 +18,7 @@
     margin-left: 70px;
     color: rgb(63, 60, 60);
     font-family: 'Lora', serif;
-    font-size: 25px;   
+    font-size: 30px;   
     font-weight: 500;
     margin: 0 
 }
@@ -37,7 +37,7 @@
     margin-bottom: 0px;
     padding: 4px;
     background-color: rgb(255, 255, 255);   
-    transition: all 0.5s;   
+    transition: all 0.3s;   
     border-radius: 10px; 
   
 }
@@ -62,7 +62,6 @@
 
 
 .destaques-article-div-grid-imagem-info{
-    /* background-color: rgb(223, 223, 223); */
     margin-top: 5px;
     border-radius: 15px; 
     border:  1px ;

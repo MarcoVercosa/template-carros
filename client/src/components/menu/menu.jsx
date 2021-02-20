@@ -1,13 +1,15 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, memo } from 'react';
 import SloganLeft from "./sloganLeft.png"
 import TextField from '@material-ui/core/TextField';
 import "./menu.css"
 import { Link } from 'react-router-dom';
 
+import BuscaBD from "../fetchBackEnd/api"
 
 
 
-export default function Menu(props) {
+
+function Menu(props) {
 
     const [contatos, setContatos] = useState({
 
@@ -22,26 +24,28 @@ export default function Menu(props) {
         dadosTotal: false
     })
 
-    useEffect(() => {
+    useEffect(async () => {
 
-        if (props.dados) {
-            setContatos(prevState => {
-                return {
-                    ...prevState,
-                    dadosLojaUm: props.dados.data[0].lojaUm ? true : false,
-                    dadosLojaDois: props.dados.data[0].lojaDois ? true : false,
-                    dadosLojaTres: props.dados.data[0].lojaTres ? true : false,
-                    dadosLojaQuatro: props.dados.data[0].lojaQuatro ? true : false,
-                    dadosLojaWhatsApp: props.dados.data[0].whatsapp ? true : false,
-                    dadosLojaFacebook: props.dados.data[0].facebook ? true : false,
-                    dadosLojaInstagram: props.dados.data[0].instagram ? true : false,
-                    dadosLojaYouTube: props.dados.data[0].youtube ? true : false,
-                    dadosTotal: props.dados
-                }
-            })
-        }
+        const classBuscaBD = new BuscaBD()
+        const resultado = await classBuscaBD.Contato()
+
+        setContatos(prevState => {
+            return {
+                ...prevState,
+                dadosLojaUm: resultado.data[0].lojaUm ? true : false,
+                dadosLojaDois: resultado.data[0].lojaDois ? true : false,
+                dadosLojaTres: resultado.data[0].lojaTres ? true : false,
+                dadosLojaQuatro: resultado.data[0].lojaQuatro ? true : false,
+                dadosLojaWhatsApp: resultado.data[0].whatsapp ? true : false,
+                dadosLojaFacebook: resultado.data[0].facebook ? true : false,
+                dadosLojaInstagram: resultado.data[0].instagram ? true : false,
+                dadosLojaYouTube: resultado.data[0].youtube ? true : false,
+                dadosTotal: resultado
+            }
+        })
+
         console.log(props.dados)
-    }, [props])
+    }, [])
 
     window.onscroll = (() => {
         if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 64) {
@@ -152,12 +156,14 @@ export default function Menu(props) {
 
                     <div className="menu-head-div">
                         <ul>
-                            <li>
+                            <li> <Link to="/">
                                 INÍCIO
-                        </li>
-                            <li>
-                                VEÍCULOS
-                        </li>
+                                </Link>
+                            </li>
+                            <li><Link to="/estoque">
+                                ESTOQUE
+                                </Link>
+                            </li>
                             <li>
                                 BLINDADOS
                         </li>
@@ -200,8 +206,6 @@ export default function Menu(props) {
                 </header>
             </div>
         </>
-
     )
-
-
 }
+export default memo(Menu)

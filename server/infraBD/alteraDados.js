@@ -126,6 +126,17 @@ class AlteraDadosBD {
     //////////////////////////////////////////////////////////////
 
 
+    Contato(res) {
+        const sql = "SELECT * FROM vendaCarro.informacoes WHERE id=1"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações para a HOME: " + erro)
+            } else {
+                res.json(resultado)
+            }
+        })
+    }
+
     ImagensSlidePrincipal(res) {
         const sql = "SELECT imagensSlide FROM vendaCarro.informacoes WHERE id=1"
         conectaBDCarro.query(sql, (erro, resultado) => {
@@ -138,20 +149,7 @@ class AlteraDadosBD {
         })
     }
 
-    MenuSlideFooter(res) {
-
-        const sql = "SELECT * FROM vendaCarro.informacoes WHERE id=1"
-        conectaBDCarro.query(sql, (erro, resultado) => {
-            if (erro) {
-                res.json("Ocorreu o seguinte erro ao buscar informações para a HOME: " + erro)
-            } else {
-                res.json(resultado)
-            }
-        })
-    }
-
-
-    DestaquesHome(res) {
+    DestaquesHome(res) {//seleciona os destaques que são 1 (verdadeiro)
         const sql = "SELECT * FROM vendaCarro.carros WHERE destaque=1"
         conectaBDCarro.query(sql, (erro, resultado) => {
 
@@ -160,7 +158,17 @@ class AlteraDadosBD {
             } else {
                 res.json(resultado)
             }
+        })
+    }
 
+    Footer(res) {
+        const sql = "SELECT sobreNos FROM vendaCarro.informacoes WHERE id=1"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações para a HOME: " + erro)
+            } else {
+                res.json(resultado)
+            }
         })
     }
 

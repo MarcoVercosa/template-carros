@@ -1,4 +1,6 @@
-
+/* $$$$$$$$$      $$$$$$$$$  */
+/* $$$$$$$$$ MENU CONTATO $$$$$$$$$  */
+/* $$$$$$$$$      $$$$$$$$$  */
 
 .menu-header-div-contato{
     /* display: flex;  */
@@ -6,7 +8,8 @@
     grid-auto-columns:  auto;
     grid-auto-flow: column;
     background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));
-    /* justify-content: space-between; */
+   
+    
 }
 .menu-header-div-contato div{
     width: 100%;
@@ -14,7 +17,7 @@
 }
 
 .menu-header-div-contato ul{
-
+    margin: 2px;
     display: flex; 
     width: auto;
     padding-left: 0px;
@@ -24,24 +27,21 @@
     font-size: 11px;
     color: white;
 }
-.menu-header-div-contato ul li{
+.menu-header-div-contato ul li spam{
+    
+    text-align: center;
+    
     
 }
 .menu-header-div-contato i{
     color: white
 }
-
-.menu-header-div-contato-redes-sociais{
-    /* display: flex; */
-
-}
 .menu-header-div-contato-redes-sociais ul{
-    /* display: flex;
-    vertical-align: middle;
-    margin-left: 5%;
-    gap: 15px;
-    padding: 0 */
+    margin: 0 auto;
+    
+
 }
+
 .menu-header-div-contato-redes-sociais .fa-whatsapp{
     color: green;
 }
@@ -55,6 +55,10 @@
 .menu-header-div-contato-redes-sociais .fa-youtube{
     color: rgb(220, 68, 68)
 }
+
+/* $$$$$$$$$                    $$$$$$$$$  */
+/* $$$$$$$$$  MENU NAVEGACAO    $$$$$$$$$  */
+/* $$$$$$$$$                    $$$$$$$$$  */
 
 .menu-header-div{
     margin-top: -20px;
@@ -85,13 +89,12 @@
     height: 100%;
 }
 .menu-head-div {
-    display: flex;
-    
-    width: 65%;
-    
+    display: flex;    
+    width: 65%;    
 }
 
 .menu-head-div ul{
+    margin-top: 21px;
     margin-left: 15px;
     display: flex;
     flex-wrap: wrap;

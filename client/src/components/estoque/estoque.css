@@ -1,0 +1,55 @@
+.estoque-menu-left{
+display: inline-block;
+width: 100%;
+}
+
+.titulo-estoque{
+     display: flex;
+    margin: 20px 0 10px 18px;
+    color: rgb(63, 60, 60);
+    font-family: 'Lora', serif;
+    font-size: 30px;   
+    font-weight: 500;
+    
+}
+
+.estoque-menu-left-div{
+display: inline-block;
+margin-top: 55px;
+width: 25%;
+padding: 0;
+}
+
+.estoque-menu-left-div-div {
+    width: 90%;
+    margin: 20px
+}
+.estoque-menu-left-div-div label{
+    margin-bottom: 5px;
+    display: block;
+    color: #999999;
+    font-family: 'Lora', serif;
+}
+.estoque-menu-left-div-div  select{
+    padding: 18px;
+    background-color: white;
+    border-color: rgb(172, 172, 172);
+    width: 100%;
+    color: rgb(121, 121, 121);
+    font-family: 'Lora', serif;
+   border-radius: 7px;
+    transition: 500ms ease-in-out;
+}
+
+.estoque-menu-left-div-div  select:hover{
+    background-color: rgb(225, 225, 225);
+}
+.estoque-menu-left-div-button{
+    display: flex;
+    justify-content: center;
+}
+.estoque-article{
+    display: inline-block;
+    vertical-align:top;
+    width: 70%;
+}
