@@ -158,5 +158,11 @@ module.exports = (app) => {
         console.log("FOOTER para HOME")
         const resultado = AlteraDadosBD.Footer(res)
     })
+    app.get("/estoque", (req, res) => {
+
+        console.log("Solicitado ESTOQUE")
+        const resultado = AlteraDadosBD.Estoque(res)
+
+    })
 
 }

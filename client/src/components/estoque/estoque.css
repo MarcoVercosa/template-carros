@@ -9,8 +9,7 @@ width: 100%;
     color: rgb(63, 60, 60);
     font-family: 'Lora', serif;
     font-size: 30px;   
-    font-weight: 500;
-    
+    font-weight: 500;    
 }
 
 .estoque-menu-left-div{
@@ -53,3 +52,75 @@ padding: 0;
     vertical-align:top;
     width: 70%;
 }
+.estoque-article-estoque{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 30% 30% 30%;   
+}
+.estoque-article-estoque-div{
+    width: 100%;   
+    transition: ease-in-out 0.3s ;   
+    border-radius: 10px;
+    padding: 4px;
+}
+.estoque-article-estoque-div:hover{
+    background-color: rgb(235, 235, 235);    
+}
+
+.estoque-article-estoque-div-imagem{
+    width: 100%;
+    height: 50%;
+    
+}
+.estoque-article-estoque-div-imagem img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+.estoque-article-estoque-div-imagem-info{
+    margin-top: 5px;
+    border-radius: 15px; 
+    border:  1px ;
+    border-style: dashed;
+    color: rgb(221, 221, 221);
+    text-align: center;
+}
+.estoque-article-div-grid-imagem-info hr{
+    border-bottom: 1px;
+    border-style: dashed;
+    color: rgb(202, 202, 202)
+}
+
+.estoque-article-div-grid-div-p{
+    display: block;
+    padding-top: 10px;
+    color: rgb(100, 100, 100);;
+    font-family: 'Lora', serif;
+    font-size: 18px;   
+    font-weight: 700;
+}
+.estoque-article-div-grid-div-p-p{
+    display: block;
+    margin: 5px 0;
+    color:rgb(20, 81, 214);
+    font-family: 'Lora', serif;
+    font-size: 18px;   
+    font-weight: 700;
+}
+.estoque-article-div-grid-div-p-p-p , spam{
+    display: block;
+    margin: 5px 0;
+    color: rgb(100, 100, 100);
+    font-family: 'Lora', serif;
+    font-size: 15px;  
+     
+}
+.estoque-article-div-navegacao{
+    
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 5%
+}
+

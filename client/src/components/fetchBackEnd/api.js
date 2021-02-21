@@ -109,5 +109,11 @@ export default class BuscaBD {
         return resultado
     }
 
+    async Estoque() {
+        console.log("API solicitada ESTOQUE")
+        const resultado = await axios.get("http://192.168.0.150:9000/estoque")
+        return resultado
+    }
+
 }
 

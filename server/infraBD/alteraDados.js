@@ -152,7 +152,6 @@ class AlteraDadosBD {
     DestaquesHome(res) {//seleciona os destaques que são 1 (verdadeiro)
         const sql = "SELECT * FROM vendaCarro.carros WHERE destaque=1"
         conectaBDCarro.query(sql, (erro, resultado) => {
-
             if (erro) {
                 res.json("Ocorreu o seguinte erro ao buscar informações do site: " + erro)
             } else {
@@ -170,6 +169,19 @@ class AlteraDadosBD {
                 res.json(resultado)
             }
         })
+    }
+
+    Estoque(res) {
+
+        const sql = "SELECT marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE: " + erro)
+            } else {
+                res.json(resultado)
+            }
+        })
+
     }
 
 }
