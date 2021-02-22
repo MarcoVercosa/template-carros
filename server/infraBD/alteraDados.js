@@ -160,7 +160,7 @@ class AlteraDadosBD {
         })
     }
 
-    Footer(res) {
+    Footer(res) {//sobre Nos - ROdapé
         const sql = "SELECT sobreNos FROM vendaCarro.informacoes WHERE id=1"
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
@@ -171,8 +171,7 @@ class AlteraDadosBD {
         })
     }
 
-    Estoque(res) {
-
+    Estoque(res) {// todos os carros
         const sql = "SELECT marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
@@ -181,7 +180,90 @@ class AlteraDadosBD {
                 res.json(resultado)
             }
         })
+    }
 
+    FiltroEstoque(res) {//dados para filtro estoque
+        var armazenaFiltro = {
+            marca: [],
+            combustivel: false,
+            cambio: false,
+            ano: false,
+            blindado: false
+        }
+
+        const sql = "SELECT marca, combustivel, cambio, ano, blindado FROM vendaCarro.carros"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                return "Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE: " + erro
+            } else {
+                const dadosMarca = FiltraMarca(resultado)//traz as marcas sem repetidas
+                armazenaFiltro = { ...armazenaFiltro, marca: dadosMarca }
+
+                const dadosAno = FiltraAno(resultado) //traz todos os anos, do ano do carro mais antigo até o mais novo
+                armazenaFiltro = { ...armazenaFiltro, ano: dadosAno }
+
+                const dadosCombustivel = FiltraCombustivel(resultado) //traz tipos de combustiveis sem repetidas
+                armazenaFiltro = { ...armazenaFiltro, combustivel: dadosCombustivel }
+
+                const dadosBlindado = FiltraBlindado(resultado) //informa se há ou nao Blindados
+                armazenaFiltro = { ...armazenaFiltro, blindado: dadosBlindado }
+                console.log(armazenaFiltro)
+                res.json(armazenaFiltro)
+            }
+
+        })
+
+        function FiltraMarca(resultado) {
+            const armazenaMarcas = []
+            resultado.map((dados) => {
+                armazenaMarcas.push(dados.marca.toUpperCase())
+                //armazena todas as marcas em array
+            })
+            var armazenaMarcasSemDuplicado = armazenaMarcas.filter((dados, index, arrayCompleta) => {
+                //retira as duplicadas da array com Marcas: dados(dado do vez), index (index do dado da vez) arrayCompleta (é a array completa)
+                return index === arrayCompleta.indexOf(dados)
+            })
+            return armazenaMarcasSemDuplicado
+        }
+        function FiltraAno(resultado) {
+            // console.log(resultado)
+            var todosAnos = []
+            var montaComponente = []
+            resultado.map(dados => {//armazena somente os anos
+                todosAnos.push(dados.ano)
+            })
+            const menorAno = Math.min(...todosAnos)// identifica o MENOR ano
+            const maiorAno = Math.max(...todosAnos)// identifica o MAIOR ano
+
+            for (var i = menorAno; i <= maiorAno; i++) {//FAZ UM LOOP e preenche do menor até o maior ano
+                montaComponente.push(i)
+            }
+            return montaComponente
+        }
+        function FiltraCombustivel(resultado) {
+            var armazenaCombustivel = []
+            resultado.map(dados => {
+                armazenaCombustivel.push(dados.combustivel)
+            })
+            var armazenaCombustívelSemDuplicado = armazenaCombustivel.filter((dados, index, arrayCompleta) => {
+                //retira as duplicadas da array com Marcas: dados(dado do vez), index (index do dado da vez) arrayCompleta (é a array completa)
+                return index === arrayCompleta.indexOf(dados)
+            })
+            return armazenaCombustívelSemDuplicado
+        }
+        function FiltraBlindado(resultado) {
+            var armazenaBlindado = []
+            var armazenaBlindadoFiltra = []
+            resultado.map(dados => {
+                armazenaBlindado.push(dados.blindado)
+            })
+
+            armazenaBlindadoFiltra = armazenaBlindado.filter((dados, index, ArrayTotal) => {
+                return index === ArrayTotal.indexOf(dados)
+            })
+            return armazenaBlindadoFiltra
+
+        }
     }
 
 }

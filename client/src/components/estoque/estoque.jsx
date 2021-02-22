@@ -35,7 +35,7 @@ export default function Estoque(props) {
         blindado: false,
         marca: false,
         filtraMarca: false,
-        preco: false,
+        preco: "todos",
         ano: false,
         filtraAno: false,
         cambio: false,
@@ -60,13 +60,15 @@ export default function Estoque(props) {
         })
         FiltraMarca(resultado)
         FiltraAno(resultado)
+        const tempo = await classBuscaBD.FiltroEstoque()
+        console.log(tempo)
 
     }, [])
 
     function FiltraMarca(resultado) {
         const armazenaMarcas = []
         resultado.data.map((dados) => {
-            armazenaMarcas.push(dados.marca)
+            armazenaMarcas.push(dados.marca.toUpperCase())
             //armazena todas as marcas em array
         })
         var armazenaMarcasSemDuplicado = armazenaMarcas.filter((dados, index, arrayCompleta) => {
@@ -88,7 +90,7 @@ export default function Estoque(props) {
         const maiorAno = Math.max(...todosAnos)// identifica o MAIOR ano
 
         for (var i = menorAno; i <= maiorAno; i++) {//FAZ UM LOOP e preenche do menor até o maior ano
-            montaComponente.push(<option>{i}</option>)
+            montaComponente.push(<option>Até {i}</option>)
         }
         setSelectFiltro(prevState => {
             return { ...prevState, filtraAno: montaComponente }
@@ -121,7 +123,7 @@ export default function Estoque(props) {
                     <div className="estoque-menu-left-div-div">
                         <label for="blindado">Veículos Blindados</label>
                         <select id="blindado">
-                            <option >TODOS</option>
+                            <option >TODAS</option>
                             <option >SIM</option>
                             <option>NÃO</option>
                         </select>
@@ -129,7 +131,7 @@ export default function Estoque(props) {
                     <div className="estoque-menu-left-div-div">
                         <label for="marca">Marca</label>
                         <select id="marca">
-                            <option >TODOS</option>
+                            <option >TODAS</option>
                             {selectFiltro.filtraMarca &&
                                 selectFiltro.filtraMarca.map((dados) => {
                                     return (
@@ -141,41 +143,46 @@ export default function Estoque(props) {
                     </div>
                     <div className="estoque-menu-left-div-div">
                         <label for="preco">Preço</label>
-                        <select id="preco">
-                            <option >TODOS</option>
-                            <option >SIM</option>
-                            <option>NÃO</option>
+                        <select id="preco"
+                            value={selectFiltro.preco}
+                            onChange={(click) => {
+                                setSelectFiltro(prevState => {
+                                    return { ...prevState, preco: click.target.value }
+                                })
+                            }}
+                        >
+                            <option value={0} >TODAS</option>
+                            <option value={20000} >Até R$ 20.000,00</option>
+                            <option value={30000} >De R$ 20.000,00 a R$ 30.000,00</option>
+                            <option value={40000}>De R$ 30.000,00 a R$ 40.000,00</option>
+                            <option value={50000}>De R$ 40.000,00 a R$ 50.000,00</option>
+                            <option value={50001}>Acima de R$ 50.000,00</option>
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-div">
-                        <label for="ano">Ano DE:</label>
+                        <label for="ano">Ano:</label>
                         <select id="ano">
-                            <option >TODOS</option>
-                            {selectFiltro.filtraAno}
-                        </select>
-                    </div>
-                    <div className="estoque-menu-left-div-div">
-                        <label for="ano">Ano ATÉ:</label>
-                        <select id="ano">
-                            <option >TODOS</option>
+                            <option >TODAS</option>
                             {selectFiltro.filtraAno}
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-div">
                         <label for="cambio">Câmbio</label>
                         <select id="cambio">
-                            <option >TODOS</option>
-                            <option >SIM</option>
-                            <option>NÃO</option>
+                            <option>TODAS</option>
+                            <option>MANUAL</option>
+                            <option>AUTOMÁTICO</option>
 
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-div">
                         <label for="combustivel">Combustível</label>
                         <select id="combustivel">
-                            <option >TODOS</option>
-                            <option >SIM</option>
-                            <option>NÃO</option>
+                            <option >TODAS</option>
+                            <option >GASOLINA</option>
+                            <option >ALCOOL</option>
+                            <option >FLEX</option>
+                            <option >GASOLINA</option>
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-button">
@@ -204,7 +211,7 @@ export default function Estoque(props) {
                                             <hr />
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.motor}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
-                                            <span className="estoque-article-div-grid-div-p-p-p">{dados.porta}P {dados.cambio}</span>
+                                            <span className="estoque-article-div-grid-div-p-p-p">{dados.porta} {dados.cambio}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.ano}</span>
                                         </div>
 

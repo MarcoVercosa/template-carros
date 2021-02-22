@@ -143,10 +143,8 @@ module.exports = (app) => {
     })
 
     app.get("/imagensslideprincipal", (req, res) => {
-
         console.log("SOLICITADO IMAGENS SLIDE PRINCIPAL")
         const resultado = AlteraDadosBD.ImagensSlidePrincipal(res)
-
     })
 
     app.get("/destaqueshome", (req, res) => {
@@ -159,9 +157,16 @@ module.exports = (app) => {
         const resultado = AlteraDadosBD.Footer(res)
     })
     app.get("/estoque", (req, res) => {
-
         console.log("Solicitado ESTOQUE")
         const resultado = AlteraDadosBD.Estoque(res)
+    })
+
+    app.get("/filtroestoque", (req, res) => {
+
+        console.log("Solicitado FILTRO ESTOQUE")
+        const resultado = AlteraDadosBD.FiltroEstoque(res)
+
+
 
     })
 
