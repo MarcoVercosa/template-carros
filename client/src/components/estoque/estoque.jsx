@@ -32,14 +32,16 @@ export default function Estoque(props) {
 
 
     const [selectFiltro, setSelectFiltro] = useState({
-        blindado: false,
-        marca: false,
-        filtraMarca: false,
-        preco: "todos",
-        ano: false,
-        filtraAno: false,
+        BDBlindado: false,
+        selectBlindado: false,
+        BDMarca: false,
+        selectMarca: false,
+        selectPreco: false,
+        BDAno: false,
+        selectAno: false,
         cambio: false,
-        combustivel: false
+        BDcombustivel: false,
+        selectCombustivel: false
     })
 
     const [carrosEstoque, setCarrosEstoque] = useState({
@@ -53,49 +55,26 @@ export default function Estoque(props) {
 
     useEffect(async () => {
         const classBuscaBD = new BuscaBD
-        const resultado = await classBuscaBD.Estoque()
-        console.log(resultado)
+        const estoque = await classBuscaBD.Estoque()
+
         setCarrosEstoque(prevState => {
-            return { ...prevState, todosDestaques: resultado.data, paginacao: resultado.data.slice(carrosEstoque.paginaRetorna, carrosEstoque.paginaAvanca) }
+            return { ...prevState, todosDestaques: estoque.data, paginacao: estoque.data.slice(carrosEstoque.paginaRetorna, carrosEstoque.paginaAvanca) }
         })
-        FiltraMarca(resultado)
-        FiltraAno(resultado)
-        const tempo = await classBuscaBD.FiltroEstoque()
-        console.log(tempo)
+
+        const filtro = await classBuscaBD.FiltroEstoque()
+        var confBlindado = []
+        if (filtro.data.blindado.length > 1) { confBlindado = ["TODOS", "SIM", "NÃO"] }
+        if (filtro.data.blindado.length === 1) {
+            if (filtro.data.blindado[0] === 0) { confBlindado = ["NAO"] } else { confBlindado = ["TODOS", "SIM", "NÃO"] }
+        }
+
+        setSelectFiltro(prevState => {
+            return { ...prevState, BDMarca: filtro.data.marca, BDAno: filtro.data.ano, BDCombustivel: filtro.data.combustivel, BDBlindado: confBlindado }
+        })
 
     }, [])
 
-    function FiltraMarca(resultado) {
-        const armazenaMarcas = []
-        resultado.data.map((dados) => {
-            armazenaMarcas.push(dados.marca.toUpperCase())
-            //armazena todas as marcas em array
-        })
-        var armazenaMarcasSemDuplicado = armazenaMarcas.filter((dados, index, arrayCompleta) => {
-            //retira as duplicadas da array com Marcas: dados(dado do vez), index (index do dado da vez) arrayCompleta (é a array completa)
-            return index === arrayCompleta.indexOf(dados)
-        })
-        setSelectFiltro(prevState => {
-            return { ...prevState, filtraMarca: armazenaMarcasSemDuplicado }
-        })
-    }
 
-    function FiltraAno(resultado) {
-        var todosAnos = []
-        var montaComponente = []
-        resultado.data.map(dados => {//armazena somente os anos
-            todosAnos.push(dados.ano)
-        })
-        const menorAno = Math.min(...todosAnos)// identifica o MENOR ano
-        const maiorAno = Math.max(...todosAnos)// identifica o MAIOR ano
-
-        for (var i = menorAno; i <= maiorAno; i++) {//FAZ UM LOOP e preenche do menor até o maior ano
-            montaComponente.push(<option>Até {i}</option>)
-        }
-        setSelectFiltro(prevState => {
-            return { ...prevState, filtraAno: montaComponente }
-        })
-    }
     function Paginacao(direcao) {
         if (direcao === "avancar") {
             // if (carrosEstoque.paginaAvanca >= carrosEstoque.todosDestaques.length) { return }
@@ -123,17 +102,21 @@ export default function Estoque(props) {
                     <div className="estoque-menu-left-div-div">
                         <label for="blindado">Veículos Blindados</label>
                         <select id="blindado">
-                            <option >TODAS</option>
-                            <option >SIM</option>
-                            <option>NÃO</option>
+                            {selectFiltro.BDBlindado &&
+                                selectFiltro.BDBlindado.map(dados => {
+                                    return (
+                                        <option>{dados}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-div">
                         <label for="marca">Marca</label>
                         <select id="marca">
                             <option >TODAS</option>
-                            {selectFiltro.filtraMarca &&
-                                selectFiltro.filtraMarca.map((dados) => {
+                            {selectFiltro.BDMarca &&
+                                selectFiltro.BDMarca.map((dados) => {
                                     return (
                                         <option >{dados}</option>
                                     )
@@ -163,7 +146,14 @@ export default function Estoque(props) {
                         <label for="ano">Ano:</label>
                         <select id="ano">
                             <option >TODAS</option>
-                            {selectFiltro.filtraAno}
+                            {selectFiltro.BDAno &&
+                                selectFiltro.BDAno.map(dados => {
+                                    return (
+                                        <option >Até {dados}</option>
+                                    )
+                                })
+
+                            }
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-div">
@@ -179,10 +169,13 @@ export default function Estoque(props) {
                         <label for="combustivel">Combustível</label>
                         <select id="combustivel">
                             <option >TODAS</option>
-                            <option >GASOLINA</option>
-                            <option >ALCOOL</option>
-                            <option >FLEX</option>
-                            <option >GASOLINA</option>
+                            {selectFiltro.BDCombustivel &&
+                                selectFiltro.BDCombustivel.map(dados => {
+                                    return (
+                                        <option>{dados}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className="estoque-menu-left-div-button">

@@ -207,7 +207,6 @@ class AlteraDadosBD {
 
                 const dadosBlindado = FiltraBlindado(resultado) //informa se há ou nao Blindados
                 armazenaFiltro = { ...armazenaFiltro, blindado: dadosBlindado }
-                console.log(armazenaFiltro)
                 res.json(armazenaFiltro)
             }
 
