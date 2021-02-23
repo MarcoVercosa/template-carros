@@ -162,12 +162,31 @@ module.exports = (app) => {
     })
 
     app.get("/filtroestoque", (req, res) => {
-
-        console.log("Solicitado FILTRO ESTOQUE")
+        console.log("Solicitado dados para FILTRO ESTOQUE")
         const resultado = AlteraDadosBD.FiltroEstoque(res)
+    })
+    app.post("/buscaestoquecomfilter", (req, res) => {
+        console.log("Solicitado dados ESTOQUE com filtro de pesquisa")
+        console.log(req.body)
+        const formater = new Intl.NumberFormat("pt-BR")
+        var anoAtual = new Date().getFullYear()
+        const dados = {
+            marca: req.body.dados.marca === "false" || !req.body.dados.marca ? "" : String(req.body.dados.marca),
+            valor: req.body.dados.valor === "false" || !req.body.dados.valor ? 0 : formater.format(parseFloat(req.body.dados.valor)),
+            ano: req.body.dados.ano === "false" || !req.body.dados.ano ? anoAtual : Number(req.body.dados.ano),
+            cambio: req.body.dados.cambio === "false" || !req.body.dados.cambio ? "" : String(req.body.dados.cambio),
+            combustivel: req.body.dados.combustivel === "false" || !req.body.dados.combustivel ? "" : String(req.body.dados.combustivel),
+            blindado: Blindado(req.body.dados.blindado)
+        }
 
+        function Blindado(dados) {
+            if (dados === "todos") { return "" }
+            if (dados === "true") { return true }
+            else { return false }
+        }
 
-
+        console.log(dados)
+        const resultado = AlteraDadosBD.FiltroEstoqueComFiltro(dados, res)
     })
 
 }

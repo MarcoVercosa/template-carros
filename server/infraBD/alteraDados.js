@@ -265,5 +265,39 @@ class AlteraDadosBD {
         }
     }
 
+    FiltroEstoqueComFiltro(dados, res) {
+        var sql = undefined
+        switch (dados.valor) {
+            case 0:
+            case 50.001:
+                console.log("switch 1")
+                sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor >= ${dados.valor} AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
+                break;
+            default:
+                console.log("switch 2")
+                sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor BETWEEN ${dados.valor - 10000} AND ${dados.valor}  AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
+                break;
+
+        }
+
+        if (dados.valor === 0) {
+
+        } else {
+
+        }
+
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE: " + erro)
+                // console.log("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE:" + erro)
+            } else {
+                console.log(resultado.length)
+                res.json(resultado)
+                // console.log(resultado)
+            }
+
+        })
+    }
+
 }
 module.exports = new AlteraDadosBD
