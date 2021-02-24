@@ -54,7 +54,6 @@ export default function CarroselPrincipal() {
                             <img alt={dados} key={index} className={index === 0 ? "selected" : ""} src={"http://192.168.0.150:9000/static/" + dados} />
                         )
                     })
-
                 }
                 <div className="divdirecaoSlideRigth divdirecaoSlide">
                     <i className="fa fa-chevron-right fa-4x setaavanca "
