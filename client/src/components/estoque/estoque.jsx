@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import Menu from "../../components/menu/menu"
 import Footer from "../../components/footer/footer"
 import "./estoque.css"
@@ -198,7 +200,6 @@ export default function Estoque(props) {
                                         <option key={index} value={dados} >Até {dados}</option>
                                     )
                                 })
-
                             }
                         </select>
                     </div>
@@ -267,11 +268,14 @@ export default function Estoque(props) {
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.porta} {dados.cambio}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.ano}</span>
                                             <div className="estoque-article-div-grid-div-button">
-                                                <Button variant="contained" color="primary"
 
-                                                >
-                                                    DETAlHES
-                                            </Button>
+                                                <Link to={`/detalhesanuncio${dados.id}`} target="_blank">
+
+                                                    <Button variant="contained" color="primary"
+                                                    >
+                                                        MAIS DETALHES
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>

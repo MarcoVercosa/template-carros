@@ -127,6 +127,12 @@ export default class BuscaBD {
         return resultado
     }
 
+    async BuscaDetalheAnuncio(id) {
+        console.log("API solicitada para buscar detalhes de anuncio")
+        const resultado = await axios.get(`http://192.168.0.150:9000/estoque${id}`)
+        return resultado
+    }
+
 
 
 

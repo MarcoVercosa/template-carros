@@ -178,15 +178,19 @@ module.exports = (app) => {
             combustivel: !req.body.dados.combustivel || req.body.dados.combustivel === "false" ? "" : String(req.body.dados.combustivel),
             blindado: Blindado(req.body.dados.blindado)
         }
-
         function Blindado(dados) {
             if (dados === "todos") { return "" }
             if (dados === "true") { return 1 }
             else { return 0 }
         }
-
         console.log(dados)
         const resultado = AlteraDadosBD.FiltroEstoqueComFiltro(dados, res)
+    })
+
+    app.get("/estoque:idanuncio", (req, res) => {
+        console.log("Solicitado Detalhes de anuncio")
+        AlteraDadosBD.BuscaDetalhesAnuncio(req.params.idanuncio, res)
+        // res.json(req.params.idanuncio)
     })
 
 }

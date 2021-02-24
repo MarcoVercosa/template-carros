@@ -25,7 +25,7 @@ export default function CarroselPrincipal() {
             if (numero >= imagens.length) { numero = 0 }//se numero der o total de imagens, zera a var
             imagens[numero].classList.add("selected") //add a class select na imagem da vez
             setContadorImagensCarrosel(numero) //atualza o state parq que as setas da imagem possam enchergar a posição da imagem da vez
-        }, 7000)
+        }, 9000)
     }
 
     function NavegaCarrosel(direcao) {

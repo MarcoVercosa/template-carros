@@ -32,6 +32,8 @@
     
 }
 .destaques-article-div-grid-div{
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     height: 100%;
     margin-bottom: 0px;
@@ -104,4 +106,15 @@
     justify-content: center;
     text-align: center;
     margin-top: 10%
+}
+.destaques-article-div-grid-div-anuncio{
+    color: rgb(163, 163, 163);
+    font-family: 'Lora', serif;
+    font-size: 15px; 
+}
+.destaques-menu-left-div-button{
+    margin-top: 20px;
+}
+.destaques-menu-left-div-button a{
+    text-decoration: none;
 }

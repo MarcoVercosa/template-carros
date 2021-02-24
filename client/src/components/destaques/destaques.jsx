@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./destaques.css"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -113,6 +114,16 @@ export default function Destaques(dados) {
                                     <span className="destaques-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.porta}P {dados.cambio}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.ano}</span>
+                                    <span className="destaques-article-div-grid-div-anuncio">Anúncio: {dados.id}</span>
+                                    <div className="destaques-menu-left-div-button">
+
+                                        <Link to={`/detalhesanuncio${dados.id}`} target="_blank">
+                                            <Button variant="contained" size="large" color="primary"
+                                            >
+                                                MAIS DETALHES
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 </div>
 
                             </div>

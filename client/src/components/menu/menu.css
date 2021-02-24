@@ -6,7 +6,8 @@
     display: grid;
     grid-auto-columns:  auto;
     grid-auto-flow: column;
-    background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));  
+    /* background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(102, 102, 102));   */
+    background-image: linear-gradient(to bottom, rgb(8, 31, 240), rgb(68, 86, 191))
     
 }
 .menu-header-div-contato div{
@@ -35,47 +36,48 @@
     color: white
 }
 .menu-header-div-contato-redes-sociais ul{
-    margin: 0 auto;
-    
-
+    margin: 0 auto;   
 }
 
 .menu-header-div-contato-redes-sociais .fa-whatsapp{
-    color: green;
+    color: rgb(3, 230, 3);
 }
 .menu-header-div-contato-redes-sociais .fa-facebook{
-    color: rgb(62, 62, 223)
+    color: rgb(213, 213, 213)
 }
 .menu-header-div-contato-redes-sociais .fa-instagram {
-    color: rgb(216, 94, 121);
+    color: rgb(211, 53, 87);
       
 }
 .menu-header-div-contato-redes-sociais .fa-youtube{
-    color: rgb(220, 68, 68)
+    color: rgb(221, 44, 44)
 }
 
 /* $$$$$$$$$                    $$$$$$$$$  */
 /* $$$$$$$$$  MENU NAVEGACAO    $$$$$$$$$  */
 /* $$$$$$$$$                    $$$$$$$$$  */
 
+.menu-header{
+    display: flex;    
+    background-color: rgb(211, 210, 210);
+    /* background-image: linear-gradient(to bottom, rgb(157, 157, 157), rgb(109, 109, 109)); */
+    background-image: linear-gradient(to bottom, rgb(87, 103, 247), rgb(82, 95, 169));
+    width: 100%; 
+    height: 82px;     
+}
+
 .menu-header-div{
     
     top: 0px   ;
-    /* margin-top: -20px; */
-    
     opacity: 0.7;
     position: fixed;
     z-index: 5000;
     width: 100%;
-    transition: 1.1s ease-in-out;      
+    transition: 1.1s ease-in-out;          
 }
-
-.menu-header{
-    display: flex;    
-    background-color: rgb(211, 210, 210);
-    background-image: linear-gradient(to bottom, rgb(157, 157, 157), rgb(109, 109, 109));
-    width: 100%; 
-    height: 82px;     
+.menu-header a{
+    text-decoration: none;
+    color:#ffffff
 }
 
 

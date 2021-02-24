@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import Paineladministrativo from "./components/painelAdministrativo/painel/painelAdministrativo.jsx"
 import Estoque from "./components/estoque/estoque"
+import DetalhesAnuncio from "./components/detalhesAnuncio/detalhesAnuncio"
 
 
 ReactDOM.render(
@@ -13,7 +14,7 @@ ReactDOM.render(
       <Route path="/" exact={true} component={App} />
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
       <Route path="/estoque" exact={true} component={Estoque} />
-      {/* <Route path="/harpacrista" component={HinoHarpa} /> */}
+      <Route path="/detalhesanuncio:idanuncio" component={DetalhesAnuncio} />
       {/* <Route path="/populaharpa" component={PopularBDHarpa} /> */}
       {/* <Route path="/biblianvi/pesquisa/:palavrapesquisabiblia" component={PesquisaBiblia} /> */}
       {/* <Route path="/sobre" component={Sobre} ></Route> */}

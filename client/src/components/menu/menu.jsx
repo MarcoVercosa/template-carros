@@ -1,8 +1,8 @@
 import { React, useState, useEffect, memo } from 'react';
+import { Link } from 'react-router-dom';
 import SloganLeft from "./sloganLeft.png"
 import TextField from '@material-ui/core/TextField';
 import "./menu.css"
-import { Link } from 'react-router-dom';
 
 import BuscaBD from "../fetchBackEnd/api"
 
@@ -48,7 +48,7 @@ function Menu(props) {
     }, [])
 
     window.onscroll = (() => {
-        if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 64) {
+        if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 15) {
             document.getElementById("menu-header-div").className = "menu-header-div"
         } else {
             document.getElementById("menu-header-div").className = ""

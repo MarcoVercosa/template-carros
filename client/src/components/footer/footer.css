@@ -2,7 +2,10 @@ footer{
 display: flex;
 margin-top: 50px;
 height: 250px;
-background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(118, 118, 118));
+/* background-image: linear-gradient(to bottom, rgb(0, 0, 0), rgb(118, 118, 118)); */
+background-image: linear-gradient(to bottom, rgb(21, 43, 242), rgb(70, 85, 170));
+/* opacity: 0.9; */
+
 align-items: center;
 }
 

@@ -172,7 +172,7 @@ class AlteraDadosBD {
     }
 
     Estoque(res) {// todos os carros
-        const sql = "SELECT marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
+        const sql = "SELECT id, marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
                 res.json("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE: " + erro)
@@ -182,7 +182,7 @@ class AlteraDadosBD {
         })
     }
 
-    FiltroEstoque(res) {//dados para filtro estoque
+    FiltroEstoque(res) {//DISPONIBILIZA dados para  montagem do filtro estoque
         var armazenaFiltro = {
             marca: [],
             combustivel: false,
@@ -265,7 +265,8 @@ class AlteraDadosBD {
         }
     }
 
-    FiltroEstoqueComFiltro(dados, res) {//OBS: O BD no campo valor só aceita se o numero tiver pontuação nas casas decimais ex: (50.000) 50 mil, 
+    FiltroEstoqueComFiltro(dados, res) {//DISPONIBILIZA DADOS PARA PESQUISA COM FILTRO
+        //OBS: O BD no campo valor só aceita se o numero tiver pontuação nas casas decimais ex: (50.000) 50 mil, 
         //pode ser em string ou number tambem,
         const formater = new Intl.NumberFormat("pt-BR")
         var sql = undefined
@@ -276,9 +277,6 @@ class AlteraDadosBD {
             console.log("switch 2")
             sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor BETWEEN ${formater.format(dados.valor - 10000)} AND ${formater.format(dados.valor)}  AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
         }
-
-
-
 
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
@@ -291,6 +289,20 @@ class AlteraDadosBD {
             }
 
         })
+    }
+    BuscaDetalhesAnuncio(id, res) {
+        const sql = `SELECT * FROM vendaCarro.carros WHERE id=${id}`
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações pelo ID do Anúncio: " + erro)
+                // console.log("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE:" + erro)
+            } else {
+                console.log(resultado.length)
+                res.json(resultado)
+                // console.log(resultado)
+            }
+        })
+
     }
 
 }
