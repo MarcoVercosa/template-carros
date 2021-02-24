@@ -1,4 +1,5 @@
 import { React, useState, useEffect, memo } from 'react';
+import { Link } from 'react-router-dom';
 import "./footer.css"
 import BuscaBD from "../fetchBackEnd/api"
 
@@ -26,11 +27,14 @@ function Footer(props) {//recebe do app dados so BD  coluna sobreNos
                     <ul>
 
                         <li>
-                            Início
+                            <Link to="/">
+                                Início
+                            </Link>
                         </li>
                         <hr />
                         <li>
                             Sobre nós
+
                         </li>
                         <hr />
                         <li>
@@ -38,7 +42,9 @@ function Footer(props) {//recebe do app dados so BD  coluna sobreNos
                         </li>
                         <hr />
                         <li>
-                            Estoque
+                            <Link to="/estoque">
+                                Estoque
+                            </Link>
                         </li>
                         <hr />
                     </ul>

@@ -171,18 +171,18 @@ module.exports = (app) => {
         const formater = new Intl.NumberFormat("pt-BR")
         var anoAtual = new Date().getFullYear()
         const dados = {
-            marca: req.body.dados.marca === "false" || !req.body.dados.marca ? "" : String(req.body.dados.marca),
-            valor: req.body.dados.valor === "false" || !req.body.dados.valor ? 0 : formater.format(parseFloat(req.body.dados.valor)),
-            ano: req.body.dados.ano === "false" || !req.body.dados.ano ? anoAtual : Number(req.body.dados.ano),
-            cambio: req.body.dados.cambio === "false" || !req.body.dados.cambio ? "" : String(req.body.dados.cambio),
-            combustivel: req.body.dados.combustivel === "false" || !req.body.dados.combustivel ? "" : String(req.body.dados.combustivel),
+            marca: !req.body.dados.marca || req.body.dados.marca === "false" ? "" : String(req.body.dados.marca),
+            valor: !req.body.dados.valor || req.body.dados.valor === "false" ? 0 : parseFloat(req.body.dados.valor),
+            ano: !req.body.dados.ano || req.body.dados.ano === "false" ? anoAtual : Number(req.body.dados.ano),
+            cambio: !req.body.dados.cambio || req.body.dados.cambio === "false" ? "" : String(req.body.dados.cambio),
+            combustivel: !req.body.dados.combustivel || req.body.dados.combustivel === "false" ? "" : String(req.body.dados.combustivel),
             blindado: Blindado(req.body.dados.blindado)
         }
 
         function Blindado(dados) {
             if (dados === "todos") { return "" }
-            if (dados === "true") { return true }
-            else { return false }
+            if (dados === "true") { return 1 }
+            else { return 0 }
         }
 
         console.log(dados)

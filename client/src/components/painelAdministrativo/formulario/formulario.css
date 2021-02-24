@@ -2,7 +2,7 @@
   margin: 0 auto;    
   width: 90%;   
   border-radius: 15px;
-  background-color: rgb(208, 207, 203);
+  background-color: rgb(221, 221, 221);
   border-radius: 15px;
   padding: 10px;
   
@@ -203,17 +203,17 @@ color: white
 }
 
 .formulario-div-formualario-form-imagem-div{
-  display: inline !important;
+  display: flex !important;
   position: static !important;;
   margin: 0  0 0 0px  !important;
-  /* width: 40% !important;
-  height: 55% !important;   */
+  width: 40% !important;
+  /* height: 55% !important;   */
   animation-duration: 500ms !important;;
   animation-name: preview !important;
   overflow: hidden !important;
 }  
 
-.formulario-div-formualario-form-imagem-div img{
+.formulario-div-formualario-form-imagem-div a img{
   display: inline-block !important;
   width: 75% !important;
   margin: 0  !important;
@@ -245,9 +245,12 @@ transition: all ease-in-out 0.5s ;
   display: inline-block !important;;
   position: static !important;;
   margin: 0  !important;
-  height: 55% !important;
-  width: 10% !important;
+  height: 20% !important;
+  width: 100% !important;
   overflow: hidden !important; 
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
 
 
@@ -259,22 +262,6 @@ transition: all ease-in-out 0.5s ;
   height: 24% !important;
   overflow: hidden !important;
 }
-
-/* .input-imagens-edicao::before{
-  content: 'Selecione Imagens'!important;
-  display: inline-block !important;
-  background: linear-gradient(top, #f9f9f9, #e3e3e3)!important;
-  border: 1px solid #999!important;
-  border-radius: 3px !important;
-  padding: 5px 8px !important;
-  outline: none !important;
-  white-space: nowrap !important;
-  -webkit-user-select: none !important;
-  cursor: pointer !important;
-  text-shadow: 1px 1px #fff !important;
-  font-weight: 700 !important;
-  font-size: 10pt !important;
-} */
 
 .input-imagens-edicao{
   width: 95px;

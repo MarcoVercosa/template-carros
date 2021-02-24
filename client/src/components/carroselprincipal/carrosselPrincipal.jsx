@@ -3,12 +3,6 @@ import "./carroselPrincipal.css"
 
 import BuscaBD from "../fetchBackEnd/api"
 
-// import ImagemUm from "./imagens/carros.jpg"
-// import ImagemDois from "./imagens/feliz.jpg"
-// import ImagemTres from "./imagens/lancamentos.jpg"
-// import ImagemQuatro from "./imagens/venda.jpg"
-
-
 export default function CarroselPrincipal() {
 
     const [imagensCarrosel, setImagensCarrosel] = useState([])
@@ -31,7 +25,7 @@ export default function CarroselPrincipal() {
             if (numero >= imagens.length) { numero = 0 }//se numero der o total de imagens, zera a var
             imagens[numero].classList.add("selected") //add a class select na imagem da vez
             setContadorImagensCarrosel(numero) //atualza o state parq que as setas da imagem possam enchergar a posição da imagem da vez
-        }, 10000)
+        }, 7000)
     }
 
     function NavegaCarrosel(direcao) {

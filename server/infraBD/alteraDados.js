@@ -265,26 +265,20 @@ class AlteraDadosBD {
         }
     }
 
-    FiltroEstoqueComFiltro(dados, res) {
+    FiltroEstoqueComFiltro(dados, res) {//OBS: O BD no campo valor só aceita se o numero tiver pontuação nas casas decimais ex: (50.000) 50 mil, 
+        //pode ser em string ou number tambem,
+        const formater = new Intl.NumberFormat("pt-BR")
         var sql = undefined
-        switch (dados.valor) {
-            case 0:
-            case 50.001:
-                console.log("switch 1")
-                sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor >= ${dados.valor} AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
-                break;
-            default:
-                console.log("switch 2")
-                sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor BETWEEN ${dados.valor - 10000} AND ${dados.valor}  AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
-                break;
-
-        }
-
-        if (dados.valor === 0) {
-
+        if (dados.valor === 0 || dados.valor > 50000) {//formater.format tranforma o valor NUMBER em string, mas adicionando ponto nas casas decimais
+            sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor >= ${formater.format(dados.valor)} AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
+            console.log("switch 1")
         } else {
-
+            console.log("switch 2")
+            sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${dados.marca}%" AND valor BETWEEN ${formater.format(dados.valor - 10000)} AND ${formater.format(dados.valor)}  AND ano <= ${dados.ano} AND cambio LIKE "%${dados.cambio}%" AND combustivel LIKE "%${dados.combustivel}%" AND blindado LIKE "%${dados.blindado}%" `
         }
+
+
+
 
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {

@@ -55,14 +55,19 @@ padding: 0;
 }
 .estoque-article-estoque{
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 20px;
     grid-template-columns: 30% 30% 30%;   
 }
 .estoque-article-estoque-div{
-    width: 100%;   
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;   
     transition: ease-in-out 0.3s ;   
     border-radius: 10px;
     padding: 4px;
+    
 }
 .estoque-article-estoque-div:hover{
     background-color: rgb(235, 235, 235);    
@@ -84,13 +89,13 @@ padding: 0;
     border-radius: 15px; 
     border:  1px ;
     border-style: dashed;
-    color: rgb(221, 221, 221);
+    color: rgb(211, 211, 211);
     text-align: center;
 }
-.estoque-article-div-grid-imagem-info hr{
+.estoque-article-div-grid-div-hr{
     border-bottom: 1px;
     border-style: dashed;
-    color: rgb(202, 202, 202)
+    color: rgb(167, 163, 163)
 }
 
 .estoque-article-div-grid-div-p{
@@ -123,5 +128,11 @@ padding: 0;
     justify-content: center;
     text-align: center;
     margin-top: 5%
+}
+
+.estoque-article-div-grid-div-button{
+    display: flex;
+    justify-content: center;
+    margin-top:25px;
 }
 
