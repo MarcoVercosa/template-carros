@@ -48,7 +48,7 @@ function Menu(props) {
     }, [])
 
     window.onscroll = (() => {
-        if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 15) {
+        if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 128) {
             document.getElementById("menu-header-div").className = "menu-header-div"
         } else {
             document.getElementById("menu-header-div").className = ""

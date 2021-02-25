@@ -11,17 +11,20 @@
 
 .detalhesanuncio-article-div-carrosel{
     display: inline-block;
-    width: 50%;
+    width: 60%;
     position: relative;
-    height: 400px;
+    height: 500px;
 }
 .detalhesanuncio-article-div-carrosel img{
     display: inline-block;
     width: 100%;
     height: 100%;
     position: absolute;
+    border-radius: 15px;
     opacity: 0;
+    transition: opacity 400ms ease-in-out;
 }
+
 .detalhesanuncio-article-div-carrosel img.selected{
     display: inline-block;
     width: 100%;
@@ -34,6 +37,7 @@
     display: flex;
     width: 50%;
     position: absolute;
+    
 }
 .detalhesanunciodireita{
     top: 40%;
@@ -46,18 +50,21 @@
 .arrow{
     display: flex;    
     color: white;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+.arrow:hover{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.2);
 }
 .detalhesanunciodireita{
     justify-content:right;
 }
-.detalhesanunciodireita-div-contato{
-    display: inline-block;
-    width: 30%;
-    vertical-align: top
-}
+
 .detalhesanunciodireita-div-contato-info-detalhes{
     display:block;
     width: 50%;
+    
 }
 .detalhesanunciodireita-div-contato-info-detalhes p{
     font-size: 16px;
@@ -81,5 +88,18 @@
 }
 .detalhesanunciodireita-opcionais-div p spam{
     margin-right: 3.5px;
+}
+.detalhesanunciodireita-div-contato{
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    margin-left: 30px;
+}
+.detalhesanunciodireita-div-contato-p{
+    display: block;
+    font-family: 'Lora', serif;
+    font-size: 29px;
+    color: rgb(124, 124, 124);
+    font-weight: 500;
 }
 

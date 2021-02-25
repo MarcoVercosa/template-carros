@@ -5,13 +5,33 @@ import "./detalhesAnuncio.css"
 
 import BuscaBD from "../fetchBackEnd/api"
 
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+}));
+
 
 
 export default function DetalhesAnuncio(props) {
+    const classes = useStyles();
 
     const [dadosAnuncio, setDadosAnuncio] = useState(false)
     const [imagens, setImagens] = useState(false)
     const [contadorImagens, setContadorImagens] = useState(0)
+    const [botaoInfo, setBotaoInfo] = useState({
+        detalhes: true,
+        observacoes: false,
+        dadosDetalhes: true,
+        dadosObservacoes: false
+    })
+
 
     useEffect(async () => {
         const classBuscaBD = new BuscaBD
@@ -88,41 +108,82 @@ export default function DetalhesAnuncio(props) {
                     </div>
 
                 </div>
-                <div className="detalhesanunciodireita-div-contato-info-detalhes">
-                    <p className="detalhesanunciodireita-veiculo">Veículo: <spam>{dadosAnuncio.marca} - {dadosAnuncio.modelo}</spam></p>
-                    <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.cambio}</spam></p>
-                    <p className="detalhesanunciodireita-cambio">Câmbio: <spam>{dadosAnuncio.cambio}</spam></p>
-                    <p className="detalhesanunciodireita-combustivel">Combustível: <spam>{dadosAnuncio.combustivel} - {dadosAnuncio.modelo}</spam></p>
-                    <p className="detalhesanunciodireita-KM">KM: <spam>{dadosAnuncio.kilometro}</spam></p>
-                    <p className="detalhesanunciodireita-portas">Portas: <spam>{dadosAnuncio.porta}</spam></p>
-                    <p className="detalhesanunciodireita-portas">Final placa: <spam>{dadosAnuncio.finalPlaca}</spam></p>
-                    <div className="detalhesanunciodireita-opcionais-div">
-                        <p className="detalhesanunciodireita-opcionais">Opcionais:
-                    <spam>{dadosAnuncio.airbag ? "AIRBAG" : ""} </spam><spam>{dadosAnuncio.alarme ? "ALARME" : " "}</spam>
-                            <spam> {dadosAnuncio.cdplayer ? "CDPLAYER" : ""}</spam> <spam>{dadosAnuncio.dvdplayer ? "DVDPLAYER" : ""}</spam>
-                            <spam>{dadosAnuncio.gps ? "GPS" : ""}</spam><spam>{dadosAnuncio.radio ? "RÁDIO" : ""}</spam>
-                            <spam>{dadosAnuncio.radioTocaFita ? "RÁDIO" : ""}</spam><spam>{dadosAnuncio.computadorBordo ? "COMPUTADOR-DE-BORDO" : ""}</spam>
-                            <spam>{dadosAnuncio.controleTracao ? "CONTROLE-DE-TRAÇÃO" : ""}</spam><spam>{dadosAnuncio.controleVelocidade ? "CONTROLE-DE-VELICIDADE" : ""}</spam>
-                            <spam>{dadosAnuncio.desembacadorTraseiro ? "DESEMBAÇADOR-TRASEIRO" : ""}</spam><spam>{dadosAnuncio.limpadorTraseiro ? "LIMPADOR-TRASEIRO" : ""}</spam>
-                            <spam>{dadosAnuncio.arCondicionado ? "AR-CONDICIONADO" : ""}</spam><spam>{dadosAnuncio.arQuente ? "AR-QUENTE" : ""}</spam>
-                            <spam>{dadosAnuncio.freioAbs ? "FREIO-ABS" : ""}</spam><spam>{dadosAnuncio.retrovisoresEletricos ? "RETROVISORES-ELÉTRICOS" : ""}</spam>
-                            <spam>{dadosAnuncio.travasEletricas ? "TRAVAS-ELÉTRICAS" : ""}</spam><spam>{dadosAnuncio.vidrosEletricos ? "VIDROS-ELÉTRICOS" : ""}</spam>
-                            <spam>{dadosAnuncio.retrovisoresFotocromisos ? "RETROVISORES-FOTOCROMICOS" : ""}</spam><spam>{dadosAnuncio.rodaLigaLeve ? "RODA-LIGA-LEVE" : ""}</spam>
-                            <spam>{dadosAnuncio.sensorChuva ? "SENSOR-CHUVA" : ""}</spam><spam>{dadosAnuncio.sensorEstacionamento ? "SENSOR-ESTACIONAMENTO" : ""}</spam>
-                            <spam>{dadosAnuncio.tetoSolar ? "TETO-SOLAR" : ""}</spam><spam>{dadosAnuncio.direcaoHidraulica ? "DIREÇÃO-HIDRÁULICA" : ""}</spam>
-                            <spam>{dadosAnuncio.volanteAltura ? "VOLANTE-COM-REGULAGEM-ALTURA" : ""}</spam><spam>{dadosAnuncio.bancoCouro ? "BANCOS-EM-COURO" : ""}</spam>
-                            <spam>{dadosAnuncio.encostoCabecaTraseiro ? "ENCOSTOS-CABEÇA-TRASEIRO" : ""}</spam><spam>{dadosAnuncio.bancosFrenteAquecimento ? "BANCOS-FRENTE-AQUECIMENTO" : ""}</spam>
-                            <spam>{dadosAnuncio.tracaoQuatroRodas ? "TRAÇÃO-QUATRO-RODAS" : ""}</spam><spam>{dadosAnuncio.protetorCacamba ? "PROTETOR-CAÇAMBA" : ""}</spam>
-                            <spam>{dadosAnuncio.blindado ? "BLINDADO" : ""}</spam><spam>{dadosAnuncio.farolXenonio ? "FAROL-XENONIO" : ""}</spam>
-
-                        </p>
+                <div className="detalhesanunciodireita-div-contato">
+                    <p className="detalhesanunciodireita-div-contato-p">R$ {dadosAnuncio.valor},00</p>
+                    <div>
+                        <form className="detalhesanunciodireita-div-contato" className={classes.root} >
+                            <p>Solicitar um contato</p>
+                            <TextField id="standard-basic" label="Standard" />
+                        </form>
                     </div>
 
+                </div>
+                <div style={{ marginTop: "35px", marginBottom: "20px" }} className={classes.root}>
+                    <Button style={{ margin: "0" }} variant="contained" color="primary"
+                        onClick={() => {
+                            setBotaoInfo(prevState => {
+                                return {
+                                    ...prevState, detalhes: !botaoInfo.detalhes, observacoes: !botaoInfo.observacoes,
+                                    dadosDetalhes: !botaoInfo.dadosDetalhes, dadosObservacoes: !botaoInfo.dadosObservacoes
+                                }
+                            })
+                        }}
+                        disabled={botaoInfo.detalhes}
+                    >
+                        DETALHES
+                    </Button>
+                    <Button style={{ marginLeft: "40px" }} variant="contained" color="primary"
+                        onClick={() => {
+                            setBotaoInfo(prevState => {
+                                return {
+                                    ...prevState, detalhes: !botaoInfo.detalhes, observacoes: !botaoInfo.observacoes,
+                                    dadosDetalhes: !botaoInfo.dadosDetalhes, dadosObservacoes: !botaoInfo.dadosObservacoes
+                                }
+                            })
+                        }}
+                        disabled={botaoInfo.observacoes}
+                    >
+                        OBSERVAÇÕES
+                    </Button>
+                </div>
+                {botaoInfo.dadosDetalhes &&
+                    <div className="detalhesanunciodireita-div-contato-info-detalhes">
+                        <p className="detalhesanunciodireita-veiculo">Veículo: <spam>{dadosAnuncio.marca} - {dadosAnuncio.modelo}</spam></p>
+                        <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.cambio}</spam></p>
+                        <p className="detalhesanunciodireita-cambio">Câmbio: <spam>{dadosAnuncio.cambio}</spam></p>
+                        <p className="detalhesanunciodireita-combustivel">Combustível: <spam>{dadosAnuncio.combustivel}</spam></p>
+                        <p className="detalhesanunciodireita-KM">KM: <spam>{dadosAnuncio.kilometro}</spam></p>
+                        <p className="detalhesanunciodireita-portas">Portas: <spam>{dadosAnuncio.porta}</spam></p>
+                        <p className="detalhesanunciodireita-portas">Final placa: <spam>{dadosAnuncio.finalPlaca}</spam></p>
+                        <div className="detalhesanunciodireita-opcionais-div">
+                            <p className="detalhesanunciodireita-opcionais">Opcionais:
+                                <spam>{dadosAnuncio.airbag ? "AIRBAG" : ""} </spam><spam>{dadosAnuncio.alarme ? "ALARME" : " "}</spam>
+                                <spam> {dadosAnuncio.cdplayer ? "CDPLAYER" : ""}</spam> <spam>{dadosAnuncio.dvdplayer ? "DVDPLAYER" : ""}</spam>
+                                <spam>{dadosAnuncio.gps ? "GPS" : ""}</spam><spam>{dadosAnuncio.radio ? "RÁDIO" : ""}</spam>
+                                <spam>{dadosAnuncio.radioTocaFita ? "RÁDIO-TOCA-FITA" : ""}</spam><spam>{dadosAnuncio.computadorBordo ? "COMPUTADOR-DE-BORDO" : ""}</spam>
+                                <spam>{dadosAnuncio.controleTracao ? "CONTROLE-DE-TRAÇÃO" : ""}</spam><spam>{dadosAnuncio.controleVelocidade ? "CONTROLE-DE-VELOCIDADE" : ""}</spam>
+                                <spam>{dadosAnuncio.desembacadorTraseiro ? "DESEMBAÇADOR-TRASEIRO" : ""}</spam><spam>{dadosAnuncio.limpadorTraseiro ? "LIMPADOR-TRASEIRO" : ""}</spam>
+                                <spam>{dadosAnuncio.arCondicionado ? "AR-CONDICIONADO" : ""}</spam><spam>{dadosAnuncio.arQuente ? "AR-QUENTE" : ""}</spam>
+                                <spam>{dadosAnuncio.freioAbs ? "FREIO-ABS" : ""}</spam><spam>{dadosAnuncio.retrovisoresEletricos ? "RETROVISORES-ELÉTRICOS" : ""}</spam>
+                                <spam>{dadosAnuncio.travasEletricas ? "TRAVAS-ELÉTRICAS" : ""}</spam><spam>{dadosAnuncio.vidrosEletricos ? "VIDROS-ELÉTRICOS" : ""}</spam>
+                                <spam>{dadosAnuncio.retrovisoresFotocromicos ? "RETROVISORES-FOTOCROMICOS" : ""}</spam><spam>{dadosAnuncio.rodaLigaLeve ? "RODA-LIGA-LEVE" : ""}</spam>
+                                <spam>{dadosAnuncio.sensorChuva ? "SENSOR-CHUVA" : ""}</spam><spam>{dadosAnuncio.sensorEstacionamento ? "SENSOR-ESTACIONAMENTO" : ""}</spam>
+                                <spam>{dadosAnuncio.tetoSolar ? "TETO-SOLAR" : ""}</spam><spam>{dadosAnuncio.direcaoHidraulica ? "DIREÇÃO-HIDRÁULICA" : ""}</spam>
+                                <spam>{dadosAnuncio.volanteAltura ? "VOLANTE-COM-REGULAGEM-ALTURA" : ""}</spam><spam>{dadosAnuncio.bancoCouro ? "BANCOS-EM-COURO" : ""}</spam>
+                                <spam>{dadosAnuncio.encostoCabecaTraseiro ? "ENCOSTOS-CABEÇA-TRASEIRO" : ""}</spam><spam>{dadosAnuncio.bancosFrenteAquecimento ? "BANCOS-FRENTE-AQUECIMENTO" : ""}</spam>
+                                <spam>{dadosAnuncio.tracaoQuatroRodas ? "TRAÇÃO-QUATRO-RODAS" : ""}</spam><spam>{dadosAnuncio.protetorCacamba ? "PROTETOR-CAÇAMBA" : ""}</spam>
+                                <spam>{dadosAnuncio.blindado ? "BLINDADO" : ""}</spam><spam>{dadosAnuncio.farolXenonio ? "FAROL-XENONIO" : ""}</spam>
 
-                </div>
-                <div className="detalhesanunciodireita-div-contato">
-                    <h1>OK</h1>
-                </div>
+                            </p>
+                        </div>
+                    </div>
+                }
+                {botaoInfo.dadosObservacoes &&
+                    <div className="detalhesanunciodireita-div-contato-info-detalhes">
+                        <p><spam>{dadosAnuncio.sobre}</spam></p>
+                    </div>
+                }
+
             </article >
             <Footer />
         </>
