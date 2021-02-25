@@ -35,7 +35,7 @@
 .detalhesanunciodirecao{
     z-index: 500;
     display: flex;
-    width: 50%;
+    width: auto;
     position: absolute;
     
 }
@@ -101,5 +101,26 @@
     font-size: 29px;
     color: rgb(124, 124, 124);
     font-weight: 500;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.detalhesanunciodireita-div-contato-div{
+border: 1px solid rgb(157, 157, 157);
+border-radius: 13px;
+
+}
+.detalhesanunciodireita-div-contato-form{
+    padding: 10px;
+    border: 1px solid rgb(135, 163, 204);
+    border-radius: 10px;
+}
+.detalhesanunciodireita-div-contato-form p{
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: rgb(75, 106, 174);
+    font-weight: 800;
+}
+.detalhesanunciodireita-div-contato-form div{
+    margin-top: 10px
 }
 

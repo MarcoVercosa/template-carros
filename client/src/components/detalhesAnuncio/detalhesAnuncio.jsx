@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
             margin: theme.spacing(1),
+            // width: '95%',
         },
     },
 }));
@@ -110,12 +111,45 @@ export default function DetalhesAnuncio(props) {
                 </div>
                 <div className="detalhesanunciodireita-div-contato">
                     <p className="detalhesanunciodireita-div-contato-p">R$ {dadosAnuncio.valor},00</p>
-                    <div>
-                        <form className="detalhesanunciodireita-div-contato" className={classes.root} >
-                            <p>Solicitar um contato</p>
-                            <TextField id="standard-basic" label="Standard" />
-                        </form>
-                    </div>
+                    {/* <div className="detalhesanunciodireita-div-contato-div"> */}
+                    <form className="detalhesanunciodireita-div-contato-form">
+                        <p>TENHO INTERESSE</p>
+                        <hr />
+                        <div>
+                            <TextField label="Nome" id="standard-size-small" size="small" type="text"
+                                style={{ width: "90%" }} />
+                        </div>
+                        <div>
+                            <TextField label="E-mail" id="standard-size-small" size="small" type="text"
+                                style={{ width: "90%" }} />
+                        </div>
+                        <div>
+                            <TextField label="DDD" id="standard-size-small" size="small" type="tel"
+                                style={{ width: "20%" }} />
+                            <TextField label="Telefone" id="standard-size-small" size="small" type="tel"
+                                style={{ width: "60%", marginLeft: "10%" }} />
+
+                        </div>
+
+                        <div>
+                            <TextField
+                                style={{ width: "90%" }}
+                                id="outlined-multiline-static"
+                                label="Mensagem"
+                                multiline
+                                rows={5}
+                                variant="outlined"
+                            />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <Button variant="contained" color="primary">
+                                ENVIAR
+                            </Button>
+                        </div>
+
+                    </form>
+
+                    {/* </div> */}
 
                 </div>
                 <div style={{ marginTop: "35px", marginBottom: "20px" }} className={classes.root}>
@@ -149,7 +183,7 @@ export default function DetalhesAnuncio(props) {
                 {botaoInfo.dadosDetalhes &&
                     <div className="detalhesanunciodireita-div-contato-info-detalhes">
                         <p className="detalhesanunciodireita-veiculo">Veículo: <spam>{dadosAnuncio.marca} - {dadosAnuncio.modelo}</spam></p>
-                        <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.cambio}</spam></p>
+                        <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.cambio} - {dadosAnuncio.ano}</spam></p>
                         <p className="detalhesanunciodireita-cambio">Câmbio: <spam>{dadosAnuncio.cambio}</spam></p>
                         <p className="detalhesanunciodireita-combustivel">Combustível: <spam>{dadosAnuncio.combustivel}</spam></p>
                         <p className="detalhesanunciodireita-KM">KM: <spam>{dadosAnuncio.kilometro}</spam></p>
