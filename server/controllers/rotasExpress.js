@@ -199,6 +199,7 @@ module.exports = (app) => {
     // ############################################
     app.post("/sendemail", (req, res) => {
         console.log("Envio de e-mail BackEnd")
+        console.log(req.body.dados)
         const user = "marco2007sky@hotmail.com"
         const pass = "MOdeld4166"
 
@@ -215,8 +216,9 @@ module.exports = (app) => {
                 from: user,
                 to: "marco2011sky@gmail.com",
                 subject: "CLIENTE INTERESSADO EM VEÍCULO",
-                text: `NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n DDD: ${req.body.dados.ddd}
-                TELEFONE: ${req.body.dados.telefone} \n ID ANÚNCIO ${req.body.dados.idAnuncio} \n MENSAGEM: ${req.body.dados.mensagem}`
+                text: `NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n DDD: ${req.body.dados.ddd} \n 
+                TELEFONE: ${req.body.dados.telefone} \n ID ANÚNCIO: ${req.body.dados.idAnuncio} \n 
+                 \n MENSAGEM: ${req.body.dados.mensagem}`
 
             })
             console.log("Message ID sent: %s", enviaEmail.messageId);

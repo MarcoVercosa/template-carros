@@ -14,6 +14,7 @@
     width: 60%;
     position: relative;
     height: 500px;
+  
 }
 .detalhesanuncio-article-div-carrosel img{
     display: inline-block;
@@ -62,8 +63,9 @@
 }
 
 .detalhesanunciodireita-div-contato-info-detalhes{
-    display:block;
-    width: 50%;
+    display:inline-block;  
+    width: 60%;
+    /* margin-top: -7% */
     
 }
 .detalhesanunciodireita-div-contato-info-detalhes p{
