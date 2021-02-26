@@ -216,9 +216,16 @@ module.exports = (app) => {
                 from: user,
                 to: "marco2011sky@gmail.com",
                 subject: "CLIENTE INTERESSADO EM VEÍCULO",
-                text: `NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n DDD: ${req.body.dados.ddd} \n 
-                TELEFONE: ${req.body.dados.telefone} \n ID ANÚNCIO: ${req.body.dados.idAnuncio} \n 
-                 \n MENSAGEM: ${req.body.dados.mensagem}`
+                text: `NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n 
+                DDD: ${req.body.dados.ddd} \n TELEFONE: ${req.body.dados.telefone} \n
+                DDD: ${req.body.dados.dddCel} \n CELULAR: ${req.body.dados.telefoneCel} \n
+                
+                RETORNO: \n
+                WhatsApp: ${req.body.dados.whatsappRetorno ? "SIM" : "NÃO"} \n
+                E-Mail: ${req.body.dados.emailRetorno ? "SIM" : "NÃO"} \n
+                Telefone: ${req.body.dados.telefoneRetorno ? "SIM" : "NÃO"} \n
+                \n MENSAGEM: ${req.body.dados.mensagem} \n 
+                ID ANÚNCIO: ${req.body.dados.idAnuncio}`
 
             })
             console.log("Message ID sent: %s", enviaEmail.messageId);

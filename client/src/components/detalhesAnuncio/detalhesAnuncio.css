@@ -65,7 +65,7 @@
 .detalhesanunciodireita-div-contato-info-detalhes{
     display:inline-block;  
     width: 60%;
-    /* margin-top: -7% */
+    min-height: 500px;
     
 }
 .detalhesanunciodireita-div-contato-info-detalhes p{
@@ -73,8 +73,13 @@
     display: block;
     margin: 0px;
     color: #777777;
-    font-weight: 700;
-    
+    font-weight: 700;    
+}
+.detalhesanunciodireita-div-contato-info-detalhes-sobre{
+    display: inline-block;
+   
+    /* min-height: 200px; */
+
 }
 .detalhesanunciodireita-div-contato-info-detalhes p spam{
     font-family: 'Lora', serif;
@@ -96,6 +101,9 @@
     width: 30%;
     vertical-align: top;
     margin-left: 30px;
+    position: absolute;
+    top: 40%
+    
 }
 .detalhesanunciodireita-div-contato-p{
     display: block;

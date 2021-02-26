@@ -48,18 +48,18 @@ function Menu(props) {
     }, [])
 
     window.onscroll = (() => {
-        if (document.body.scrollTop > 64 || document.documentElement.scrollTop > 128) {
-            document.getElementById("menu-header-div").className = "menu-header-div"
+        if (document.body.scrollTop > 43 || document.documentElement.scrollTop > 43) {
+            document.getElementById("menu-header-div").className = "menu-header-fixed"
         } else {
-            document.getElementById("menu-header-div").className = ""
+            document.getElementById("menu-header-div").className = "menu-header-normal"
         }
-        // console.log(document.documentElement.scrollTop)
+        console.log(document.documentElement.scrollTop)
     })
 
     return (
 
         <>
-            <div id="menu-header-div" className="">
+            <div className="">
                 <div className="menu-header-div-contato">
 
                     {contatos.dadosLojaUm &&
@@ -150,59 +150,60 @@ function Menu(props) {
 
                 <header className="menu-header">
 
-                    <div className="menu-div-slogan-left">
-                        <img src={SloganLeft} alt="Slogam Empresa" />
-                    </div>
+                    <div id="menu-header-div" className="menu-header-normal">
+                        <div className="menu-div-slogan-left">
+                            <img src={SloganLeft} alt="Slogam Empresa" />
+                        </div>
 
-                    <div className="menu-head-div">
-                        <ul>
-                            <li> <Link to="/">
-                                INÍCIO
+                        <div className="menu-head-div">
+                            <ul>
+                                <li> <Link to="/">
+                                    INÍCIO
                                 </Link>
-                            </li>
-                            <li><Link to="/estoque">
-                                ESTOQUE
+                                </li>
+                                <li><Link to="/estoque">
+                                    ESTOQUE
                                 </Link>
-                            </li>
-                            <li>
-                                BLINDADOS
+                                </li>
+                                <li>
+                                    BLINDADOS
                         </li>
-                            <li>
-                                VENDER
+                                <li>
+                                    VENDER
                         </li>
-                            <li>
-                                FINANCIAR
+                                <li>
+                                    FINANCIAR
                         </li>
-                            <li>
-                                LOCALIZAÇÃO
+                                <li>
+                                    LOCALIZAÇÃO
                         </li>
-                            <li>
-                                SOBRE NÓS
+                                <li>
+                                    SOBRE NÓS
                         </li>
-                            <li><Link to="/paineladministrativo">
-                                CONTATO
+                                <li><Link to="/paineladministrativo">
+                                    CONTATO
                             </Link>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style={{ marginLeft: "60px" }} className="head-div-search">
+
+                            <TextField
+                                style={{ marginTop: "13px", position: "absolute", width: "15%" }}
+                                label="BUSCAR"
+                                id="outlined-size-small"
+                                defaultValue=""
+                                variant="outlined"
+                                size="small"
+                                color="standard"
+                            />
+
+
+                        </div>
+                        <spam className="menu-spam-search"><i class="fas fa-search fa-2x"></i></spam>
+
                     </div>
-
-                    <div style={{ marginLeft: "60px" }} className="head-div-search">
-
-                        <TextField
-                            style={{ marginTop: "13px", position: "absolute", width: "15%" }}
-                            label="BUSCAR"
-                            id="outlined-size-small"
-                            defaultValue=""
-                            variant="outlined"
-                            size="small"
-                            color="standard"
-                        />
-
-
-                    </div>
-                    <spam className="menu-spam-search"><i class="fas fa-search fa-2x"></i></spam>
-
-
                 </header>
             </div>
         </>
