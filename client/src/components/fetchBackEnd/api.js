@@ -132,7 +132,13 @@ export default class BuscaBD {
         const resultado = await axios.get(`http://192.168.0.150:9000/estoque${id}`)
         return resultado
     }
-
+    async SendEmail(dados) {
+        console.log("API solicitada para envio de email")
+        const resultado = await axios.post("http://192.168.0.150:9000/sendemail", {
+            dados
+        })
+        return resultado
+    }
 
 
 

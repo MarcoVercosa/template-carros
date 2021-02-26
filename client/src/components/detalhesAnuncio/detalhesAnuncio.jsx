@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function DetalhesAnuncio(props) {
     const classes = useStyles();
 
@@ -27,10 +26,18 @@ export default function DetalhesAnuncio(props) {
     const [imagens, setImagens] = useState(false)
     const [contadorImagens, setContadorImagens] = useState(0)
     const [botaoInfo, setBotaoInfo] = useState({
-        detalhes: true,
-        observacoes: false,
+        botaoDetalhes: true,
+        botaoObservacoes: false,
         dadosDetalhes: true,
         dadosObservacoes: false
+    })
+    const [tenhoInteresse, setTenhoInteresse] = useState({
+        nome: false,
+        email: false,
+        ddd: false,
+        telefone: false,
+        mensagem: false,
+        idAnuncio: false
     })
 
 
@@ -41,12 +48,7 @@ export default function DetalhesAnuncio(props) {
         setDadosAnuncio(dados.data[0])
         setImagens(JSON.parse(dados.data[0].imagensPath))
         console.log(dados)
-
-
     }, [])
-
-
-
 
     function NavegaImagens(direcao) {
         const imagensQuery = document.querySelectorAll(".detalhesanuncio-article-div-carrosel img")
@@ -69,8 +71,13 @@ export default function DetalhesAnuncio(props) {
             }
             imagensQuery[contadorImagens - 1].classList.add("selected")
             setContadorImagens(contadorImagens - 1)
-
         }
+    }
+    async function FunctTenhoInteresse(params) {
+        const classBuscaBD = new BuscaBD
+        const resultado = classBuscaBD.SendEmail(tenhoInteresse)
+        console.log(tenhoInteresse)
+
     }
 
 
@@ -79,7 +86,7 @@ export default function DetalhesAnuncio(props) {
             <Menu />
             <article className="detalhesanuncio-article">
                 <div className="detalhesanuncio-article-div-titulo">
-                    <p>{dadosAnuncio.marca} {dadosAnuncio.modelo} {dadosAnuncio.motor} {dadosAnuncio.cambio}</p>
+                    <p>{dadosAnuncio.marca} {dadosAnuncio.modelo} {dadosAnuncio.motor} {dadosAnuncio.cambio}<spam>OFERTA: #{dadosAnuncio.id}</spam></p>
                 </div>
                 <div className="detalhesanuncio-article-div-carrosel">
                     {imagens &&
@@ -114,20 +121,44 @@ export default function DetalhesAnuncio(props) {
                     {/* <div className="detalhesanunciodireita-div-contato-div"> */}
                     <form className="detalhesanunciodireita-div-contato-form">
                         <p>TENHO INTERESSE</p>
-                        <hr />
+                        {/* <hr style={{ color: "red" }} /> */}
                         <div>
                             <TextField label="Nome" id="standard-size-small" size="small" type="text"
-                                style={{ width: "90%" }} />
+                                style={{ width: "90%" }}
+                                onBlur={(dados) => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, nome: dados.target.value }
+                                    })
+                                }}
+                            />
                         </div>
                         <div>
                             <TextField label="E-mail" id="standard-size-small" size="small" type="text"
-                                style={{ width: "90%" }} />
+                                style={{ width: "90%" }}
+                                onBlur={(dados) => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, email: dados.target.value }
+                                    })
+                                }}
+                            />
                         </div>
                         <div>
                             <TextField label="DDD" id="standard-size-small" size="small" type="tel"
-                                style={{ width: "20%" }} />
+                                style={{ width: "20%" }}
+                                onBlur={(dados) => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, ddd: dados.target.value }
+                                    })
+                                }}
+                            />
                             <TextField label="Telefone" id="standard-size-small" size="small" type="tel"
-                                style={{ width: "60%", marginLeft: "10%" }} />
+                                style={{ width: "60%", marginLeft: "10%" }}
+                                onBlur={(dados) => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, telefone: dados.target.value }
+                                    })
+                                }}
+                            />
 
                         </div>
 
@@ -139,10 +170,22 @@ export default function DetalhesAnuncio(props) {
                                 multiline
                                 rows={5}
                                 variant="outlined"
+                                onBlur={(dados) => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, mensagem: dados.target.value }
+                                    })
+                                }}
                             />
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                            <Button variant="contained" color="primary">
+                            <Button variant="contained" color="primary"
+                                onClick={() => {
+                                    setTenhoInteresse(prevState => {
+                                        return { ...prevState, idAnuncio: dadosAnuncio.id }
+                                    })
+                                    FunctTenhoInteresse()
+                                }}
+                            >
                                 ENVIAR
                             </Button>
                         </div>
@@ -157,7 +200,7 @@ export default function DetalhesAnuncio(props) {
                         onClick={() => {
                             setBotaoInfo(prevState => {
                                 return {
-                                    ...prevState, detalhes: !botaoInfo.detalhes, observacoes: !botaoInfo.observacoes,
+                                    ...prevState, botaoDetalhes: !botaoInfo.detalhes, botaoObservacoes: !botaoInfo.observacoes,
                                     dadosDetalhes: !botaoInfo.dadosDetalhes, dadosObservacoes: !botaoInfo.dadosObservacoes
                                 }
                             })
@@ -170,7 +213,7 @@ export default function DetalhesAnuncio(props) {
                         onClick={() => {
                             setBotaoInfo(prevState => {
                                 return {
-                                    ...prevState, detalhes: !botaoInfo.detalhes, observacoes: !botaoInfo.observacoes,
+                                    ...prevState, botaoDetalhes: !botaoInfo.detalhes, botaoObservacoes: !botaoInfo.observacoes,
                                     dadosDetalhes: !botaoInfo.dadosDetalhes, dadosObservacoes: !botaoInfo.dadosObservacoes
                                 }
                             })

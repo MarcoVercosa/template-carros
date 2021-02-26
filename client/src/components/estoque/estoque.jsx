@@ -267,6 +267,7 @@ export default function Estoque(props) {
                                             <span className="estoque-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.porta} {dados.cambio}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.ano}</span>
+                                            <span className="estoque-article-div-grid-div-p-p-p-p">OFERTA: #{dados.id}</span>
                                             <div className="estoque-article-div-grid-div-button">
 
                                                 <Link to={`/detalhesanuncio${dados.id}`} target="_blank">

@@ -2,6 +2,7 @@ const express = require("express")
 const AlteraDadosBD = require("../infraBD/alteraDados") //importa class para alteração no BD
 const path = require('path') //lib que gerencia extenções de arquivos. Usado no Multer
 const multer = require("multer") // upload de imagens
+const nodemailer = require("nodemailer")
 const fs = require("fs") //gerenciamento de arquivos no disco
 
 
@@ -193,4 +194,34 @@ module.exports = (app) => {
         // res.json(req.params.idanuncio)
     })
 
+    //##############################################
+    // #            ENVIO E-MAIL                  # 
+    // ############################################
+    app.post("/sendemail", (req, res) => {
+        console.log("Envio de e-mail BackEnd")
+        const user = "marco2007sky@hotmail.com"
+        const pass = "MOdeld4166"
+
+        async function SendEmail() {
+            const transporter = nodemailer.createTransport({
+                service: "hotmail",
+                auth: {
+                    user,
+                    pass
+                }
+            })
+
+            let enviaEmail = await transporter.sendMail({
+                from: user,
+                to: "marco2011sky@gmail.com",
+                subject: "CLIENTE INTERESSADO EM VEÍCULO",
+                text: `NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n DDD: ${req.body.dados.ddd}
+                TELEFONE: ${req.body.dados.telefone} \n ID ANÚNCIO ${req.body.dados.idAnuncio} \n MENSAGEM: ${req.body.dados.mensagem}`
+
+            })
+            console.log("Message ID sent: %s", enviaEmail.messageId);
+        }
+        SendEmail().catch(console.log)
+
+    })
 }

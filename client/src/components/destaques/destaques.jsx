@@ -114,7 +114,7 @@ export default function Destaques(dados) {
                                     <span className="destaques-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.porta}P {dados.cambio}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.ano}</span>
-                                    <span className="destaques-article-div-grid-div-anuncio">Anúncio: {dados.id}</span>
+                                    <span className="destaques-article-div-grid-div-anuncio">OFERTA: #{dados.id}</span>
                                     <div className="destaques-menu-left-div-button">
 
                                         <Link to={`/detalhesanuncio${dados.id}`} target="_blank">
