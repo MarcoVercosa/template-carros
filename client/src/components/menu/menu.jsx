@@ -59,7 +59,7 @@ function Menu(props) {
     return (
 
         <>
-            <div className="">
+            <div className="menu">
                 <div className="menu-header-div-contato">
 
                     {contatos.dadosLojaUm &&
