@@ -106,14 +106,14 @@ export default function Destaques(dados) {
                                     </a>
                                 </div>
                                 <div className="destaques-article-div-grid-imagem-info">
-                                    <span className="destaques-article-div-grid-div-p">{dados.modelo}</span>
+                                    <span className="destaques-article-div-grid-div-p">{dados.marca} {dados.modelo}</span>
                                     <hr />
                                     <span className="destaques-article-div-grid-div-p-p">R$ {dados.valor},00</span>
                                     <hr />
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.motor}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
                                     <span className="destaques-article-div-grid-div-p-p-p">{dados.porta}P {dados.cambio}</span>
-                                    <span className="destaques-article-div-grid-div-p-p-p">{dados.ano}</span>
+                                    {/* <span className="destaques-article-div-grid-div-p-p-p">{dados.ano}</span> */}
                                     <span className="destaques-article-div-grid-div-anuncio">OFERTA: #{dados.id}</span>
                                     <div className="destaques-menu-left-div-button">
 

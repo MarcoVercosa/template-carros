@@ -139,6 +139,16 @@ export default class BuscaBD {
         })
         return resultado
     }
+    async BuscaEstoqueBlindados(id) {
+        console.log("API solicitada para buscar Blindados")
+        const resultado = await axios.get(`http://192.168.0.150:9000/blindados`)
+        return resultado
+    }
+    async BuscaEstoqueNovos(id) {
+        console.log("API solicitada para buscar Novos")
+        const resultado = await axios.get(`http://192.168.0.150:9000/novos`)
+        return resultado
+    }
 
 
 

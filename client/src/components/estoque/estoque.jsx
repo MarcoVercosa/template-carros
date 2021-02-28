@@ -118,7 +118,6 @@ export default function Estoque(props) {
             return { ...prevState, todoEstoque: resultado.data, paginaAvanca: 9, paginaRetorna: 0, paginacao: resultado.data.slice(0, 9) }
         })
         MostrarTopoDestaque()
-
     }
 
     return (
@@ -126,7 +125,7 @@ export default function Estoque(props) {
             <Menu />
 
             <menu id="inicio" className="estoque-menu-left">
-                <h3 className="titulo-estoque">VEÍCULOS EM ESTOQUE {carrosEstoque.todoEstoque.length}</h3>
+                <h3 className="titulo-estoque">VEÍCULOS EM ESTOQUE </h3>
 
                 <div className="estoque-menu-left-div">
                     <div className="estoque-menu-left-div-div">
@@ -246,7 +245,7 @@ export default function Estoque(props) {
                     </div>
                 </div>
                 <div className="estoque-article" >
-                    <h1 className="titulo-estoque" >Anúncios</h1>
+                    <h1 className="titulo-estoque" >Anúncios:</h1>
                     <div className="estoque-article-estoque">
                         {carrosEstoque.todoEstoque &&
                             carrosEstoque.paginacao.map((recebe, index) => {
@@ -259,14 +258,14 @@ export default function Estoque(props) {
                                             </a>
                                         </div>
                                         <div key={index + 1} className="estoque-article-estoque-div-imagem-info">
-                                            <span className="estoque-article-div-grid-div-p">{dados.modelo}</span>
+                                            <span className="estoque-article-div-grid-div-p">{dados.marca} {dados.modelo}</span>
                                             <hr className="estoque-article-div-grid-div-hr" />
                                             <span className="estoque-article-div-grid-div-p-p">R$ {dados.valor},00</span>
                                             <hr className="estoque-article-div-grid-div-hr" />
                                             <span className="estoque-article-div-grid-div-p-p-p">{dados.motor}</span>
                                             <span className="estoque-article-div-grid-div-p-p-p"> {dados.combustivel}</span>
-                                            <span className="estoque-article-div-grid-div-p-p-p">{dados.porta} {dados.cambio}</span>
-                                            <span className="estoque-article-div-grid-div-p-p-p">{dados.ano}</span>
+                                            <span className="estoque-article-div-grid-div-p-p-p">{dados.porta}P {dados.cambio}</span>
+                                            {/* <span className="estoque-article-div-grid-div-p-p-p">{dados.ano}</span> */}
                                             <span className="estoque-article-div-grid-div-p-p-p-p">OFERTA: #{dados.id}</span>
                                             <div className="estoque-article-div-grid-div-button">
 
@@ -313,13 +312,10 @@ export default function Estoque(props) {
                         startIcon={<ArrowForwardIosIcon style={{ fontSize: 28, marginLeft: "20px" }} />}
                         disabled={carrosEstoque.paginaAvanca >= carrosEstoque.todoEstoque.length}
                     >
-
                     </Button>
                 </div>
-
             </menu >
             <Footer />
         </>
-
     )
 }

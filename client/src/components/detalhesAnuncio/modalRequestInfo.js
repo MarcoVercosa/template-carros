@@ -55,21 +55,18 @@ export default function ModalRequestInfo(props) {
         </div>
     );
     async function EnviaDados() {
-        // const classBuscaBD = new BuscaBD
-        // const resultado = classBuscaBD.SendEmail(props.tenhoInteresse)
-        console.log(props.tenhoInteresse)
+        const classBuscaBD = new BuscaBD
+        const resultado = classBuscaBD.SendEmail(props.tenhoInteresse)
+
     }
 
     return (
         <div>
-            {/* <button type="button" onClick={handleOpen}>
-                Open Modal
-        </button> */}
             <Button variant="contained" color="primary"
                 onClick={() => {
                     if (!props.tenhoInteresse.nome || !props.tenhoInteresse.email ||
                         !props.tenhoInteresse.dddCel || !props.tenhoInteresse.telefoneCel) {
-                        alert("Preecha os campos em brancos")
+                        alert("Os campos Nome, email e celuar não podem estar em branco.")
                         console.log(props.tenhoInteresse)
                         return
                     }

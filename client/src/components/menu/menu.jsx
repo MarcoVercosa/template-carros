@@ -157,23 +157,32 @@ function Menu(props) {
 
                         <div className="menu-head-div">
                             <ul>
-                                <li> <Link to="/">
-                                    INÍCIO
+                                <Link to="/">
+                                    <li> 
+                                        INÍCIO
+                                
+                                    </li>
                                 </Link>
-                                </li>
-                                <li><Link to="/estoque">
-                                    ESTOQUE
+                                <Link to="/estoque">
+                                    <li>
+                                        ESTOQUE
+                                    
+                                    </li>
                                 </Link>
-                                </li>
-                                <li>
-                                    BLINDADOS
-                        </li>
+                                <Link to="/blindados">
+                                    <li>
+                                        BLINDADOS
+                                    </li>
+                                </Link>
+                                <Link to="/novos">
+                                    <li>
+                                        NOVOS
+                                    </li>
+                                </Link>
                                 <li>
                                     VENDER
                         </li>
-                                <li>
-                                    FINANCIAR
-                        </li>
+
                                 <li>
                                     LOCALIZAÇÃO
                         </li>

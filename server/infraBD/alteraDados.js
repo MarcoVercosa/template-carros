@@ -172,7 +172,7 @@ class AlteraDadosBD {
     }
 
     Estoque(res) {// todos os carros
-        const sql = "SELECT id, marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
+        const sql = "SELECT id, marca, modelo, valor, motor,porta, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros"
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
                 res.json("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE: " + erro)
@@ -287,7 +287,6 @@ class AlteraDadosBD {
                 res.json(resultado)
                 // console.log(resultado)
             }
-
         })
     }
     BuscaDetalhesAnuncio(id, res) {
@@ -295,14 +294,33 @@ class AlteraDadosBD {
         conectaBDCarro.query(sql, (erro, resultado) => {
             if (erro) {
                 res.json("Ocorreu o seguinte erro ao buscar informações pelo ID do Anúncio: " + erro)
-                // console.log("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE:" + erro)
             } else {
-                console.log(resultado.length)
                 res.json(resultado)
                 // console.log(resultado)
             }
         })
-
+    }
+    BuscaEstoqueBlindados(res) {
+        const sql = "SELECT id, marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros WHERE blindado=1"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar estoque Blindados: " + erro)
+            } else {
+                res.json(resultado)
+                // console.log(resultado)
+            }
+        })
+    }
+    BuscaEstoqueNovos(res) {
+        const sql = "SELECT id, marca, modelo, valor, motor, combustivel, cambio, ano, blindado, imagensPath FROM vendaCarro.carros WHERE kilometro=0"
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar estoque Blindados: " + erro)
+            } else {
+                res.json(resultado)
+                // console.log(resultado)
+            }
+        })
     }
 
 }

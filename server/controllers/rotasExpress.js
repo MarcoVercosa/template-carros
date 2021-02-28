@@ -231,6 +231,13 @@ module.exports = (app) => {
             console.log("Message ID sent: %s", enviaEmail.messageId);
         }
         SendEmail().catch(console.log)
-
+    })
+    app.get("/blindados", (req, res) => {
+        console.log("Solicitado estoque BLINDADOS")
+        AlteraDadosBD.BuscaEstoqueBlindados(res)
+    })
+    app.get("/novos", (req, res) => {
+        console.log("Solicitado estoque NOVOS")
+        AlteraDadosBD.BuscaEstoqueNovos(res)
     })
 }

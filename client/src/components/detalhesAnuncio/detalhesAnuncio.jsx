@@ -1,4 +1,4 @@
-import { react, useState, useEffect } from "react"
+import { React, useState, useEffect } from "react"
 import Menu from "../menu/menu"
 import Footer from "../footer/footer"
 import ModalRequestInfo from "./modalRequestInfo"
@@ -62,7 +62,7 @@ export default function DetalhesAnuncio(props) {
         setDadosAnuncio(dados.data[0])
         setImagens(JSON.parse(dados.data[0].imagensPath))
         setTenhoInteresse(prevState => {
-            return { ...prevState, idAnuncio: dados.data[0].id, mensagem: `Tenho interesse nesse ${dados.data[0].marca} ${dados.data[0].modelo} ${dados.data[0].motor} #${dados.data[0].id}. Aguardo um retorno.` }
+            return { ...prevState, idAnuncio: dados.data[0].id, mensagem: `Tenho interesse no ${dados.data[0].marca} ${dados.data[0].modelo} ${dados.data[0].motor} #${dados.data[0].id}. Aguardo um retorno.` }
         })
     }, [])
 
@@ -172,7 +172,7 @@ export default function DetalhesAnuncio(props) {
                         {botaoInfo.dadosDetalhes &&
                             <>
                                 <p className="detalhesanunciodireita-veiculo">Veículo: <spam>{dadosAnuncio.marca} - {dadosAnuncio.modelo}</spam></p>
-                                <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.cambio} - {dadosAnuncio.ano}</spam></p>
+                                <p className="detalhesanunciodireita-modelo">Modelo: <spam>{dadosAnuncio.motor} - {dadosAnuncio.ano}</spam></p>
                                 <p className="detalhesanunciodireita-cambio">Câmbio: <spam>{dadosAnuncio.cambio}</spam></p>
                                 <p className="detalhesanunciodireita-combustivel">Combustível: <spam>{dadosAnuncio.combustivel}</spam></p>
                                 <p className="detalhesanunciodireita-KM">KM: <spam>{dadosAnuncio.kilometro}</spam></p>

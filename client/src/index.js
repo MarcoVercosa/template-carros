@@ -6,6 +6,8 @@ import App from './App';
 import Paineladministrativo from "./components/painelAdministrativo/painel/painelAdministrativo.jsx"
 import Estoque from "./components/estoque/estoque"
 import DetalhesAnuncio from "./components/detalhesAnuncio/detalhesAnuncio"
+import Blindados from "./components/blindados/blindados"
+import Novos from "./components/novos/novos"
 
 
 ReactDOM.render(
@@ -15,8 +17,8 @@ ReactDOM.render(
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
       <Route path="/estoque" exact={true} component={Estoque} />
       <Route path="/detalhesanuncio:idanuncio" component={DetalhesAnuncio} />
-      {/* <Route path="/populaharpa" component={PopularBDHarpa} /> */}
-      {/* <Route path="/biblianvi/pesquisa/:palavrapesquisabiblia" component={PesquisaBiblia} /> */}
+      <Route path="/blindados" exact={true} component={Blindados} />
+      <Route path="/novos" component={Novos} />
       {/* <Route path="/sobre" component={Sobre} ></Route> */}
       {/* <Route path="*" component={PaginaErro} /> */}
 
