@@ -101,9 +101,9 @@ export default function Destaques(dados) {
                         return (
                             <div className="destaques-article-div-grid-div">
                                 <div className="destaques-article-div-grid-imagem">
-                                    <a href={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]} target="_blank">
-                                        <img alt={dados.modelo} key={index} src={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]}></img>
-                                    </a>
+                                    {/* <a href={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]} target="_blank"> */}
+                                    <img alt={dados.modelo} key={index} src={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]}></img>
+                                    {/* </a> */}
                                 </div>
                                 <div className="destaques-article-div-grid-imagem-info">
                                     <span className="destaques-article-div-grid-div-p">{dados.marca} {dados.modelo}</span>

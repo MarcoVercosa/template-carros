@@ -304,7 +304,7 @@ export default function DetalhesAnuncio(props) {
                             </div>
                             <div style={{ marginTop: "25px" }}>
                                 <FormControl component="fieldset" className={classes.formControl}>
-                                    <FormLabel component="legend">Nosso Retorno:</FormLabel>
+                                    <FormLabel component="legend">Quero receber contato por:</FormLabel>
                                     <FormGroup row>
                                         <FormControlLabel
                                             control={<Checkbox

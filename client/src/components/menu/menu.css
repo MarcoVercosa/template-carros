@@ -31,17 +31,19 @@
     font-size: 11px;
     color: white;
 }
-.menu-header-div-contato ul li spam{
-    
-    text-align: center;
-    
-    
+.menu-header-div-contato ul li spam{    
+    text-align: center;   
 }
+.menu-header-div-contato-redes-sociais{
+
+}
+
 .menu-header-div-contato i{
     color: white
 }
 .menu-header-div-contato-redes-sociais ul{
-    margin: 0 auto;   
+    /* margin: 0 auto;    */
+    margin-top: 11px
 }
 
 .menu-header-div-contato-redes-sociais .fa-whatsapp{

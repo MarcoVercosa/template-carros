@@ -57,9 +57,10 @@ function Footer(props) {//recebe do app dados so BD  coluna sobreNos
                             </li>
                         </Link>
                         <hr />
-                        <li>
+                        <li><Link to="/vender">
                             Vender
-                    </li>
+                            </Link>
+                        </li>
                         <hr />
                         <Link to="/novos">
                             <li>

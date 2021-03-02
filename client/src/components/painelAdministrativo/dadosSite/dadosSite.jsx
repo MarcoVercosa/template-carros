@@ -33,22 +33,26 @@ export default function DadosSite(props) {
         email: "",
         lojaUm: "",
         horarioFuncionamentoUm: "",
-        localUm: "",
+        logradouroUm: "",
+        bairroCidadeUm: "",
         cepUm: "",
         telefoneUm: "",
         lojaDois: "",
         horarioFuncionamentoDois: "",
-        localDois: "",
+        logradouroDois: "",
+        bairroCidadeDois: "",
         cepDois: "",
         telefoneDois: "",
-        lojaTres: "",
+        logradouroTres: "",
+        bairroCidadeTres: "",
         horarioFuncionamentoTres: "",
-        localTres: "",
+        logradouroTres: "",
         cepTres: "",
         telefoneTres: "",
         lojaQuatro: "",
         horarioFuncionamentoQuatro: "",
-        localQuatro: "",
+        logradouroQuatro: "",
+        bairroCidadeQuatro: "",
         cepQuatro: "",
         telefoneQuatro: "",
         sobreNos: "",
@@ -70,35 +74,41 @@ export default function DadosSite(props) {
     }, [])
 
     function PolulaFormulario(resultado) {
-        SetFormulario({
-            whatsapp: resultado.data[0].whatsapp,
-            facebook: resultado.data[0].facebook,
-            youtube: resultado.data[0].youtube,
-            instagram: resultado.data[0].instagram,
-            email: resultado.data[0].email,
-            lojaUm: resultado.data[0].lojaUm,
-            horarioFuncionamentoUm: resultado.data[0].horarioFuncionamentoUm,
-            localUm: resultado.data[0].localUm,
-            cepUm: resultado.data[0].cepUm,
-            telefoneUm: resultado.data[0].telefoneUm,
-            lojaDois: resultado.data[0].lojaDois,
-            horarioFuncionamentoDois: resultado.data[0].horarioFuncionamentoDois,
-            localDois: resultado.data[0].localDois,
-            cepDois: resultado.data[0].cepDois,
-            telefoneDois: resultado.data[0].telefoneDois,
-            lojaTres: resultado.data[0].lojaTres,
-            horarioFuncionamentoTres: resultado.data[0].horarioFuncionamentoTres,
-            localTres: resultado.data[0].localTres,
-            cepTres: resultado.data[0].cepTres,
-            telefoneTres: resultado.data[0].telefoneTres,
-            lojaQuatro: resultado.data[0].lojaQuatro,
-            horarioFuncionamentoQuatro: resultado.data[0].horarioFuncionamentoQuatro,
-            localQuatro: resultado.data[0].localQuatro,
-            cepQuatro: resultado.data[0].cepQuatro,
-            telefoneQuatro: resultado.data[0].telefoneQuatro,
-            sobreNos: resultado.data[0].sobreNos,
-            imagensSlide: resultado.data[0].imagensSlide ? JSON.parse(resultado.data[0].imagensSlide) : ""
-        })
+        if (resultado.data.length > 0) {
+            SetFormulario({
+                whatsapp: resultado.data[0].whatsapp,
+                facebook: resultado.data[0].facebook,
+                youtube: resultado.data[0].youtube,
+                instagram: resultado.data[0].instagram,
+                email: resultado.data[0].email,
+                lojaUm: resultado.data[0].lojaUm,
+                horarioFuncionamentoUm: resultado.data[0].horarioFuncionamentoUm,
+                logradouroUm: resultado.data[0].logradouroUm,
+                bairroCidadeUm: resultado.data[0].bairroCidadeUm,
+                cepUm: resultado.data[0].cepUm,
+                telefoneUm: resultado.data[0].telefoneUm,
+                lojaDois: resultado.data[0].lojaDois,
+                horarioFuncionamentoDois: resultado.data[0].horarioFuncionamentoDois,
+                logradouroDois: resultado.data[0].logradouroDois,
+                bairroCidadeDois: resultado.data[0].bairroCidadeDois,
+                cepDois: resultado.data[0].cepDois,
+                telefoneDois: resultado.data[0].telefoneDois,
+                lojaTres: resultado.data[0].lojaTres,
+                horarioFuncionamentoTres: resultado.data[0].horarioFuncionamentoTres,
+                logradouroTres: resultado.data[0].logradouroTres,
+                bairroCidadeTres: resultado.data[0].bairroCidadeTres,
+                cepTres: resultado.data[0].cepTres,
+                telefoneTres: resultado.data[0].telefoneTres,
+                lojaQuatro: resultado.data[0].lojaQuatro,
+                horarioFuncionamentoQuatro: resultado.data[0].horarioFuncionamentoQuatro,
+                logradouroQuatro: resultado.data[0].logradouroQuatro,
+                bairroCidadeQuatro: resultado.data[0].bairroCidadeQuatro,
+                cepQuatro: resultado.data[0].cepQuatro,
+                telefoneQuatro: resultado.data[0].telefoneQuatro,
+                sobreNos: resultado.data[0].sobreNos,
+                imagensSlide: resultado.data[0].imagensSlide ? JSON.parse(resultado.data[0].imagensSlide) : ""
+            })
+        }
     }
 
     async function DadosModal(dados) {
@@ -308,16 +318,33 @@ export default function DadosSite(props) {
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
-                                return { ...prevState, localUm: envia.target.value }
+                                return { ...prevState, logradouroUm: envia.target.value }
                             })
                         }}
-                        value={formulario.localUm}
+                        value={formulario.logradouroUm}
                         id="local"
-                        label="LOCAL"
+                        label="LOGRADOURO"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
-                        // error={!formulario.localUm}
+                        // error={!formulario.logradouroUm}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, bairroCidadeUm: envia.target.value }
+                            })
+                        }}
+                        value={formulario.bairroCidadeUm}
+                        id="bairrocidade"
+                        label="BAIRRO - CIDADE"
+                        variant="outlined"
+                        className="FormularioCadastro_inputs"
+                        margin="dense"
+                        // error={!formulario.logradouroUm}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -339,7 +366,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ display: "flex", marginTop: '20px', marginLeft: '48px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, telefoneUm: envia.target.value }
@@ -396,16 +423,33 @@ export default function DadosSite(props) {
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
-                                return { ...prevState, localDois: envia.target.value }
+                                return { ...prevState, logradouroDois: envia.target.value }
                             })
                         }}
-                        value={formulario.localDois}
-                        id="localDois"
-                        label="LOCAL"
+                        value={formulario.logradouroDois}
+                        id="logradouroDois"
+                        label="LOGRADOURO"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
                         // error={!formulario.marca}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, bairroCidadeDois: envia.target.value }
+                            })
+                        }}
+                        value={formulario.bairroCidadeDois}
+                        id="bairrocidadedois"
+                        label="BAIRRO - CIDADE"
+                        variant="outlined"
+                        className="FormularioCadastro_inputs"
+                        margin="dense"
+                        // error={!formulario.logradouroUm}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -427,7 +471,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ display: "flex", marginTop: '20px', marginLeft: '48px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, telefoneDois: envia.target.value }
@@ -485,16 +529,33 @@ export default function DadosSite(props) {
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
-                                return { ...prevState, localTres: envia.target.value }
+                                return { ...prevState, logradouroTres: envia.target.value }
                             })
                         }}
-                        value={formulario.localTres}
-                        id="localTres"
-                        label="LOCAL"
+                        value={formulario.logradouroTres}
+                        id="logradourotres"
+                        label="LOGRADOURO"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
                         // error={!formulario.marca}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, bairroCidadeTres: envia.target.value }
+                            })
+                        }}
+                        value={formulario.bairroCidadeTres}
+                        id="bairrocidadetres"
+                        label="BAIRRO - CIDADE"
+                        variant="outlined"
+                        className="FormularioCadastro_inputs"
+                        margin="dense"
+                        // error={!formulario.logradouroUm}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -516,7 +577,7 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    <TextField style={{ display: "flex", marginTop: '20px', marginLeft: '48px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, telefoneTres: envia.target.value }
@@ -574,16 +635,33 @@ export default function DadosSite(props) {
                     <TextField style={{ marginLeft: '20px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
-                                return { ...prevState, localQuatro: envia.target.value }
+                                return { ...prevState, logradouroQuatro: envia.target.value }
                             })
                         }}
-                        value={formulario.localQuatro}
-                        id="localQuatro"
-                        label="LOCAL"
+                        value={formulario.logradouroQuatro}
+                        id="logradouroQuatro"
+                        label="LOGRADOURO"
                         variant="outlined"
                         className="FormularioCadastro_inputs"
                         margin="dense"
                         // error={!formulario.marca}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                        onChange={(envia) => {
+                            SetFormulario(prevState => {
+                                return { ...prevState, bairroCidadeQuatro: envia.target.value }
+                            })
+                        }}
+                        value={formulario.bairroCidadeQuatro}
+                        id="bairrocidadequatro"
+                        label="BAIRRO - CIDADE"
+                        variant="outlined"
+                        className="FormularioCadastro_inputs"
+                        margin="dense"
+                        // error={!formulario.logradouroUm}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -605,7 +683,8 @@ export default function DadosSite(props) {
                             shrink: true,
                         }}
                     />
-                    <TextField style={{ marginLeft: '20px', width: '15%' }}
+                    {/* <TextField style={{ marginTop: '20px', width: '15%' }} */}
+                    <TextField style={{ display: "flex", marginTop: '20px', marginLeft: '48px', width: '15%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, telefoneQuatro: envia.target.value }

@@ -63,61 +63,68 @@ function Menu(props) {
                 <div className="menu-header-div-contato">
 
                     {contatos.dadosLojaUm &&
-                        <div className="menu-header-div-contato-tel-um">
+                        <div className="menu-header-div-contato-tel-um menu-header-div-contato-tel">
                             <ul>
                                 <li>
-                                    <spam><i class="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaUm}
+                                    <spam><i className="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaUm}
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].localUm}
+                                    <spam><i className="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].logradouroUm}
+                                    <p style={{display: "flex", justifyContent: "center", margin: "0px", marginTop: "4px"}}>{contatos.dadosTotal.data[0].bairroCidadeUm}</p>
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneUm}
+                                    <spam><i className="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneUm}
                                 </li>
                             </ul>
                         </div>
                     }
                     {contatos.dadosLojaDois &&
-                        <div className="menu-header-div-contato-tel-dois">
+                        <div className="menu-header-div-contato-tel-dois menu-header-div-contato-tel">
                             <ul>
                                 <li>
-                                    <spam><i class="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaDois}
+                                    <spam><i className="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaDois}
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].localDois}
+                                    <spam><i className="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].logradouroDois}
+                                    <p style={{display: "flex", justifyContent: "center", margin: "0px", marginTop: "4px"}}>{contatos.dadosTotal.data[0].bairroCidadeDois}</p>
+
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneDois}
+                                    <spam><i className="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneDois}
                                 </li>
                             </ul>
                         </div>
                     }
                     {contatos.dadosLojaTres &&
-                        <div className="menu-header-div-contato-tel-tres">
+                        <div className="menu-header-div-contato-tel-tres menu-header-div-contato-tel">
                             <ul>
                                 <li>
-                                    <spam><i class="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaTres}
+                                    <spam><i className="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaTres}
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].localTres}
+                                    <spam><i className="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].logradouroTres}
+                                    <p style={{display: "flex", justifyContent: "center", margin: "0px", marginTop: "4px"}}>{contatos.dadosTotal.data[0].bairroCidadeTres}</p>
+
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneTres}
+                                    <spam><i className="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneTres}
                                 </li>
                             </ul>
                         </div>
                     }
                     {contatos.dadosLojaQuatro &&
-                        <div className="menu-header-div-contato-tel-tres">
+                        <div className="menu-header-div-contato-tel-quatro menu-header-div-contato-tel">
                             <ul>
                                 <li>
-                                    <spam><i class="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaQuatro}
+                                    <spam><i className="fas fa-store"></i></spam> {contatos.dadosTotal.data[0].lojaQuatro}
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].localQuatro}
+                                    <spam><i className="fas fa-map-marker-alt"></i></spam> {contatos.dadosTotal.data[0].logradouroQuatro}
+                                    <p style={{display: "flex", justifyContent: "center", margin: "0px", marginTop: "4px"}}>{contatos.dadosTotal.data[0].bairroCidadeQuatro}</p>
+
                                 </li>
                                 <li>
-                                    <spam><i class="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneQuatro}
+                                    <spam><i className="fas fa-phone-volume"></i></spam> {contatos.dadosTotal.data[0].telefoneQuatro}
                                 </li>
                             </ul>
                         </div>
@@ -126,22 +133,22 @@ function Menu(props) {
                         <ul>
                             {contatos.dadosLojaWhatsApp &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].whatsapp} target="_blank"><i class="fab fa-whatsapp fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].whatsapp} target="_blank"><i className="fab fa-whatsapp fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaFacebook &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].facebook} target="_blank"> <i class="fab fa-facebook fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].facebook} target="_blank"> <i className="fab fa-facebook fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaInstagram &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].instagram} target="_blank" > <i class="fab fa-instagram fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].instagram} target="_blank" > <i className="fab fa-instagram fa-3x"></i></a>
                                 </li>
                             }
                             {contatos.dadosLojaYouTube &&
                                 <li>
-                                    <a href={contatos.dadosTotal.data[0].youtube} target="_blank"> <i class="fab fa-youtube fa-3x"></i></a>
+                                    <a href={contatos.dadosTotal.data[0].youtube} target="_blank"> <i className="fab fa-youtube fa-3x"></i></a>
                                 </li>
                             }
                         </ul>
@@ -179,9 +186,10 @@ function Menu(props) {
                                         NOVOS
                                     </li>
                                 </Link>
-                                <li>
+                                <li><Link to="/vender">
                                     VENDER
-                        </li>
+                            </Link>
+                                </li>
 
                                 <li>
                                     LOCALIZAÇÃO
@@ -210,7 +218,7 @@ function Menu(props) {
 
 
                         </div>
-                        <spam className="menu-spam-search"><i class="fas fa-search fa-2x"></i></spam>
+                        <spam className="menu-spam-search"><i className="fas fa-search fa-2x"></i></spam>
 
                     </div>
                 </header>

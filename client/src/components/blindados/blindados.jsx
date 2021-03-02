@@ -105,9 +105,9 @@ export default function Blindados(props) {
                                     return (
                                         <div className="estoque-article-estoque-div">
                                             <div className="estoque-article-estoque-div-imagem">
-                                                <a href={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]} target="_blank">
-                                                    <img alt={dados.modelo} key={index} src={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]}></img>
-                                                </a>
+                                                {/* <a href={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]} target="_blank"> */}
+                                                <img alt={dados.modelo} key={index} src={"http://192.168.0.150:9000/static/" + dados.imagensPath[0]}></img>
+                                                {/* </a> */}
                                             </div>
                                             <div key={index + 1} className="estoque-article-estoque-div-imagem-info">
                                                 <span className="estoque-article-div-grid-div-p">{dados.marca} {dados.modelo}</span>
