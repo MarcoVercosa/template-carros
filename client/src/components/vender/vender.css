@@ -1,0 +1,13 @@
+.vender-article{
+    width: 100%;
+}
+
+.vender-article-div-imagem{
+    margin-top: 15px;
+    width: 100%;
+    height: 350px;
+}
+.vender-article-div-imagem img{
+width: 100%;
+height: 100%;
+}

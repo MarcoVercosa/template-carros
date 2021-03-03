@@ -8,6 +8,7 @@ import Estoque from "./components/estoque/estoque"
 import DetalhesAnuncio from "./components/detalhesAnuncio/detalhesAnuncio"
 import Blindados from "./components/blindados/blindados"
 import Novos from "./components/novos/novos"
+import Vender from "./components/vender/vender"
 import Contato from "./components/contato/contato"
 
 
@@ -20,7 +21,9 @@ ReactDOM.render(
       <Route path="/detalhesanuncio:idanuncio" component={DetalhesAnuncio} />
       <Route path="/blindados" exact={true} component={Blindados} />
       <Route path="/novos" component={Novos} />
+      <Route path="/vender" component={Vender} ></Route>
       <Route path="/contato" component={Contato} ></Route>
+
       {/* <Route path="*" component={PaginaErro} /> */}
 
     </Switch>

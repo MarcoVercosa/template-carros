@@ -9,7 +9,7 @@ import ModalQueroContato from "./modalQueroContato"
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    TextField, Radio, RadioGroup,
+    TextField,
     FormControlLabel, FormGroup, Checkbox, FormControl, FormLabel
 } from '@material-ui/core/';
 
@@ -80,13 +80,13 @@ export default function Contato() {
     return (
         <>
             <Menu />
-            <article className="vender-article">
-                <div className="vender-article-div-imagem">
+            <article className="contato-article">
+                <div className="contato-article-div-imagem">
                     <img src={Imagem} />
                 </div>
-                <p className="vender-article-div-endereco-p">FALE CONOSCO</p>
+                <p className="contato-article-div-endereco-p">FALE CONOSCO</p>
                 <hr></hr>
-                <div className="vender-article-div-endereco">
+                <div className="contato-article-div-endereco">
 
                     {contatos.dadosLojaUm &&
                         <div>
@@ -169,37 +169,37 @@ export default function Contato() {
                         </div>
                     }
                     {contatos.dadosEmail &&
-                        <a href={`mailto:${contatos.dadosTotal.data[0].email}`} className="vender-article-div-endereco-email"><i class="fas fa-envelope"></i>{contatos.dadosTotal.data[0].email}</a>
+                        <a href={`mailto:${contatos.dadosTotal.data[0].email}`} className="contato-article-div-endereco-email"><i class="fas fa-envelope"></i>{contatos.dadosTotal.data[0].email}</a>
                     }
                 </div>
-                <div className="vender-article-div-endereco-outroscontatos">
-                    <ul className="vender-article-div-endereco-outroscontatos-ul">
+                <div className="contato-article-div-endereco-outroscontatos">
+                    <ul className="contato-article-div-endereco-outroscontatos-ul">
                         {contatos.dadosLojaWhatsApp &&
-                            <li className="vender-article-div-endereco-outroscontatos-ul-whatsapp">
+                            <li className="contato-article-div-endereco-outroscontatos-ul-whatsapp">
                                 <a href={contatos.dadosTotal.data[0].whatsapp} target="_blank"><i className="fab fa-whatsapp fa-3x"></i></a>
                             </li>
                         }
                         {contatos.dadosLojaFacebook &&
-                            <li className="vender-article-div-endereco-outroscontatos-ul-facebook">
+                            <li className="contato-article-div-endereco-outroscontatos-ul-facebook">
                                 <a href={contatos.dadosTotal.data[0].facebook} target="_blank"> <i className="fab fa-facebook fa-3x"></i></a>
                             </li>
                         }
                         {contatos.dadosLojaInstagram &&
-                            <li className="vender-article-div-endereco-outroscontatos-ul-instagram">
+                            <li className="contato-article-div-endereco-outroscontatos-ul-instagram">
                                 <a href={contatos.dadosTotal.data[0].instagram} target="_blank" > <i className="fab fa-instagram fa-3x"></i></a>
                             </li>
                         }
                         {contatos.dadosLojaYouTube &&
-                            <li className="vender-article-div-endereco-outroscontatos-ul-youtube">
+                            <li className="contato-article-div-endereco-outroscontatos-ul-youtube">
                                 <a href={contatos.dadosTotal.data[0].youtube} target="_blank"> <i className="fab fa-youtube fa-3x"></i></a>
                             </li>
                         }
                     </ul>
                 </div>
-                <div className="vender-article-div-mensagem">
+                <div className="contato-article-div-mensagem">
 
-                    <div className="vender-article-div-mensagem-div">
-                        <form className="vender-article-div-mensagem-form">
+                    <div className="contato-article-div-mensagem-div">
+                        <form className="contato-article-div-mensagem-form">
                             {/* <p>TENHO INTERESSE</p> */}
                             {/* <hr style={{ color: "red" }} /> */}
                             <div>
