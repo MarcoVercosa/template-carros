@@ -11,3 +11,25 @@
 width: 100%;
 height: 100%;
 }
+.vender-article-menu{
+    width: 100%;
+}
+.vender-article-menu-div-p{
+font-family: 'Lora', serif;
+font-size: 30px;
+color: rgb(148, 148, 148);
+margin-left: 5%;
+}
+.vender-article-menu-div-form{
+    width: 50%;
+    margin: 0 auto;
+    background-color: rgb(242, 242, 242);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.vender-article-menu-div-form p{
+    font-family: 'Lora', serif;
+font-size: 14px;
+color: rgb(148, 148, 148);
+}

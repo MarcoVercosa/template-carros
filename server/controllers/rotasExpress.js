@@ -240,4 +240,50 @@ module.exports = (app) => {
         console.log("Solicitado estoque NOVOS")
         AlteraDadosBD.BuscaEstoqueNovos(res)
     })
+    app.post("/sendemailvender", (req, res) => {
+        console.log("Envio de e-mail VENDER BackEnd")
+        console.log(req.body.dados)
+        const user = "marco2007sky@hotmail.com"
+        const pass = "MOdeld4166"
+
+        async function SendEmail() {
+            const transporter = nodemailer.createTransport({
+                service: "hotmail",
+                auth: {
+                    user,
+                    pass
+                }
+            })
+
+            let enviaEmail = await transporter.sendMail({
+                from: user,
+                to: "marco2011sky@gmail.com",
+                subject: `${req.body.dados.assunto}`,
+                text:
+                    `
+                    NOME: ${req.body.dados.nome} \n E-MAIL: ${req.body.dados.email} \n 
+                    DDD: ${req.body.dados.ddd} \n TELEFONE: ${req.body.dados.telefone} \n
+                    DDD: ${req.body.dados.dddCel} \n CELULAR: ${req.body.dados.telefoneCel} \n
+                    
+                    RETORNO: \n
+                    WhatsApp: ${req.body.dados.whatsappRetorno ? "SIM" : "NÃO"} \n
+                    E-Mail: ${req.body.dados.emailRetorno ? "SIM" : "NÃO"} \n
+                    Telefone: ${req.body.dados.telefoneRetorno ? "SIM" : "NÃO"} \n
+                    \n \n
+                    Marca: ${req.body.dados.marca} \n
+                    Modelo: ${req.body.dados.modelo} \n
+                    Ano Modelo: ${req.body.dados.anoModelo} \n
+                    cor: ${req.body.dados.cor} \n
+                    Kilômetros: ${req.body.dados.kilometro} \n
+                    Primeiro proprietário: ${req.body.dados.primeiroProprietario ? "SIM" : "NÃO"} \n
+                    Possui seguro: ${req.body.dados.seguro ? "SIM" : "NÃO"} \n
+                    Sinistro: ${req.body.dados.sinistro ? "SIM" : "NÃO"} \n
+                    Valor Aproximado: ${req.body.dados.valorAproximado} \n
+                    OBSERVAÇÃO: ${req.body.dados.observacao} \n 
+                `
+            })
+            console.log("Message ID sent: %s", enviaEmail.messageId);
+        }
+        SendEmail().catch(console.log)
+    })
 }
