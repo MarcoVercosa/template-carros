@@ -197,7 +197,7 @@ function Menu(props) {
                                 <li>
                                     SOBRE NÓS
                         </li>
-                                <li><Link to="/paineladministrativo">
+                                <li><Link to="/contato">
                                     CONTATO
                             </Link>
                                 </li>

@@ -38,6 +38,7 @@ export default function DetalhesAnuncio(props) {
     const [tenhoInteresse, setTenhoInteresse] = useState({
         nome: false,
         email: false,
+        assunto: "CLIENTE INTERESSADO EM VEÍCULO",
         ddd: false,
         telefone: false,
         dddCel: false,
@@ -89,13 +90,13 @@ export default function DetalhesAnuncio(props) {
             setContadorImagens(contadorImagens - 1)
         }
     }
-    async function FunctTenhoInteresse() {
-        // const classBuscaBD = new BuscaBD
-        // const resultado = classBuscaBD.SendEmail(tenhoInteresse)
-        setDadosAnuncio(prevState => {
-            return { ...prevState, abreModal: true }
-        })
-    }
+    // async function FunctTenhoInteresse() {
+    //     // const classBuscaBD = new BuscaBD
+    //     // const resultado = classBuscaBD.SendEmail(tenhoInteresse)
+    //     setDadosAnuncio(prevState => {
+    //         return { ...prevState, abreModal: true }
+    //     })
+    // }
 
 
     return (
@@ -215,6 +216,9 @@ export default function DetalhesAnuncio(props) {
                             <div>
                                 <TextField label="Nome" id="standard-size-small" size="small" type="text"
                                     style={{ width: "90%" }}
+                                    inputProps={{
+                                        maxlength: 40
+                                    }}
                                     onBlur={(dados) => {
                                         dados.target.value = dados.target.value.toUpperCase()
                                         setTenhoInteresse(prevState => {
@@ -226,6 +230,9 @@ export default function DetalhesAnuncio(props) {
                             <div>
                                 <TextField label="E-mail" id="standard-size-small" size="small" type="text"
                                     style={{ width: "90%" }}
+                                    inputProps={{
+                                        maxlength: 40
+                                    }}
                                     onBlur={(dados) => {
                                         dados.target.value = dados.target.value.toUpperCase()
                                         setTenhoInteresse(prevState => {
@@ -237,6 +244,9 @@ export default function DetalhesAnuncio(props) {
                             <div>
                                 <TextField label="DDD" id="standard-size-small" size="small" type="tel"
                                     style={{ width: "20%" }}
+                                    inputProps={{
+                                        maxlength: 2
+                                    }}
                                     onBlur={(dados) => {
 
                                         if (!isNaN(dados.target.value)) {
@@ -252,6 +262,9 @@ export default function DetalhesAnuncio(props) {
                                 />
                                 <TextField label="Telefone" id="standard-size-small" size="small" type="tel"
                                     style={{ width: "60%", marginLeft: "10%" }}
+                                    inputProps={{
+                                        maxlength: 8
+                                    }}
                                     onBlur={(dados) => {
                                         setTenhoInteresse(prevState => {
                                             return { ...prevState, telefone: dados.target.value }
@@ -262,6 +275,9 @@ export default function DetalhesAnuncio(props) {
                             <div>
                                 <TextField label="DDD" id="standard-size-small" size="small" type="tel"
                                     style={{ width: "20%" }}
+                                    inputProps={{
+                                        maxlength: 2
+                                    }}
                                     onBlur={(dados) => {
                                         if (!isNaN(dados.target.value)) {
                                             setTenhoInteresse(prevState => {
@@ -275,6 +291,9 @@ export default function DetalhesAnuncio(props) {
                                 />
                                 <TextField label="Celular" id="standard-size-small" size="small" type="tel"
                                     style={{ width: "60%", marginLeft: "10%" }}
+                                    inputProps={{
+                                        maxlength: 9
+                                    }}
                                     onBlur={(dados) => {
                                         setTenhoInteresse(prevState => {
                                             return { ...prevState, telefoneCel: dados.target.value }
@@ -287,6 +306,9 @@ export default function DetalhesAnuncio(props) {
                             <div>
                                 <TextField
                                     style={{ width: "90%" }}
+                                    inputProps={{
+                                        maxlength: 500
+                                    }}
                                     id="outlined-multiline-static"
                                     label="Mensagem"
                                     // value={tenhoInteresse.mensagem}

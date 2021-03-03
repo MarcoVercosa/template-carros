@@ -4,18 +4,20 @@
 
 .vender-article-div-imagem {
     width: 100%;
-    height: 400px;
+    height: 250px;
 }
 .vender-article-div-imagem img{
-    width: 100%;
+    display: block;
+    width: 80%;
     height: 100%;
+    margin: 0 auto
 }
 .vender-article-div-endereco{
     display: flex;
     flex-direction: row; 
     justify-content: center;
     box-sizing: border-box;   
-    width:90%;
+    width:100%;
 }
 .vender-article-div-endereco-p{
     font-family: 'Lora', serif;
@@ -50,6 +52,7 @@
     text-decoration: none;
     margin-top: 50px;
     color: blue;
+    margin-left: 30px;
 }
 .vender-article-div-endereco-email i {
     color: rgb(9, 9, 9);
@@ -58,8 +61,39 @@
 .vender-article-div-endereco-outroscontatos{
 
 }
-.vender-article-div-endereco-outroscontatos ul{
+.vender-article-div-endereco-outroscontatos-ul{
     display: flex;
     flex-direction: row;
     list-style: none;
+    justify-content: center;
+}
+.vender-article-div-endereco-outroscontatos-ul li{    
+    padding: 10px;
+}
+.vender-article-div-endereco-outroscontatos-ul-whatsapp a{
+    color: rgb(9, 221, 9)
+}
+.vender-article-div-endereco-outroscontatos-ul-facebook a{
+    color: rgb(54, 51, 247)
+}
+.vender-article-div-endereco-outroscontatos-ul-instagram a{
+    color: rgb(232, 142, 220)
+}
+.vender-article-div-endereco-outroscontatos-ul-youtube a{
+    color: rgb(252, 11, 23)
+}
+
+.vender-article-div-mensagem{
+    display: flex;
+    justify-content: center;
+    
+}
+.vender-article-div-mensagem-div{
+    background-color: rgb(242, 242, 242);
+    padding: 5px;
+    width: 40%;
+    border-radius: 10px;
+}
+.vender-article-div-mensagem-form{
+    
 }
