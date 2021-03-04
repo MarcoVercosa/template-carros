@@ -30,16 +30,15 @@ export default function Destaques(dados) {
 
 
     const [imagensDestaque, setImagensDestaque] = useState({
-
         todosDestaques: false,
         paginacao: 0,
         paginaAvanca: 8,
         paginaRetorna: 0,
         ativaBotaoEsquerdo: false,
         ativaBotaodireito: false
-
-
     })
+
+    const [campoPesquisa, setCampoPesquisa] = useState("")
 
     useEffect(async () => {
         const classBuscaBD = new BuscaBD
@@ -66,8 +65,9 @@ export default function Destaques(dados) {
 
     function MostrarTopoDestaque() {
         window.location.href = ("#destaques")
-
     }
+
+
 
     return (
         <article className="destaques-article">
@@ -77,10 +77,13 @@ export default function Destaques(dados) {
                 <TextField
                     style={{ width: "30%" }}
                     id="outlined-secondary"
-                    label="PESQUISAR"
+                    label="PESQUISAR ESTOQUE"
                     variant="outlined"
                     color="primary"
                     size="small"
+                    onBlur={(dados) => {
+                        setCampoPesquisa(dados.target.value)
+                    }}
                 />
                 <Button
                     style={{ marginLeft: "20px" }}
@@ -88,6 +91,7 @@ export default function Destaques(dados) {
                     color="primary"
                     className={classes.button}
                     startIcon={<SearchIcon style={{ fontSize: 28 }} />}
+                    onClick={() => { window.location.href = (`http://192.168.0.150:3000/estoque${campoPesquisa}`) }}
                 >
                     BUSCAR
                 </Button>
@@ -162,6 +166,20 @@ export default function Destaques(dados) {
                 >
 
                 </Button>
+
+                <div style={{ display: imagensDestaque.paginaAvanca >= imagensDestaque.todosDestaques.length ? "block" : "none" }}>
+                    <Link to="/estoque#inicio" style={{ textDecoration: "none" }}>
+                        <Button
+                            style={{ marginLeft: "20px" }}
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                        // startIcon={<ArrowForwardIosIcon style={{ fontSize: 28, marginLeft: "20px" }} />}
+                        // disabled={imagensDestaque.paginaAvanca >= imagensDestaque.todosDestaques.length}
+                        >ESTOQUE
+                         </Button>
+                    </Link>
+                </div>
             </div>
 
         </article>

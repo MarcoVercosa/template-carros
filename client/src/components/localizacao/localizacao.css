@@ -1,0 +1,10 @@
+.localizacao-article{
+    width: 100%;
+}
+.localizacao-article div{
+    width: 100%;
+    height: 400px;
+    background-color: rgb(186, 186, 186);
+    /* margin-top: 20px; */
+    border-bottom: 8px solid rgb(11, 53, 237);
+}

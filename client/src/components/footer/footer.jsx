@@ -32,13 +32,11 @@ function Footer(props) {//recebe do app dados so BD  coluna sobreNos
                             </Link>
                         </li>
                         <hr />
-                        <li>
-                            Sobre nós
 
-                        </li>
-                        <hr />
                         <li>
-                            Contato
+                            <Link to="/contato">
+                                Contato
+                            </Link>
                         </li>
                         <hr />
                         <li>

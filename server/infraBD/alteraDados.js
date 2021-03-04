@@ -286,6 +286,19 @@ class AlteraDadosBD {
             }
         })
     }
+    BuscaPesquisaPorNome(key, res) {
+        const sql = `SELECT * FROM vendaCarro.carros WHERE marca LIKE "%${key}%" OR modelo  LIKE "%${key}%"`
+        conectaBDCarro.query(sql, (erro, resultado) => {
+            if (erro) {
+                res.json("Ocorreu o seguinte erro ao buscar informações sobre a pesquisa: " + erro)
+                // console.log("Ocorreu o seguinte erro ao buscar informações para a página ESTOQUE:" + erro)
+            } else {
+                res.json(resultado)
+            }
+        })
+
+    }
+
     BuscaDetalhesAnuncio(id, res) {
         const sql = `SELECT * FROM vendaCarro.carros WHERE id=${id}`
         conectaBDCarro.query(sql, (erro, resultado) => {

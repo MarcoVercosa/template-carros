@@ -12,7 +12,6 @@ import BuscaBD from "../fetchBackEnd/api"
 function Menu(props) {
 
     const [contatos, setContatos] = useState({
-
         dadosLojaUm: false,
         dadosLojaDois: false,
         dadosLojaTres: false,
@@ -23,6 +22,7 @@ function Menu(props) {
         dadosLojaYouTube: false,
         dadosTotal: false
     })
+    const [campoPesquisa, setCampoPesquisa] = useState(false)
 
     useEffect(async () => {
 
@@ -191,16 +191,18 @@ function Menu(props) {
                             </Link>
                                 </li>
 
-                                <li>
+                                <li><Link to="/localizacao">
                                     LOCALIZAÇÃO
-                        </li>
-                                <li>
-                                    SOBRE NÓS
-                        </li>
+                            </Link>
+                                </li>
                                 <li><Link to="/contato">
                                     CONTATO
                             </Link>
                                 </li>
+                                <li>
+                                    SOBRE NÓS
+                        </li>
+
                             </ul>
                         </div>
 
@@ -214,6 +216,18 @@ function Menu(props) {
                                 variant="outlined"
                                 size="small"
                                 color="standard"
+                                onChange={(recebe)=>{setCampoPesquisa(recebe.target.value)}}
+                                onKeyDown={(tecla)=>{
+                                    if(tecla.key === "Enter"){
+                                        if(!campoPesquisa  ||  campoPesquisa.length < 2){
+                                            alert("Digite ao menos 2 letras para iniciar a pesquisa" )
+                                            alert(campoPesquisa)
+                                            return
+                                        }else{
+                                            window.location.href = (`http://192.168.0.150:3000/estoque${campoPesquisa}`)
+                                        }
+                                    }
+                                }}
                             />
 
 

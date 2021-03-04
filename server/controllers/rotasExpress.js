@@ -193,6 +193,11 @@ module.exports = (app) => {
         AlteraDadosBD.BuscaDetalhesAnuncio(req.params.idanuncio, res)
         // res.json(req.params.idanuncio)
     })
+    app.get("/campopesquisaestoque:key", (req, res) => {
+        console.log("Solicitado busca anúncio por nome")
+        AlteraDadosBD.BuscaPesquisaPorNome(req.params.key, res)
+        // res.json(req.params.idanuncio)
+    })
 
     //##############################################
     // #            ENVIO E-MAIL                  # 

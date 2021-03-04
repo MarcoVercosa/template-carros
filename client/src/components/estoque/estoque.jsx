@@ -14,10 +14,8 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
 
 
-
-
-
 export default function Estoque(props) {
+    //os campos pesquisa da home e Menu direcionam para cá com a key recebida na props.
     const useStyles = makeStyles((theme) => ({
         root: {
             '& > *': {
@@ -58,15 +56,9 @@ export default function Estoque(props) {
 
     })
 
-    useEffect(async () => {
+
+    async function CamposFiltro() {
         const classBuscaBD = new BuscaBD
-        const estoque = await classBuscaBD.Estoque()
-        console.log(estoque)
-
-        setCarrosEstoque(prevState => {
-            return { ...prevState, todoEstoque: estoque.data, paginacao: estoque.data.slice(carrosEstoque.paginaRetorna, carrosEstoque.paginaAvanca) }
-        })
-
         const filtro = await classBuscaBD.FiltroEstoque()
         var confBlindado = []
 
@@ -81,8 +73,34 @@ export default function Estoque(props) {
         setSelectFiltro(prevState => {
             return { ...prevState, BDMarca: filtro.data.marca, BDAno: filtro.data.ano, BDCombustivel: filtro.data.combustivel, BDBlindado: confBlindado }
         })
+    }
+
+    useEffect(async () => {
+        //os campos pesquisa da home e Menu direcionam para cá com a key recebida na props.
+        //então essa página pode ser aberta com o /estoque ou o direcionamento dos campos pesquisar recebendo a key via url
+        if (props.match.params.key) {
+            const classBuscaBD = new BuscaBD
+            const estoque = await classBuscaBD.CampoPesquisa(props.match.params.key)
+            setCarrosEstoque(prevState => {
+                return { ...prevState, todoEstoque: estoque.data, paginacao: estoque.data.slice(carrosEstoque.paginaRetorna, carrosEstoque.paginaAvanca) }
+            })
+            CamposFiltro()
+            return
+        }
+        const classBuscaBD = new BuscaBD
+        const estoque = await classBuscaBD.Estoque()
+        console.log(estoque)
+        console.log(props.match.params.key)
+
+        setCarrosEstoque(prevState => {
+            return { ...prevState, todoEstoque: estoque.data, paginacao: estoque.data.slice(carrosEstoque.paginaRetorna, carrosEstoque.paginaAvanca) }
+        })
+
+        CamposFiltro()
 
     }, [])
+
+
 
 
     function Paginacao(direcao) {

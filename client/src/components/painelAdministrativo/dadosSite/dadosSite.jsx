@@ -705,12 +705,15 @@ export default function DadosSite(props) {
                     <hr style={{ marginTop: "20px" }}></hr>
                     <hr style={{ marginBottom: "20px" }}></hr>
 
-                    <h4 className="dadossite-article-div-form-h4"> SOBRE</h4>
+                    <h4 className="dadossite-article-div-form-h4"> SOBRE - rodapé páginas</h4>
                     <TextField style={{ marginLeft: '20px', width: '55%' }}
                         onChange={(envia) => {
                             SetFormulario(prevState => {
                                 return { ...prevState, sobreNos: envia.target.value }
                             })
+                        }}
+                        inputProps={{
+                            maxlength: 500
                         }}
                         value={formulario.sobreNos}
                         id="sobreNos"

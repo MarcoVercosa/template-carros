@@ -10,6 +10,7 @@ import Blindados from "./components/blindados/blindados"
 import Novos from "./components/novos/novos"
 import Vender from "./components/vender/vender"
 import Contato from "./components/contato/contato"
+import Localizacao from "./components/localizacao/localizacao"
 
 
 ReactDOM.render(
@@ -18,11 +19,14 @@ ReactDOM.render(
       <Route path="/" exact={true} component={App} />
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
       <Route path="/estoque" exact={true} component={Estoque} />
+      <Route path="/estoque:key" component={Estoque} />
+      {/* Os campos pesquisa da home ou menu direcionarão para essa url acima com a key pesquisada */}
       <Route path="/detalhesanuncio:idanuncio" component={DetalhesAnuncio} />
       <Route path="/blindados" exact={true} component={Blindados} />
       <Route path="/novos" component={Novos} />
       <Route path="/vender" component={Vender} ></Route>
       <Route path="/contato" component={Contato} ></Route>
+      <Route path="/localizacao" component={Localizacao} ></Route>
 
       {/* <Route path="*" component={PaginaErro} /> */}
 
