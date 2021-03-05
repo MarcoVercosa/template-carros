@@ -49,10 +49,7 @@ export default function Vender() {
         telefoneRetorno: true,
     })
 
-    useEffect(() => {
-        const classBuscaBD = new BuscaBD
-        const resultado = classBuscaBD.SendEmailVender(tenhoInteresse)
-    }, [])
+
 
     return (
         <>
