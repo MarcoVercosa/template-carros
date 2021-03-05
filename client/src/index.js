@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import './index.css';
 import App from './App';
+import Login from "./components/painelAdministrativo/login/login"
 import Paineladministrativo from "./components/painelAdministrativo/painel/painelAdministrativo.jsx"
 import Estoque from "./components/estoque/estoque"
 import DetalhesAnuncio from "./components/detalhesAnuncio/detalhesAnuncio"
@@ -16,8 +17,11 @@ import Localizacao from "./components/localizacao/localizacao"
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact={true} component={App} />
+      <Route path="/login" exact={true} component={Login} />
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
+
+
+      <Route path="/" exact={true} component={App} />
       <Route path="/estoque" exact={true} component={Estoque} />
       <Route path="/estoque:key" component={Estoque} />
       {/* Os campos pesquisa da home ou menu direcionarão para essa url acima com a key pesquisada */}

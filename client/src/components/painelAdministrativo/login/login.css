@@ -1,0 +1,42 @@
+.login-article{
+    width: 80%;
+    margin: 0 auto
+}
+.login-article-div-titulo{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid grey;
+}
+.login-article-div-titulo p{
+    color: rgb(116, 116, 116);
+    font-family: 'Lora', serif;
+    font-size: 30px;   
+    font-weight: 600;
+    margin: 0 ;
+    padding: 20px;    
+}
+
+.login-article-form-div{
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 45%;    
+}
+.login-article-form-div-login-p{
+    color: rgb(84, 84, 84);
+    font-family: 'Lora', serif;
+    font-size: 25px;   
+    font-weight: 600;
+    margin-left: 2px;
+}
+.login-article-form{
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    border-radius: 10px;
+}
+.login-article-form-div-login-esqueceusenha{
+    color: rgb(70, 86, 226);
+    font-family: 'Lora', serif;
+    font-size: 15px; 
+    margin: 13px;
+    font-weight: 600;
+}
