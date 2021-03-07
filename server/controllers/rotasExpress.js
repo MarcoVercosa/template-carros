@@ -4,6 +4,9 @@ const path = require('path') //lib que gerencia extenções de arquivos. Usado n
 const multer = require("multer") // upload de imagens
 const nodemailer = require("nodemailer")
 const fs = require("fs") //gerenciamento de arquivos no disco
+const jwt = require("jsonwebtoken") //sistema de autenticação
+
+const SECRET = "deusepoder"
 
 
 //conf MULTER
@@ -27,8 +30,72 @@ module.exports = (app) => {
 
     console.log("MÓDULO DE ROTAS CAREGADO")
 
+    //////////////////////////////////////////////////////////////
+    //                 AUTENTICAÇÃO PAINEL ADMINISTRATIVO       //
+    //////////////////////////////////////////////////////////////
+
+
+    // Function Midlleware para acesso a API. Verifica se o pedido ja está autenticado (se ja há token)
+    function VerifyAutenticationMidlleware(req, res, next) {
+        const token = req.headers["x-accsess-token"]
+        console.log(token)
+
+        jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
+            if (err) {
+                console.log("TOKEN EXPIRADO")
+                return res.json({ token: "expired" }) //se a comparação der erro, finalize com o erro
+            }
+            // console.log(decoded.userId)
+            req.userId = decoded.userId // se sucesso, decodifique o userid e armazene no cabeçalho
+            next() //fim do middleware, prossiga com a função
+        })
+    }
+
+    // LOGIN PAINEL
+    app.post("/login", (req, res) => {
+        console.log("Solicitado TOKEN para logar no painel")
+        console.log(req.body)
+        if (req.body.user === "lojacarro" && req.body.password === "123456789") {
+            const token = jwt.sign({ userId: 1 }, SECRET, { expiresIn: 60 }) // atrela o segredo ao usuário 1 e expira em 5 mins
+            res.json({ auth: true, token })
+        } else {
+            // res.status(401).end()
+            res.json({ auth: false, mensagem: "Usuário ou senha incorretos" })
+        }
+    })
+
+    //verifica se o token ainda é valido para abertura de página FRONTEND. OBS: o TOKEN para front e API é o mesmo
+    app.get("/validatokenpainel", (req, res) => {
+        console.log("SOLICITADO VALIDAÇÃO DE TOKEN")
+        const token = req.headers["x-accsess-token"]
+        jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
+            if (err) {
+                console.log("TOKEN EXPIRADO")
+                return res.json(false)
+            } else //se a comparação der erro, finalize com o erro
+                // console.log(decoded.userId)
+                res.json(true)
+
+        })
+    })
+
+    //////////////////////////////////////////////////////////////
+    //             FIM =>  AUTENTICAÇÃO PAINEL ADMINISTRATIVO     
+    //////////////////////////////////////////////////////////////
+
+
+
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                                                          //
+    //                 PAINEL ADMINISTRATIVO                    //
+    //                                                          //
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+
+
     //upload de imagens
-    app.post("/cadastraimagem", upload, (req, res) => {
+    app.post("/cadastraimagem", VerifyAutenticationMidlleware, upload, (req, res) => {
         console.log("Solicitado post de IMAGENS")
         // console.log(req.files)
         //PRECISA TRATAR ERROS
@@ -37,7 +104,7 @@ module.exports = (app) => {
         res.json(req.files)
     })
 
-    app.post("/deletaimagens", (req, res) => {
+    app.post("/deletaimagens", VerifyAutenticationMidlleware, (req, res) => {
         //deleta imagens do storage
         console.log("Solicitado remocao de imagem" + req.body)
         console.log(req.body.dados)
@@ -62,9 +129,16 @@ module.exports = (app) => {
     })
 
 
-    //cadastra anuncio no BD
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //                                                          //
+    //                 PAINEL ADMINISTRATIVO                    //
+    //                                                          //
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
 
-    app.post("/cadastraveiculo", (req, res) => {
+    //cadastra anuncio no BD
+    app.post("/cadastraveiculo", VerifyAutenticationMidlleware, (req, res) => {
 
         console.log("Solicitado post de DADOS")
         // console.log(req.body)
@@ -75,7 +149,7 @@ module.exports = (app) => {
     })
 
     //Busca anuncio com o número do ID do BD
-    app.get("/buscacarro/:id", (req, res) => {
+    app.get("/buscacarro/:id", VerifyAutenticationMidlleware, (req, res) => {
 
         console.log("Busca dados para editar")
         // console.log(req.params)
@@ -83,7 +157,7 @@ module.exports = (app) => {
     })
 
     //atualiza as info do carro
-    app.post("/atualizacarro", (req, res) => {
+    app.post("/atualizacarro", VerifyAutenticationMidlleware, (req, res) => {
 
         console.log("UPDATE de dados no BD solicitado.")
         const resultado = AlteraDadosBD.AtualizaBDDados(req.body.dados, req.body.idDaBusca, res)
@@ -91,12 +165,12 @@ module.exports = (app) => {
     })
 
     //deleta anuncio
-    app.get("/deletaanunciobd/:id", (req, res) => {
+    app.get("/deletaanunciobd/:id", VerifyAutenticationMidlleware, (req, res) => {
         console.log("Solicitado apagar anuncio BD")
         const resultado = (AlteraDadosBD.DeletaAnuncioBD(req.params.id, res))
     })
 
-    app.get("/listaranuncios", (req, res) => {
+    app.get("/listaranuncios", VerifyAutenticationMidlleware, (req, res) => {
 
         console.log("Solicitado listar todos anuncios")
         const resultado = (AlteraDadosBD.ListarAnuncios(res))
@@ -114,20 +188,23 @@ module.exports = (app) => {
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
 
-    app.get("/buscainfosite", (req, res) => {
-
+    app.get("/buscainfosite", VerifyAutenticationMidlleware, (req, res) => {//BUSCA AS CONF DO SITE PARA O PAINEL
         console.log("Solicitado informaçoes do site")
         const resultado = (AlteraDadosBD.GetInfoSite(req.params.id, res))
-
     })
 
-    app.post("/gravainfosite", (req, res) => {
-
+    app.post("/gravainfosite", VerifyAutenticationMidlleware, (req, res) => {//GRAVA AS INFO CAS CONF DO SITE NO PAINEL
         console.log("Solicitado GRAVAÇÃO de informaçoes do site")
         // console.log(req.body.dados)
         const resultado = AlteraDadosBD.GravaInfoSite(req.body.dados, res)
-
     })
+
+    /////////////////////////////////////////////////////////////////
+
+    //               FIM PAINEL ADMINISTRATIVO
+
+    /////////////////////////////////////////////////////////////////
+
 
 
     //////////////////////////////////////////////////////////////
@@ -138,35 +215,36 @@ module.exports = (app) => {
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
 
-    app.get("/contato", (req, res) => {
+    app.get("/contato", (req, res) => { //INFOS PARA O COMPONENTE MENU
         console.log("CONTATO para HOME")
         const resultado = AlteraDadosBD.Contato(res)
     })
 
-    app.get("/imagensslideprincipal", (req, res) => {
+    app.get("/imagensslideprincipal", (req, res) => {//IMAGENS DO CARROSEL PRINCIPAL
         console.log("SOLICITADO IMAGENS SLIDE PRINCIPAL")
         const resultado = AlteraDadosBD.ImagensSlidePrincipal(res)
     })
+    app.get("/footer", (req, res) => {//INFORMAÇÕES RODAPÉ
+        console.log("FOOTER para HOME")
+        const resultado = AlteraDadosBD.Footer(res)
+    })
 
-    app.get("/destaqueshome", (req, res) => {
+    app.get("/destaqueshome", (req, res) => { //TODOS OS CARROS CADASTRADOS COMO DESTAQUES
         console.log("SOLICITADO DESTAQUES HOME")
         const resultado = AlteraDadosBD.DestaquesHome(res)
     })
 
-    app.get("/footer", (req, res) => {
-        console.log("FOOTER para HOME")
-        const resultado = AlteraDadosBD.Footer(res)
-    })
-    app.get("/estoque", (req, res) => {
+
+    app.get("/estoque", (req, res) => {//TODOS CARROS
         console.log("Solicitado ESTOQUE")
         const resultado = AlteraDadosBD.Estoque(res)
     })
 
-    app.get("/filtroestoque", (req, res) => {
+    app.get("/filtroestoque", (req, res) => {// FORNECE OS DADOS PARA MONSTAGEM DOS CAMPOS FILTRO ESTOQUE
         console.log("Solicitado dados para FILTRO ESTOQUE")
         const resultado = AlteraDadosBD.FiltroEstoque(res)
     })
-    app.post("/buscaestoquecomfilter", (req, res) => {
+    app.post("/buscaestoquecomfilter", (req, res) => {//BUSCA DADOS CONFORME FILTRO
         console.log("Solicitado dados ESTOQUE com filtro de pesquisa")
         console.log(req.body)
         const formater = new Intl.NumberFormat("pt-BR")
@@ -188,12 +266,12 @@ module.exports = (app) => {
         const resultado = AlteraDadosBD.FiltroEstoqueComFiltro(dados, res)
     })
 
-    app.get("/estoque:idanuncio", (req, res) => {
+    app.get("/estoque:idanuncio", (req, res) => {//DIRECIONADO PELOS ANUNCIOS, ONDE RECEBE O ID PARA TRAZER DETALHES
         console.log("Solicitado Detalhes de anuncio")
         AlteraDadosBD.BuscaDetalhesAnuncio(req.params.idanuncio, res)
         // res.json(req.params.idanuncio)
     })
-    app.get("/campopesquisaestoque:key", (req, res) => {
+    app.get("/campopesquisaestoque:key", (req, res) => { //RECEBE  NA URL O NOME/MODELO PARA PESQUISA VIA OS CAMPOS PESQUISA NO MENU E DESTAQUE
         console.log("Solicitado busca anúncio por nome")
         AlteraDadosBD.BuscaPesquisaPorNome(req.params.key, res)
         // res.json(req.params.idanuncio)
@@ -202,7 +280,7 @@ module.exports = (app) => {
     //##############################################
     // #            ENVIO E-MAIL                  # 
     // ############################################
-    app.post("/sendemail", (req, res) => {
+    app.post("/sendemail", (req, res) => { //ENVIO DE EMAIL SOLICITADO NAS PÁGINAS
         console.log("Envio de e-mail TENHO INTERESSE BackEnd")
         console.log(req.body.dados)
         const user = "marco2007sky@hotmail.com"
