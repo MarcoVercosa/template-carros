@@ -1,6 +1,10 @@
 import React from 'react';
+
+import BuscaBD from "./components/fetchBackEnd/api"
+
+
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import './index.css';
 import App from './App';
 import Login from "./components/painelAdministrativo/login/login"
@@ -14,10 +18,27 @@ import Contato from "./components/contato/contato"
 import Localizacao from "./components/localizacao/localizacao"
 
 
+
+
+// var testanto = true
+// const PrivateRoute = ({ component: Component, ...rest }) => {
+
+//   (
+//     <Route  {...rest} render={props => (
+//       testanto ? <Component {...props} /> : (
+//         <Redirect to={{ pathname: "/login" }} />
+//       )
+//     )} />
+//   )
+// }
+
+
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/login" exact={true} component={Login} />
+      {/* <PrivateRoute path="/paineladministrativo" exact={true} component={Paineladministrativo} /> */}
       <Route path="/paineladministrativo" exact={true} component={Paineladministrativo} />
 
 

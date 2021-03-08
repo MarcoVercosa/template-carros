@@ -1,4 +1,6 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import BuscaBD from "../../fetchBackEnd/api" //classe axios
+
 import "./painelAdministrativo.css"
 import Formulario from "../formulario/formulario" //FORMULARIO
 import ListarAnuncios from "../listaAnuncios/listaAnuncios"
@@ -24,8 +26,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Paineladministrativo() {
 
-    const [componentesAdministrativos, setComponentesAdministrativos] = useState({
+    useEffect(async () => {
+        const token = localStorage.getItem("auth")
+        if (!token) {
+            console.log("token não encontrado")
+            return window.location.href = ("http://192.168.0.150:3000/login")
+        }
+        const classBuscaBD = new BuscaBD
+        const { data } = await classBuscaBD.ValidaTokenPainel(token)
+        if (!data) {
+            alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
+            window.location.href = ("http://192.168.0.150:3000/login")
+        }
+    }, [])
 
+    const [componentesAdministrativos, setComponentesAdministrativos] = useState({
         criarAnuncio: false,
         alterarAnuncio: false,
         deletarAnuncio: false,

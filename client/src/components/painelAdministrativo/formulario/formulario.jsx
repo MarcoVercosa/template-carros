@@ -124,6 +124,11 @@ export default function Formulario(props) {
             if (props.tipoFormulario === "listaranuncio") {
                 const classBuscaBD = new BuscaBD()
                 let resultado = await classBuscaBD.BuscaBDGetDados(props.dados)
+                if (resultado.data.token === "expired") {
+                    alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+                    window.location.href = ("http://192.168.0.150:3000/login")
+                    return
+                }
                 PreencheFormulario(resultado)
             }
         }
@@ -232,6 +237,12 @@ export default function Formulario(props) {
     async function BuscarBDDados() {
         const classBuscaBD = new BuscaBD()
         const resultado = await classBuscaBD.BuscaBDGetDados(buscaParaAlterar)
+        console.log(resultado)
+        if (resultado.data.token === "expired") {
+            alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
+            window.location.href = ("http://192.168.0.150:3000/login")
+            return
+        }
         if (resultado.data.length < 1) {
             setBuscaParaAlterar("")
             alert("Anúncio não encontrado")
@@ -313,6 +324,11 @@ export default function Formulario(props) {
             }
             const retornaImagenslLocationNodeMulter = await classBuscaBD.CadastraImagemMulter(dadosImagens)
 
+            if (retornaImagenslLocationNodeMulter.data.token === "expired") {
+                alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+                window.location.href = ("http://192.168.0.150:3000/login")
+                return
+            }
             retornaImagenslLocationNodeMulter.data.map((dados) => {
                 caminhoImagensMulter.push(dados.filename)//armezena o nome das imagens em array
             })
@@ -322,7 +338,12 @@ export default function Formulario(props) {
         //Obs, a atualização das imagens no BD ja é feita no onClick do botão
         if (editarImagens.imagensDeletadas.length > 0) {
             const resultado = await classBuscaBD.DeletaImagem(editarImagens.imagensDeletadas)
-            console.log(resultado)
+            // console.log(resultado)
+            if (resultado.data.token === "expired") {
+                alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+                window.location.href = ("http://192.168.0.150:3000/login")
+                return
+            }
             AtualizaTabelasBD(caminhoImagensMulter)
         } else {
             AtualizaTabelasBD(caminhoImagensMulter)
@@ -333,7 +354,7 @@ export default function Formulario(props) {
 
             var formularioTemp = formulario
 
-            if (caminhoImagensMulter) {//se houve imaggens guardadas no storage
+            if (caminhoImagensMulter.length > 0) {//se houve imaggens guardadas no storage
                 var stringiFy = JSON.stringify(formulario.imagensPath.concat(caminhoImagensMulter))
                 //transforma o json novamente em string. o Concat  add os valores da array caminhoImagensMulter permitindo tornar uma única array. parecido com o Objetc-consign
                 formularioTemp = { ...formularioTemp, valor: formularioTemp.valor.slice(3, -3) } //rerira o R$ e o ,00 do valor
@@ -347,6 +368,12 @@ export default function Formulario(props) {
 
             var formularioTempFinal = Object.assign(formularioTemp, formularioOpcionais)
             const resultado = await classBuscaBD.AtualizaBDDados(formularioTempFinal, buscaParaAlterar)
+
+            if (resultado.data.token === "expired") {
+                alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+                window.location.href = ("http://192.168.0.150:3000/login")
+                return
+            }
             console.log(resultado)
             props.mensagemDeRetorno(`${resultado.data} ID do anúncio: ${buscaParaAlterar}`)
 
@@ -902,7 +929,7 @@ export default function Formulario(props) {
                             <>
 
                                 <ModalExcluirAnuncio
-                                    buscaParaAlterar={buscaParaAlterar} formulario={formulario} MostrarTopoPaginaComMensagem={MostrarTopoPaginaComMensagem}
+                                    buscaParaAlterar={buscaParaAlterar} formulario={formulario} MostrarTopoPaginaComMensagem={MostrarTopoPaginaComMensagem} mensagemDeRetorno={props.mensagemDeRetorno}
                                 />
                             </>
                         }

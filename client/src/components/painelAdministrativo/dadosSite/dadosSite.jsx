@@ -69,6 +69,11 @@ export default function DadosSite(props) {
 
         const classBuscaBD = new BuscaBD
         const resultado = await classBuscaBD.GetInfoSite()
+        if (resultado.data.token === "expired") {
+            alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+            window.location.href = ("http://192.168.0.150:3000/login")
+            return
+        }
         PolulaFormulario(resultado)
 
     }, [])
@@ -180,6 +185,11 @@ export default function DadosSite(props) {
 
 
         const resultado = await classBuscaBD.GravaInfoSite(tempFormulario)
+        if (resultado.data.token === "expired") {
+            alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+            window.location.href = ("http://192.168.0.150:3000/login")
+            return
+        }
         window.location.href = ("#inicio")
         props.mensagemDeRetorno(resultado.data)
     }

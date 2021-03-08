@@ -13,6 +13,12 @@ async function CriaAnuncio(event, formulario, formularioOpcionais) {//fazupload 
 
     const retornaImagenslLocationNodeMulter = await classBuscaBD.CadastraImagemMulter(dadosImagens)
     //faz o upload das imagens e o node vai retornar as imagens recebidas
+
+    if (retornaImagenslLocationNodeMulter.data.token === "expired") {
+        alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+        window.location.href = ("http://192.168.0.150:3000/login")
+        return
+    }
     console.log(retornaImagenslLocationNodeMulter)
     let imagensPath = []
     //faz um map na array nos nomes das imagens retornadas do Node
@@ -38,6 +44,12 @@ async function ArmazenaDadosBD(recebeLocationImagens, formulario, formularioOpci
     var reunidadosFinal = Object.assign(reuniDados, formularioOpcionais) // Object.assign torna dois objs em um só
     console.log(reuniDados)
     const EnviaDadosBD = await classBuscaBD.CadastraDadosBD(reunidadosFinal)
+    if (EnviaDadosBD.data.token === "expired") {
+        alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+        window.location.href = ("http://192.168.0.150:3000/login")
+        return
+    }
+
     return EnviaDadosBD
 }
 

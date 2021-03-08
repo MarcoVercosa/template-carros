@@ -38,7 +38,6 @@ module.exports = (app) => {
     // Function Midlleware para acesso a API. Verifica se o pedido ja está autenticado (se ja há token)
     function VerifyAutenticationMidlleware(req, res, next) {
         const token = req.headers["x-accsess-token"]
-        console.log(token)
 
         jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
             if (err) {

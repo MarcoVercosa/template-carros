@@ -75,6 +75,11 @@ export default function SimpleModal(props) {
 
                     const resultado = await RemoverAnuncio(props.buscaParaAlterar, props.formulario.imagensPath)
                     //envia id do anuncio e imagens do BD
+                    if (resultado.data.token === "expired") {
+                        alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+                        window.location.href = ("http://192.168.0.150:3000/login")
+                        return
+                    }
                     if (resultado.data.affectedRows > 0) {
                         let mensagem = `ANÚNCIO ID: ${props.buscaParaAlterar} REMOVIDO COM SUCESSO !!!`
                         props.mensagemDeRetorno(mensagem)

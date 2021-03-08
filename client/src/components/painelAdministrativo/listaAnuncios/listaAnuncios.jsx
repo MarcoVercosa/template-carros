@@ -21,6 +21,11 @@ export default function ListarAnuncios() {
     useEffect(async () => {
         const classBuscaBD = new BuscaBD()
         let resultado = await classBuscaBD.ListarAnuncios()
+        if (resultado.data.token === "expired") {
+            alert("SESSÃO EXPIRADA. NECESSÁRIO LOGAR NOVAMENTE")
+            window.location.href = ("http://192.168.0.150:3000/login")
+            return
+        }
         setDadosListaAnuncio(prevState => {
             let calculaTotalPaginas = 0
             if (resultado.data.length % 25 === 0) { calculaTotalPaginas = resultado.data.length / 25 } else { calculaTotalPaginas = Math.floor(resultado.data.length / 25 + 1) }
@@ -31,7 +36,6 @@ export default function ListarAnuncios() {
                 paginaAtual: 1,
                 paginaFinal: calculaTotalPaginas
             }
-
         })
     }, [])
 
