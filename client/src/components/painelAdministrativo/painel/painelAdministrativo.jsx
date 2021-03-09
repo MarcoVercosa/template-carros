@@ -29,7 +29,7 @@ export default function Paineladministrativo() {
     useEffect(async () => {
         const token = localStorage.getItem("auth")
         if (!token) {
-            console.log("token não encontrado")
+            // console.log("token não encontrado")
             return window.location.href = ("http://192.168.0.150:3000/login")
         }
         const classBuscaBD = new BuscaBD

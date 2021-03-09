@@ -54,13 +54,26 @@ module.exports = (app) => {
     app.post("/login", (req, res) => {
         console.log("Solicitado TOKEN para logar no painel")
         console.log(req.body)
-        if (req.body.user === "lojacarro" && req.body.password === "123456789") {
-            const token = jwt.sign({ userId: 1 }, SECRET, { expiresIn: 60 }) // atrela o segredo ao usuário 1 e expira em 5 mins
-            res.json({ auth: true, token })
-        } else {
-            // res.status(401).end()
-            res.json({ auth: false, mensagem: "Usuário ou senha incorretos" })
+
+
+        const GeraToken = async (user, pass) => {
+
+            try {
+                console.log("iniciado func express")
+                const resultado = await AlteraDadosBD.LoginPainel(user, pass)
+                if (resultado.length > 0) {
+                    const token = jwt.sign({ userId: resultado[0].id }, SECRET, { expiresIn: 1800 })
+                    res.json({ auth: true, token, primeiroNome: resultado[0].primeiroNome, ultimoNome: resultado[0].ultimoNome })
+                } else {
+                    // res.status(401).end()
+                    res.json({ auth: false, mensagem: "Usuário ou senha incorretos" })
+                }
+
+            }
+            catch (e) { console.log("Ocorreu um erro:" + e) }
         }
+
+        GeraToken(req.body.user, req.body.password)
     })
 
     //verifica se o token ainda é valido para abertura de página FRONTEND. OBS: o TOKEN para front e API é o mesmo
@@ -276,9 +289,9 @@ module.exports = (app) => {
         // res.json(req.params.idanuncio)
     })
 
-    //##############################################
-    // #            ENVIO E-MAIL                  # 
-    // ############################################
+    //############################################################################################
+    // #                                    ENVIO E-MAIL                  # 
+    // ##########################################################################################
     app.post("/sendemail", (req, res) => { //ENVIO DE EMAIL SOLICITADO NAS PÁGINAS
         console.log("Envio de e-mail TENHO INTERESSE BackEnd")
         console.log(req.body.dados)
@@ -314,15 +327,7 @@ module.exports = (app) => {
         }
         SendEmail().catch(console.log)
     })
-    app.get("/blindados", (req, res) => {
-        console.log("Solicitado estoque BLINDADOS")
-        AlteraDadosBD.BuscaEstoqueBlindados(res)
-    })
-    app.get("/novos", (req, res) => {
-        console.log("Solicitado estoque NOVOS")
-        AlteraDadosBD.BuscaEstoqueNovos(res)
-    })
-    app.post("/sendemailvender", (req, res) => {
+    app.post("/sendemailvender", (req, res) => {//envio de emai solicitado ao cliente querer vender carro
         console.log("Envio de e-mail VENDER BackEnd")
         console.log(req.body.dados)
         const user = "marco2007sky@hotmail.com"
@@ -368,4 +373,67 @@ module.exports = (app) => {
         }
         SendEmail().catch(console.log)
     })
+
+    //envio de email esqueceu senha página login
+    app.get("/sendemailforgetpassword:email", (req, res) => {
+        console.log("Envio de e-mail RESET SENHA PAINEL")
+        var Busca = async () => {
+            try {
+                const resultado = await AlteraDadosBD.ForgetPasswordPainel(req.params.email, res)
+                if (resultado.length < 1) {
+                    res.json("Email não encontrado. Contate seu administrador")
+                } else {
+                    console.log("email encontrado : " + resultado[0].email)
+                    SendEmail(resultado[0].email).catch(console.log)
+                    res.json("Senha alterada com sucesso. Check seu email em alguns minutos")
+                }
+            }
+            catch (e) {
+                console.log("ERRO: " + e)
+            }
+        }
+        Busca()
+
+        async function SendEmail(email) {
+            const user = "marco2007sky@hotmail.com"
+            const pass = "MOdeld4166"
+            const transporter = nodemailer.createTransport({
+                service: "hotmail",
+                auth: {
+                    user,
+                    pass
+                }
+            })
+
+            let enviaEmail = await transporter.sendMail({
+                from: user,
+                to: email,
+                subject: "SOLICITAÇÃO DE TROCA DE SENHA",
+                text: `SENHA ALTERADA COM SUCESO PARA O USUÁRIO ${req.params.email} \n
+                NOVA SENHA: lojacarro@123 \n
+                \n
+                É FORTEMENTE RECOMENDÁVEL A TROCA SENHA PARA UMA OUTRA PESSOAL. \n
+                UTILIZE SENHAS FORTES, POSUINDO LETRAS MAIÚSCULAS, MINÚSCULAS,\n
+                NÚMEROS E CARACTERES ESPECIAIS ! \n 
+                `
+
+            })
+            console.log("Message ID sent: %s", enviaEmail.messageId);
+        }
+    })
+
+    //############################################################################################
+    // #                      F I M              ENVIO E-MAIL                  # 
+    // ##########################################################################################
+
+
+    app.get("/blindados", (req, res) => {
+        console.log("Solicitado estoque BLINDADOS")
+        AlteraDadosBD.BuscaEstoqueBlindados(res)
+    })
+    app.get("/novos", (req, res) => {
+        console.log("Solicitado estoque NOVOS")
+        AlteraDadosBD.BuscaEstoqueNovos(res)
+    })
+
 }

@@ -10,6 +10,59 @@ class AlteraDadosBD {
     // #####################################################// #####################################################
 
 
+    LoginPainel(user, pass) {
+        const sql = `SELECT id, primeiroNome, ultimoNome FROM vendaCarro.user WHERE email="${user}" AND password="${pass}"`
+
+        const Busca = () => {
+
+            return new Promise((resolve, reject) => {
+                conectaBDCarro.query(sql, (erro, resultado) => {
+                    if (erro) {
+                        reject(erro)
+                    } else {
+                        console.log(resultado)
+                        resolve(resultado)
+                    }
+                })
+            })
+        }
+
+        let dados = Busca()
+        return dados
+    }
+
+    async ForgetPasswordPainel(email, res) {
+        //checka se existe o email
+        const sql = `SELECT id ,email from vendaCarro.user WHERE email="${email}" `
+        var Busca = () => {
+            return new Promise((resolve, reject) => {
+                conectaBDCarro.query(sql, (erro, resultado) => {
+                    if (erro) {
+                        reject(erro)
+                    } else {
+                        if (resultado.length > 0) { ChangePasswordForget(resultado[0].id) }
+                        //se existir resultado, chame a func para troca a senha enviando o id  e em seguida retorne o resolve com o email encontrado
+                        resolve(resultado)
+                    }
+                })
+            })
+        }
+        var dados = Busca()
+        return dados
+
+        function ChangePasswordForget(id) {
+            const sql = `UPDATE  vendaCarro.user SET password = "lojacarro@123" WHERE id="${id}"`
+            conectaBDCarro.query(sql, (erro, resultado) => {
+
+                if (erro) {
+                    console.log("OCORREU UM ERRO AO TROCAR A SENHA: " + erro)
+                } else {
+                    console.log("SENHA ALTERADA COM SUCESSO. ")
+                }
+            })
+        }
+    }
+
     //Cadastra novo anuncio
     Cadastra(atendimento, res) {
         console.log(atendimento)

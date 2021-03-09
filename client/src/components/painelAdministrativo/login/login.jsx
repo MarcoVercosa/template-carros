@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import ForgetPassword from "./modaForgetPassword"
 import './login.css'
 
 import BuscaBD from "../../fetchBackEnd/api"
@@ -36,6 +37,8 @@ export default function Login(e) {
         console.log(data)
         if (!data.auth) { alert("Usuário ou senhas incorretos") } else {
             window.localStorage.setItem("auth", data.token)
+            window.localStorage.setItem("primeiroNome", data.primeiroNome)
+            window.localStorage.setItem("ultimoNome", data.ultimoNome)
             Redirect()
 
         }
@@ -74,7 +77,8 @@ export default function Login(e) {
                         </Button>
                         <hr></hr>
                     </form>
-                    <p className="login-article-form-div-login-esqueceusenha">Esqueceu a senha ?</p>
+                    {/* <p className="login-article-form-div-login-esqueceusenha">Esqueceu a senha ?</p> */}
+                    <ForgetPassword />
                 </form>
             </div>
 

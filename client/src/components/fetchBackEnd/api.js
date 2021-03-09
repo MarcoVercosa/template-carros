@@ -15,8 +15,14 @@ export default class BuscaBD {
         console.log(resultado)
         return resultado
     }
-    //verifica se o token ainda é valido
+    //Esqueceu senha. Página Login
+    async ForgetPassword(dados) {
+        const resultado = await axios.get(`http://192.168.0.150:9000/sendemailforgetpassword${dados}`)
+        console.log("Solicitado Forget Password")
+        return resultado
+    }
 
+    //verifica se o token ainda é valido
     async ValidaTokenPainel() {
         const resultado = await axios.get(`http://192.168.0.150:9000/validatokenpainel`,
             {
