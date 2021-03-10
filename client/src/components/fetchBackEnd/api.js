@@ -1,7 +1,7 @@
 import axios from "axios"
-const token = localStorage.getItem("auth")
-// axios.defaults.headers.common = { 'x-accsess-token': token }
-//vai por default sempre enviar o token no cabeçalho
+// const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+// const token = temp.tk
+
 
 
 export default class BuscaBD {
@@ -24,6 +24,8 @@ export default class BuscaBD {
 
     //verifica se o token ainda é valido
     async ValidaTokenPainel() {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         const resultado = await axios.get(`http://192.168.0.150:9000/validatokenpainel`,
             {
                 headers: { 'x-accsess-token': token }
@@ -35,6 +37,8 @@ export default class BuscaBD {
 
     //upload de imagens 
     async CadastraImagemMulter(imagens) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         const resultado = await axios.post("http://192.168.0.150:9000/cadastraimagem",
             imagens,
             {
@@ -47,6 +51,8 @@ export default class BuscaBD {
     }
     //cadastra dados no BD
     async CadastraDadosBD(dados) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         const resultado = await axios.post("http://192.168.0.150:9000/cadastraveiculo",
             dados,
             {
@@ -59,6 +65,9 @@ export default class BuscaBD {
     }
     //busca infos para alteração do anuncio
     async BuscaBDGetDados(dados) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
+
         const resultado = await axios.get(`http://192.168.0.150:9000/buscacarro/${dados}`,
             {
                 headers: { 'x-accsess-token': token }
@@ -70,6 +79,8 @@ export default class BuscaBD {
 
     //envia os dados para atualização de anuncio ja criado
     async AtualizaBDDados(dados, idDaBusca) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
 
         const resultado = await axios.post("http://192.168.0.150:9000/atualizacarro", {
             dados, //array dos dados
@@ -84,6 +95,8 @@ export default class BuscaBD {
     }
 
     async DeletaImagem(dados) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         console.log("API solicitada para remoção de imagem")
         const resultado = await axios.post("http://192.168.0.150:9000/deletaimagens",
             {
@@ -98,6 +111,8 @@ export default class BuscaBD {
     }
 
     async DeletaAnuncioBD(idPesquisa) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
 
         console.log("API solicitada para remoção de anuncio no BD")
         const resultado = await axios.get(`http://192.168.0.150:9000/deletaanunciobd/${idPesquisa}`,
@@ -108,6 +123,8 @@ export default class BuscaBD {
         return resultado
     }
     async ListarAnuncios(idPesquisa) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
 
         console.log("API solicitada para listar os anuncios no BD")
         const resultado = await axios.get("http://192.168.0.150:9000/listaranuncios",
@@ -123,6 +140,8 @@ export default class BuscaBD {
     //////////////////////////////////////////////////////////////
 
     async GravaInfoSite(dados) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         console.log("API solicitada para gravação de informações do site no BD")
         const resultado = await axios.post(`http://192.168.0.150:9000/gravainfosite`, {
             dados
@@ -136,6 +155,8 @@ export default class BuscaBD {
     }
 
     async GetInfoSite(idPesquisa) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
         console.log("API solicitada para requisição de informações do site")
         const resultado = await axios.get(`http://192.168.0.150:9000/buscainfosite`,
             {

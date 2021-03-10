@@ -38,8 +38,9 @@ module.exports = (app) => {
     // Function Midlleware para acesso a API. Verifica se o pedido ja está autenticado (se ja há token)
     function VerifyAutenticationMidlleware(req, res, next) {
         const token = req.headers["x-accsess-token"]
-
+        console.log("solicitado validação TOKEN ja existente \n " + token)
         jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
+
             if (err) {
                 console.log("TOKEN EXPIRADO")
                 return res.json({ token: "expired" }) //se a comparação der erro, finalize com o erro
@@ -53,17 +54,17 @@ module.exports = (app) => {
     // LOGIN PAINEL
     app.post("/login", (req, res) => {
         console.log("Solicitado TOKEN para logar no painel")
-        console.log(req.body)
+        console.log(req.body.user)
 
 
         const GeraToken = async (user, pass) => {
 
             try {
-                console.log("iniciado func express")
                 const resultado = await AlteraDadosBD.LoginPainel(user, pass)
                 if (resultado.length > 0) {
                     const token = jwt.sign({ userId: resultado[0].id }, SECRET, { expiresIn: 1800 })
-                    res.json({ auth: true, token, primeiroNome: resultado[0].primeiroNome, ultimoNome: resultado[0].ultimoNome })
+
+                    res.json({ auth: true, token, session: resultado[0].id, primeiroNome: resultado[0].primeiroNome, ultimoNome: resultado[0].ultimoNome })
                 } else {
                     // res.status(401).end()
                     res.json({ auth: false, mensagem: "Usuário ou senha incorretos" })
@@ -80,6 +81,7 @@ module.exports = (app) => {
     app.get("/validatokenpainel", (req, res) => {
         console.log("SOLICITADO VALIDAÇÃO DE TOKEN")
         const token = req.headers["x-accsess-token"]
+
         jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
             if (err) {
                 console.log("TOKEN EXPIRADO")

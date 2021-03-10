@@ -5,6 +5,7 @@ import "./painelAdministrativo.css"
 import Formulario from "../formulario/formulario" //FORMULARIO
 import ListarAnuncios from "../listaAnuncios/listaAnuncios"
 import DadosSite from "../dadosSite/dadosSite"
+import ModalProfile from "./modalProfile"
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,13 +28,17 @@ const useStyles = makeStyles((theme) => ({
 export default function Paineladministrativo() {
 
     useEffect(async () => {
-        const token = localStorage.getItem("auth")
-        if (!token) {
+        const dadosLocalStorage = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        if (!dadosLocalStorage) {//se não houver dados no local storage
+            return window.location.href = ("http://192.168.0.150:3000/login")
+        }
+
+        if (!dadosLocalStorage.tk) {
             // console.log("token não encontrado")
             return window.location.href = ("http://192.168.0.150:3000/login")
         }
         const classBuscaBD = new BuscaBD
-        const { data } = await classBuscaBD.ValidaTokenPainel(token)
+        const { data } = await classBuscaBD.ValidaTokenPainel(dadosLocalStorage.tk)
         if (!data) {
             alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
             window.location.href = ("http://192.168.0.150:3000/login")
@@ -134,7 +139,13 @@ export default function Paineladministrativo() {
 
                 <article className="paineladministrativo-article">
 
-                    <h4>SELECIONE A OPÇÃO DESEJADA:</h4>
+                    <div className="paineladministrativo-article-h4-profile" style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
+                        <h4>SELECIONE A OPÇÃO DESEJADA:</h4>
+
+                        <div>
+                            <ModalProfile />
+                        </div>
+                    </div>
 
 
                     <div className="paineladministrativo-article-div-button">
@@ -146,7 +157,7 @@ export default function Paineladministrativo() {
                             startIcon={<SendIcon />}
                         >
                             CRIAR ANÚNCIO
-                    </Button>
+                        </Button>
 
                         <Button
                             onClick={(dadosBotao, envia = "alterarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
@@ -156,7 +167,7 @@ export default function Paineladministrativo() {
                             startIcon={<CloudUploadIcon />}
                         >
                             ALTERAR ANÚNCIO
-                    </Button>
+                        </Button>
 
                         <Button
                             onClick={(dadosBotao, envia = "deletarAnuncio") => { SelecionaFormulario(dadosBotao, envia) }}
@@ -166,7 +177,7 @@ export default function Paineladministrativo() {
                             startIcon={<DeleteIcon />}
                         >
                             DELETAR ANÚNCIO
-                    </Button>
+                        </Button>
                         <Button
                             style={{ backgroundColor: "rgb(241, 243, 103)" }}
                             onClick={(dadosBotao, envia = "listarAnuncios") => { SelecionaFormulario(dadosBotao, envia) }}
@@ -175,7 +186,7 @@ export default function Paineladministrativo() {
                             startIcon={<FormatListNumberedIcon style={{ color: "black" }} />}
                         >
                             TODOS ANÚNCIOS
-                    </Button>
+                        </Button>
                         <Button
                             style={{ backgroundColor: "ORANGE" }}
                             onClick={(dadosBotao, envia = "dadosSite") => { SelecionaFormulario(dadosBotao, envia) }}
@@ -184,7 +195,7 @@ export default function Paineladministrativo() {
                             startIcon={<SettingsApplicationsIcon style={{ color: "black" }} />}
                         >
                             DADOS SITE
-                    </Button>
+                        </Button>
                     </div>
                 </article>
 
