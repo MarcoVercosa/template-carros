@@ -465,7 +465,6 @@ export default function Formulario(props) {
                             if (envia.target.value.length < 1) { envia.target.value = 0 }
                             SetFormulario(prevState => {
                                 const formater = new Intl.NumberFormat("pt-BR")
-                                // alert(typeof (formater.format(parseFloat(envia.target.value))))
                                 return { ...prevState, valor: "R$ " + formater.format(parseFloat(envia.target.value)) + ",00" }
                             })
                         }}

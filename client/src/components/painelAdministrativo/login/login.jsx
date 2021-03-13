@@ -36,7 +36,7 @@ export default function Login(e) {
         const { data } = await classBuscaBD.LoginPainel(credentials)
         console.log(data)
         if (!data.auth) { alert("Usuário ou senhas incorretos") } else {
-            const dados = { primeiroNome: data.primeiroNome, ultimoNome: data.ultimoNome, tk: data.token, session: data.session }
+            const dados = { codeUser: data.codeUser, tk: data.token, }
             window.localStorage.setItem("userSession", JSON.stringify(dados))
             Redirect()
         }

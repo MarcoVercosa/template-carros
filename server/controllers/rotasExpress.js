@@ -38,7 +38,7 @@ module.exports = (app) => {
     // Function Midlleware para acesso a API. Verifica se o pedido ja está autenticado (se ja há token)
     function VerifyAutenticationMidlleware(req, res, next) {
         const token = req.headers["x-accsess-token"]
-        console.log("solicitado validação TOKEN ja existente \n " + token)
+        console.log("solicitado validação TOKEN ja existente para acesso API \n " + token)
         jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
 
             if (err) {
@@ -64,7 +64,7 @@ module.exports = (app) => {
                 if (resultado.length > 0) {
                     const token = jwt.sign({ userId: resultado[0].id }, SECRET, { expiresIn: 1800 })
 
-                    res.json({ auth: true, token, session: resultado[0].id, primeiroNome: resultado[0].primeiroNome, ultimoNome: resultado[0].ultimoNome })
+                    res.json({ auth: true, token, codeUser: resultado[0].codeUser })
                 } else {
                     // res.status(401).end()
                     res.json({ auth: false, mensagem: "Usuário ou senha incorretos" })
@@ -79,7 +79,7 @@ module.exports = (app) => {
 
     //verifica se o token ainda é valido para abertura de página FRONTEND. OBS: o TOKEN para front e API é o mesmo
     app.get("/validatokenpainel", (req, res) => {
-        console.log("SOLICITADO VALIDAÇÃO DE TOKEN")
+        console.log("SOLICITADO VALIDAÇÃO DE TOKEN FRONT END")
         const token = req.headers["x-accsess-token"]
 
         jwt.verify(token, SECRET, (err, decoded) => {//compara o token com o SECRET, err = erro, decoded = token decodificado
@@ -87,10 +87,52 @@ module.exports = (app) => {
                 console.log("TOKEN EXPIRADO")
                 return res.json(false)
             } else //se a comparação der erro, finalize com o erro
-                // console.log(decoded.userId)
-                res.json(true)
+                console.log("TOKEN VERDADEIRO E ATIVO.")
+            res.json(true)
 
         })
+    })
+
+    app.get("/infoprofile:codeuser", (req, res) => {
+        console.log("solicitado infos para profile")
+        console.log(req.params.codeuser)
+
+        const BuscaInfos = async () => {
+
+            try {
+                const resultado = await AlteraDadosBD.InfoProfile(req.params.codeuser)
+                res.json(resultado)
+            }
+
+            catch (e) { console.log("Ocorreu um erro ao buscar dados do profile: " + e) }
+        }
+        BuscaInfos()
+
+    })
+
+    app.post("/changepasswordprofile", VerifyAutenticationMidlleware, (req, res) => {
+        console.log("Solicitado troca de senha via profile")
+        console.log(req.body.dados)
+
+        async function ChangePass() {
+
+            try {
+                const resultado = await AlteraDadosBD.ChangePassword(req.body.dados.codeUser, req.body.dados.email, req.body.dados.currentPassword, req.body.dados.newPassword)
+                console.log(resultado.changedRows)
+                if (resultado.changedRows) { res.json("SENHA ALTERADA COM SUCESSO.") } else { res.json("Senha atual NÃO confere") }
+            }
+            catch (e) {
+                console.log("HOUVE UM ERRO" + e)
+                res.json(e)
+            }
+        }
+
+        ChangePass()
+    })
+
+    app.post("/changedataprofile", (req, res) => {
+        console.log("Solicitado troca de dados via profile")
+        console.log(req.body.dados)
     })
 
     //////////////////////////////////////////////////////////////

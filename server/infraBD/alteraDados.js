@@ -1,3 +1,4 @@
+const { query } = require("./conexaoCarro")
 const conectaBDCarro = require("./conexaoCarro")
 
 class AlteraDadosBD {
@@ -11,7 +12,7 @@ class AlteraDadosBD {
 
 
     LoginPainel(user, pass) {
-        const sql = `SELECT id, primeiroNome, ultimoNome FROM vendaCarro.user WHERE email="${user}" AND password="${pass}"`
+        const sql = `SELECT id, codeUser FROM vendaCarro.user WHERE email="${user}" AND password="${pass}"`
 
         const Busca = () => {
 
@@ -61,6 +62,45 @@ class AlteraDadosBD {
                 }
             })
         }
+    }
+
+
+    InfoProfile(dados) {//infos para o modal Profile do Painel ADM
+        const sql = `SELECT primeiroNome, ultimoNome, email FROM vendaCarro.user WHERE codeUser="${dados}"`
+        var Busca = () => {
+            return new Promise((resolve, reject) => {
+                conectaBDCarro.query(sql, (erro, resultado) => {
+                    if (erro) {
+                        reject(erro)
+                    } else {
+                        console.log(resultado)
+                        resolve(resultado)
+                    }
+                })
+            })
+        }
+        var resultado = Busca()
+        return resultado
+    }
+
+    ChangePassword(codeUser, email, currentPassword, newPassword) { //altera password via profile no Painel ADM
+
+        const sql = `UPDATE  vendaCarro.user SET password="${newPassword}" WHERE email="${email}" AND codeUser="${codeUser}" AND password="${currentPassword}"`
+        function Busca() {
+
+            return new Promise((resolve, reject) => {
+                conectaBDCarro.query(sql, (erro, resultado) => {
+                    if (erro) {
+                        console.log(erro)
+                        reject(erro)
+                    } else {
+                        console.log(resultado)
+                        resolve(resultado)
+                    }
+                })
+            })
+        }
+        return Busca()
     }
 
     //Cadastra novo anuncio

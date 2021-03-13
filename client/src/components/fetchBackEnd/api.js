@@ -7,6 +7,11 @@ import axios from "axios"
 export default class BuscaBD {
 
 
+    //##########################################
+    //              LOGIN - PAINEL
+    //##########################################
+
+
     //login painel
     async LoginPainel(dados) {
         const resultado = await axios.post("http://192.168.0.150:9000/login",
@@ -15,14 +20,8 @@ export default class BuscaBD {
         console.log(resultado)
         return resultado
     }
-    //Esqueceu senha. Página Login
-    async ForgetPassword(dados) {
-        const resultado = await axios.get(`http://192.168.0.150:9000/sendemailforgetpassword${dados}`)
-        console.log("Solicitado Forget Password")
-        return resultado
-    }
 
-    //verifica se o token ainda é valido
+    //verifica se o token ainda é valido para abertura página
     async ValidaTokenPainel() {
         const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
         const token = temp.tk
@@ -34,6 +33,59 @@ export default class BuscaBD {
         console.log(resultado)
         return resultado
     }
+
+    //Esqueceu senha. Página Login
+    async ForgetPassword(dados) {
+        const resultado = await axios.get(`http://192.168.0.150:9000/sendemailforgetpassword${dados}`)
+        console.log("Solicitado Forget Password")
+        return resultado
+    }
+
+
+    //busca infos sobre profile para confs do user
+    async InfoProfile(codigo) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
+        const resultado = await axios.get(`http://192.168.0.150:9000/infoprofile${codigo}`,
+            {
+                headers: { 'x-accsess-token': token }
+            }
+        )
+        return resultado
+    }
+
+    //troca a senha ou nome/sobrenome via conf do profile
+    async ChangeDataOrPassordProfile(tipo, dados) {
+        const temp = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
+        const token = temp.tk
+        if (tipo === "nomeSobrenome") {
+            const resultado = await axios.post(`http://192.168.0.150:9000/changedataprofile`,
+                {
+                    dados
+                },
+                {
+                    headers: { 'x-accsess-token': token }
+                }
+            )
+            return resultado
+        } else {
+            const resultado = await axios.post(`http://192.168.0.150:9000/changepasswordprofile`,
+                {
+                    dados
+                },
+                {
+                    headers: { 'x-accsess-token': token }
+                }
+            )
+            return resultado
+        }
+
+    }
+
+
+    //##########################################
+    //              ADM PAINEL ADMINISTRATIVO
+    //##########################################
 
     //upload de imagens 
     async CadastraImagemMulter(imagens) {

@@ -39,6 +39,7 @@ export default function Paineladministrativo() {
         }
         const classBuscaBD = new BuscaBD
         const { data } = await classBuscaBD.ValidaTokenPainel(dadosLocalStorage.tk)
+        console.log(data)
         if (!data) {
             alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
             window.location.href = ("http://192.168.0.150:3000/login")
