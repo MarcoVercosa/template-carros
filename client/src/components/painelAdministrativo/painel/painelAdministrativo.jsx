@@ -30,11 +30,13 @@ export default function Paineladministrativo() {
     useEffect(async () => {
         const dadosLocalStorage = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
         if (!dadosLocalStorage) {//se não houver dados no local storage
+            alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
             return window.location.href = ("http://192.168.0.150:3000/login")
         }
 
         if (!dadosLocalStorage.tk) {
             // console.log("token não encontrado")
+            alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
             return window.location.href = ("http://192.168.0.150:3000/login")
         }
         const classBuscaBD = new BuscaBD

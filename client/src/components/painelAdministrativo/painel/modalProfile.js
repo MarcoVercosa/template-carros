@@ -92,10 +92,14 @@ export default function SimpleModal(props) {
                 const classBuscaBD = new BuscaBD
                 const dados = { codeUser: dadosProfile.codeUser, email: dadosProfile.email, currentPassword: changePassword.currentPassword, newPassword: changePassword.confirmNewPassword }
                 const resultado = await classBuscaBD.ChangeDataOrPassordProfile(tipo, dados)
-                console.log(resultado)
+                if (resultado.data.token === "expired") {
+                    alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
+                    window.location.href = ("http://192.168.0.150:3000/login")
+                    return
+                }
                 alert(resultado.data)
             } else {
-                alert('As novas senhas NÃO são iguais')
+                alert('As novas senhas precisam ser IGUAIS')
             }
         }
     }
