@@ -9,6 +9,7 @@ import ModalProfile from "./modalProfile"
 
 
 import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -27,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Paineladministrativo() {
 
-    useEffect(async () => {
+
+
+    useEffect(async () => {//valida o TOKEN Autentication
         const dadosLocalStorage = JSON.parse(window.localStorage.getItem("userSession")) === null ? false : JSON.parse(window.localStorage.getItem("userSession"))
         if (!dadosLocalStorage) {//se não houver dados no local storage
             alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
@@ -44,9 +47,12 @@ export default function Paineladministrativo() {
         console.log(data)
         if (!data) {
             alert("SESSÃO EXPIRADA. NECESÁRIO AUTENTICAÇÃO")
-            window.location.href = ("http://192.168.0.150:3000/login")
+            return window.location.href = ("http://192.168.0.150:3000/login")
         }
+        setProgresso(false)
     }, [])
+
+    const [progresso, setProgresso] = useState(true)
 
     const [componentesAdministrativos, setComponentesAdministrativos] = useState({
         criarAnuncio: false,
@@ -57,7 +63,7 @@ export default function Paineladministrativo() {
         mensagemRetorno: false
     })
 
-    const [mensagemDeRetorno, setMensagemDeRetorno] = useState(false)
+    const [mensagemDeRetorno, setMensagemDeRetorno] = useState(true)
     //recebe mensagem de sucesso ou não dos componentes
 
     const classes = useStyles();
@@ -127,6 +133,16 @@ export default function Paineladministrativo() {
                 return { ...prevState, mensagemRetorno: false }
             })
         }, 15000)
+    }
+
+
+    if (progresso) {
+        return (
+            <>
+                <LinearProgress />
+                <LinearProgress color="secondary" />
+            </>
+        )
     }
 
 

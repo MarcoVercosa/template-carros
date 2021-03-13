@@ -85,6 +85,7 @@ export default function SimpleModal(props) {
                 window.location.href = ("http://192.168.0.150:3000/login")
                 return
             }
+            alert(resultado.data)
 
         } else {
 
@@ -104,6 +105,11 @@ export default function SimpleModal(props) {
         }
     }
 
+    function Logoff() {
+        localStorage.removeItem("userSession")
+        window.location.href = ("http://192.168.0.150:3000/login")
+    }
+
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -119,6 +125,9 @@ export default function SimpleModal(props) {
                     {dadosProfile &&
                         dadosProfile.email
                     }
+                </div>
+                <div style={{ margin: "10px", color: "red", fontSize: "20px", fontFamily: "Lora", fontWeight: "700", cursor: "pointer" }}>
+                    <p onClick={Logoff}>Sair</p>
                 </div>
             </div>
 
@@ -172,7 +181,7 @@ export default function SimpleModal(props) {
 
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
                 <div style={{ width: "15%", margin: "15px auto", backgroundColor: "rgb(196, 196, 196)", padding: "40px", borderRadius: "100px" }}>
-                    <LockIcon style={{ fontSize: "75px", color: "rgb(136, 136, 137)" }} />
+                    <LockIcon style={{ fontSize: "70px", color: "rgb(136, 136, 137)" }} />
                 </div>
                 <div>
                     <p style={{ color: "rgb(100, 100, 100)" }}  >ALTERAÇÃO DE SENHA:</p>
@@ -219,7 +228,13 @@ export default function SimpleModal(props) {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={(click, tipo = "password") => { AlteraNomeOuSenha(tipo) }}
+                onClick={(click, tipo = "password") => {
+                    if (changePassword.confirmNewPassword.length < 7) {
+                        alert("A senha precisa possuir ao menos 7 caracteres")
+                        return
+                    }
+                    AlteraNomeOuSenha(tipo)
+                }}
 
             >ALTERAR SENHA
             </Button>

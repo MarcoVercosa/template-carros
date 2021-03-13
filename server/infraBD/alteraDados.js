@@ -79,15 +79,13 @@ class AlteraDadosBD {
                 })
             })
         }
-        var resultado = Busca()
-        return resultado
+
+        return Busca()
     }
 
     ChangePassword(codeUser, email, currentPassword, newPassword) { //altera password via profile no Painel ADM
-
         const sql = `UPDATE  vendaCarro.user SET password="${newPassword}" WHERE email="${email}" AND codeUser="${codeUser}" AND password="${currentPassword}"`
         function Busca() {
-
             return new Promise((resolve, reject) => {
                 conectaBDCarro.query(sql, (erro, resultado) => {
                     if (erro) {
@@ -101,6 +99,23 @@ class AlteraDadosBD {
             })
         }
         return Busca()
+    }
+
+    ChangeFirstNameLastName(codeUser, email, primeiroNome, ultimoNome) {
+        const sql = `UPDATE vendaCarro.user set primeiroNome = "${primeiroNome}", ultimoNome="${ultimoNome}" WHERE email="${email}" AND codeUser="${codeUser}" `
+        function Change() {
+            return new Promise((resolve, reject) => {
+                conectaBDCarro.query(sql, (erro, resultado) => {
+                    if (erro) {
+                        console.log(erro)
+                        reject(erro)
+                    } else {
+                        resolve(resultado)
+                    }
+                })
+            })
+        }
+        return Change()
     }
 
     //Cadastra novo anuncio

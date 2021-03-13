@@ -133,6 +133,17 @@ module.exports = (app) => {
     app.post("/changedataprofile", (req, res) => {
         console.log("Solicitado troca de dados via profile")
         console.log(req.body.dados)
+
+        async function ChangeDataProfile() {
+            try {
+                const resultado = await AlteraDadosBD.ChangeFirstNameLastName(req.body.dados.codeUser, req.body.dados.email, req.body.dados.primeiroNome, req.body.dados.ultimoNome)
+                if (resultado.changedRows) { res.json("Dados gravados com sucesso.") } else { res.json("Não identificamos alteração") }
+                console.log(resultado)
+            }
+            catch (e) { res.json(e) }
+        }
+
+        ChangeDataProfile()
     })
 
     //////////////////////////////////////////////////////////////
